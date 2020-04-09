@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <title>Backpropagation</title>
-<meta name="author" content="(Lucas Sas)"/>
+<meta name="author" content="(Lucas Sas Brunschier)"/>
 <style type="text/css">
 .underline { text-decoration: underline; }
 </style>
@@ -22,19 +22,35 @@
         document.getElementsByTagName( 'head' )[0].appendChild( link );
     }
 </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </head>
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide"><h1 class="title">Backpropagation</h1><h2 class="author">Lucas Sas</h2><p class="date">Created: 2020-03-30 Mon 16:21</p>
+<section id="sec-title-slide"><h1 class="title">Backpropagation</h1><h2 class="author">Lucas Sas Brunschier</h2><h2 class="date">SS20</h2><p class="date">Created: 2020-04-09 Thu 18:52</p>
 </section>
 <section id="table-of-contents"><div id="table-of-contents">
 <h2>Inhaltsverzeichnis</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#/slide-orgb7e139c">1. Intro</a>
+<li><a href="#/slide-org4429fd7">1. Intro</a>
 <ul>
-<li><a href="#/slide-orgb3ab2f9">1.1. Ressources</a></li>
+<li><a href="#/slide-org8e478ee">1.1. Zusätzliche Ressourcen</a></li>
+<li><a href="#/slide-orgbfc9bd0">1.2. Notation</a></li>
+</ul>
+</li>
+<li><a href="#/slide-orgea2176b">2. Vowissen</a>
+<ul>
+<li><a href="#/slide-orga3e313b">2.1. Gradient</a>
+<ul>
+<li><a href="#/slide-org71ba230">2.1.1. Beispiel</a></li>
+</ul>
+</li>
+<li><a href="#/slide-orga248f76">2.2. Stochastic Gradient Descent</a>
+<ul>
+<li><a href="#/slide-org4afb438">2.2.1. Beispiel</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -43,13 +59,119 @@
 </section>
 
 <section>
-<section id="slide-orgb7e139c">
-<h2 id="orgb7e139c"><span class="section-number-2">1</span> Intro</h2>
-<div class="outline-text-2" id="text-1">
-</div>
+<section id="slide-org4429fd7">
+<h2 id="org4429fd7"><span class="section-number-2">1</span> Intro</h2>
+<p>
+Präsentation ist auch online <a href="https://sirbubbls.github.io/backpropagation-seminar">sirbubbls.github.io/backpropagation-seminar</a>
+</p>
+
+<p>
+Präsentation ist in Org-Mode geschrieben, also sourcen aller Grafiken und
+Beispiele sind integriert.
+</p>
 </section>
-<section id="slide-orgb3ab2f9">
-<h3 id="orgb3ab2f9"><span class="section-number-3">1.1</span> Ressources</h3>
+</section>
+<section>
+<section id="slide-org8e478ee">
+<h3 id="org8e478ee"><span class="section-number-3">1.1</span> Zusätzliche Ressourcen</h3>
+<p>
+Deep Learning (Ian Goodfellow, Yoshua Bengio &amp; Aaron Courville)
+</p>
+
+<div class="figure">
+<p><img src="https://images-eu.ssl-images-amazon.com/images/I/610HnULa0dL._SY445_QL70_ML2_.jpg" alt="610HnULa0dL._SY445_QL70_ML2_.jpg" width="150" />
+</p>
+</div>
+
+<p>
+<a href="https://www.deeplearningbook.org">https://www.deeplearningbook.org</a>
+</p>
+
+<p>
+<a href="https://www.deeplearningbook.org/contents/mlp.html">Backpropagation Kapitel</a>
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgbfc9bd0">
+<h3 id="orgbfc9bd0"><span class="section-number-3">1.2</span> Notation</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python"><code trim><span style="color: #e45649;">for</span> i <span style="color: #e45649;">in</span> <span style="color: #a626a4;">range</span>(<span style="color: #da8548; font-weight: bold;">5</span>):
+    <span style="color: #e45649;">print</span>(i)
+</code></pre>
+</div>
+
+<pre class="example">
+0
+1
+2
+3
+4
+</pre>
+
+</section>
+</section>
+<section>
+<section id="slide-orgea2176b">
+<h2 id="orgea2176b"><span class="section-number-2">2</span> Vowissen</h2>
+</section>
+</section>
+<section>
+<section id="slide-orga3e313b">
+<h3 id="orga3e313b"><span class="section-number-3">2.1</span> Gradient</h3>
+<p>
+Der Gradient ist der Vektor aller partiellen Ableitungen einer Funktion \(f\).
+</p>
+
+<blockquote >
+<p>
+Notation: \(\nabla_xf(x)\)
+</p>
+</blockquote>
+</section>
+<section id="slide-org71ba230">
+<h4 id="org71ba230"><span class="section-number-4">2.1.1</span> Beispiel</h4>
+<blockquote >
+<p>
+\(f(x, y) = 2x^2 + y^3\)
+</p>
+</blockquote>
+
+<p>
+\(\rightarrow \nabla_xf(x)=(\begin{array}{c} f'_x \\ f'_y \end{array})= (\begin{array}{c} 4x \\ 3y \end{array})\)
+</p>
+
+
+</section>
+</section>
+<section>
+<section id="slide-orga248f76">
+<h3 id="orga248f76"><span class="section-number-3">2.2</span> Stochastic Gradient Descent</h3>
+<p>
+Der Gradient Descent Algorithmus wird dafür verwendet das lokale Minimum einer
+Funktion zu bestimmen.
+</p>
+</section>
+<section id="slide-org4afb438">
+<h4 id="org4afb438"><span class="section-number-4">2.2.1</span> Beispiel</h4>
+<p>
+Funktion \(f(x)=x^2-y^2\) ist gegeben.
+</p>
+
+<div class="figure">
+<p><img src="./im.png" alt="im.png" />
+</p>
+</div>
+
+<div class="org-src-container">
+
+<pre  class="src src-jupyter-python"><code trim>  %matplotlib inline
+  <span style="color: #e45649;">import</span> matplotlib.pyplot <span style="color: #e45649;">as</span> plt
+  <span style="color: #e45649;">import</span> numpy <span style="color: #e45649;">as</span> np
+</code></pre>
+</div>
 </section>
 </section>
 </div>
