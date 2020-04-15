@@ -11,6 +11,7 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@3/css/theme/moon.css" id="theme"/>
 
+<link rel="stylesheet" href="style.css"/>
 
 <!-- If the query includes 'print-pdf', include the PDF print sheet -->
 <script>
@@ -27,40 +28,12 @@
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide"><h1 class="title">Backpropagation</h1><h2 class="author">Lucas Sas Brunschier</h2><h2 class="date">SS20</h2><p class="date">Created: 2020-04-09 Thu 18:52</p>
-</section>
-<section id="table-of-contents"><div id="table-of-contents">
-<h2>Inhaltsverzeichnis</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#/slide-org4429fd7">1. Intro</a>
-<ul>
-<li><a href="#/slide-org8e478ee">1.1. Zusätzliche Ressourcen</a></li>
-<li><a href="#/slide-orgbfc9bd0">1.2. Notation</a></li>
-</ul>
-</li>
-<li><a href="#/slide-orgea2176b">2. Vowissen</a>
-<ul>
-<li><a href="#/slide-orga3e313b">2.1. Gradient</a>
-<ul>
-<li><a href="#/slide-org71ba230">2.1.1. Beispiel</a></li>
-</ul>
-</li>
-<li><a href="#/slide-orga248f76">2.2. Stochastic Gradient Descent</a>
-<ul>
-<li><a href="#/slide-org4afb438">2.2.1. Beispiel</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
+<section id="sec-title-slide"><h1 class="title">Backpropagation</h1><h2 class="author">Lucas Sas Brunschier</h2><h2 class="date">SS20</h2><p class="date">Created: 2020-04-15 Wed 02:05</p>
 </section>
 
 <section>
-<section id="slide-org4429fd7">
-<h2 id="org4429fd7"><span class="section-number-2">1</span> Intro</h2>
+<section id="slide-orgdf44e76">
+<h2 id="orgdf44e76">Intro</h2>
 <p>
 Präsentation ist auch online <a href="https://sirbubbls.github.io/backpropagation-seminar">sirbubbls.github.io/backpropagation-seminar</a>
 </p>
@@ -72,8 +45,8 @@ Beispiele sind integriert.
 </section>
 </section>
 <section>
-<section id="slide-org8e478ee">
-<h3 id="org8e478ee"><span class="section-number-3">1.1</span> Zusätzliche Ressourcen</h3>
+<section id="slide-orgedc617d">
+<h3 id="orgedc617d">Zusätzliche Ressourcen</h3>
 <p>
 Deep Learning (Ian Goodfellow, Yoshua Bengio &amp; Aaron Courville)
 </p>
@@ -94,8 +67,8 @@ Deep Learning (Ian Goodfellow, Yoshua Bengio &amp; Aaron Courville)
 </section>
 </section>
 <section>
-<section id="slide-orgbfc9bd0">
-<h3 id="orgbfc9bd0"><span class="section-number-3">1.2</span> Notation</h3>
+<section id="slide-orgba993b8">
+<h3 id="orgba993b8">Notation</h3>
 <div class="org-src-container">
 
 <pre  class="src src-python"><code trim><span style="color: #e45649;">for</span> i <span style="color: #e45649;">in</span> <span style="color: #a626a4;">range</span>(<span style="color: #da8548; font-weight: bold;">5</span>):
@@ -114,64 +87,152 @@ Deep Learning (Ian Goodfellow, Yoshua Bengio &amp; Aaron Courville)
 </section>
 </section>
 <section>
-<section id="slide-orgea2176b">
-<h2 id="orgea2176b"><span class="section-number-2">2</span> Vowissen</h2>
+<section id="slide-org66f148f">
+<h2 id="org66f148f">Vorwissen</h2>
 </section>
 </section>
 <section>
-<section id="slide-orga3e313b">
-<h3 id="orga3e313b"><span class="section-number-3">2.1</span> Gradient</h3>
-<p>
-Der Gradient ist der Vektor aller partiellen Ableitungen einer Funktion \(f\).
-</p>
-
+<section id="slide-orgd2cf474">
+<h3 id="orgd2cf474">Gradient Der Gradient ist der Vektor aller partiellen Ableitungen einer Funktion \(f\).</h3>
 <blockquote >
 <p>
 Notation: \(\nabla_xf(x)\)
 </p>
 </blockquote>
 </section>
-<section id="slide-org71ba230">
-<h4 id="org71ba230"><span class="section-number-4">2.1.1</span> Beispiel</h4>
+<section id="slide-org3802d6f">
+<h4 id="org3802d6f">Beispiel</h4>
 <blockquote >
 <p>
 \(f(x, y) = 2x^2 + y^3\)
 </p>
 </blockquote>
-
 <p>
 \(\rightarrow \nabla_xf(x)=(\begin{array}{c} f'_x \\ f'_y \end{array})= (\begin{array}{c} 4x \\ 3y \end{array})\)
 </p>
 
-
 </section>
 </section>
 <section>
-<section id="slide-orga248f76">
-<h3 id="orga248f76"><span class="section-number-3">2.2</span> Stochastic Gradient Descent</h3>
+<section id="slide-org04c5ca4">
+<h3 id="org04c5ca4">Stochastic Gradient Descent</h3>
 <p>
-Der Gradient Descent Algorithmus wird dafür verwendet das lokale Minimum einer
+Der Gradient Descent Algorithmus wird dafür verwendet ein lokales Minimum einer
 Funktion zu bestimmen.
 </p>
 </section>
-<section id="slide-org4afb438">
-<h4 id="org4afb438"><span class="section-number-4">2.2.1</span> Beispiel</h4>
+<section id="slide-org0c46b4e">
+<h4 id="org0c46b4e">Beispiel</h4>
 <p>
 Funktion \(f(x)=x^2-y^2\) ist gegeben.
 </p>
 
+<div class="org-src-container">
+
+<pre  class="src src-jupyter-python"><code trim><span style="color: #e45649;">import</span> matplotlib.pyplot <span style="color: #e45649;">as</span> plt
+<span style="color: #e45649;">import</span> numpy <span style="color: #e45649;">as</span> np
+<span style="color: #e45649;">import</span> sympy <span style="color: #e45649;">as</span> sp
+<span style="color: #e45649;">from</span> sympy <span style="color: #e45649;">import</span> latex
+sp.init_printing()
+
+<span style="color: #6a1868;">x</span>, <span style="color: #6a1868;">y</span> = sp.symbols(<span style="color: #50a14f;">'x, y'</span>, real=<span style="color: #b751b6;">True</span>)
+<span style="color: #6a1868;">F</span> = sp.Matrix([x**<span style="color: #da8548; font-weight: bold;">2</span>-y**<span style="color: #da8548; font-weight: bold;">2</span>])
+<span style="color: #6a1868;">J</span> = F.jacobian(sp.Matrix([x, y]))
+<span style="color: #e45649;">print</span>(latex(J))
+</code></pre>
+</div>
+
+: \left[\begin{matrix}2 x & - 2 y\end{matrix}\right]
+
+
+<ul class="org-ul">
+<li><a id="orgd0a5a96"></a>test<br />
+<p>
+\left[\begin{matrix}2 x &amp; - 2 y\end{matrix}\right]
+</p>
+</li>
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgce1528e">
+<h2 id="orgce1528e">Neuronale Netze</h2>
+<p>
+Formale Definition für ein Neuronales Netz: \(y=f(x; \theta)\) und \(y=f^*(x)\)
+</p>
+<ul>
+<li>\(y\) ist den Wert den unser NN vorraussagen soll</li>
+<li>\(x\) sind die Input Daten, die das NN erhält</li>
+<li>\(\theta\) sind Parameter des neuronalen Netzes, um \(f\) so nah wie möglich an
+die optimale Funktion \(f^*\) anzunähern.</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org5063bac">
+<h3 id="org5063bac">Wie ist nun ein neurales Netzwerk aufgebaut?</h3>
+<p>
+Wir teilen das Netzwerk in Schichten (Layer) auf.
+</p>
+
+
 <div class="figure">
-<p><img src="./im.png" alt="im.png" />
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Neural_network.svg/1200px-Neural_network.svg.png" alt="1200px-Neural_network.svg.png" width="50%" height="50%" />
 </p>
 </div>
 
-<div class="org-src-container">
+<p>
+Jeder Layer bildet eine Funktion \(f^{i}\), mit \(i=Layer\ Index\) ab.
+</p>
 
-<pre  class="src src-jupyter-python"><code trim>  %matplotlib inline
-  <span style="color: #e45649;">import</span> matplotlib.pyplot <span style="color: #e45649;">as</span> plt
-  <span style="color: #e45649;">import</span> numpy <span style="color: #e45649;">as</span> np
-</code></pre>
+</section>
+<section id="slide-org448b125">
+<h4 id="org448b125">Formell</h4>
+<p>
+Somit ist ein neurales Netzwerk eine Kette an Funktionen \(f\).
+</p>
+
+<blockquote >
+<p>
+Ein Netz mit \(3\) Layern wäre somit \(f^2(f^1(f^0(X)))\) mit \(X=Input\ Data\)
+</p>
+</blockquote>
+</section>
+</section>
+<section>
+<section id="slide-org5486afa">
+<h2 id="org5486afa">Backpropagation</h2>
+<div class="outline-text-2" id="text-org5486afa">
 </div>
+</section>
+</section>
+<section>
+<section id="slide-org5062208">
+<h3 id="org5062208">Wozu brauchen wir den Backpropagation Algorithmus?</h3>
+<p>
+Ein fundamentaler Baustein, von neuralen Netzen.
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgca379fd">
+<h3 id="orgca379fd">Forward Propagation</h3>
+<p>
+Ein Layer in einem Feed-Forward Neural Network besteht aus folgenden Elementen:
+</p>
+<ul>
+<li>Inputs</li>
+<li>Weights</li>
+<li>Biases</li>
+<li>Output</li>
+
+</ul>
+</section>
+<section id="slide-orga97fc97">
+<h4 id="orga97fc97">Dimensionen</h4>
 </section>
 </section>
 </div>
