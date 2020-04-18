@@ -29,12 +29,12 @@
 <div class="reveal">
 <div class="slides">
 <section id="sec-title-slide">
-<h1 class="title">Backpropagation</h1><h2 class="author">Lucas Sas Brunschier</h2><h2 class="date">SS20</h2><p class="date">Created: 2020-04-18 Sat 20:38</p>
+<h1 class="title">Backpropagation</h1><h2 class="author">Lucas Sas Brunschier</h2><h2 class="date">SS20</h2><p class="date">Created: 2020-04-19 Sun 00:40</p>
 </section>
 
 <section>
-<section id="slide-orga8a15fe">
-<h2 id="orga8a15fe">Intro</h2>
+<section id="slide-org4d117d1">
+<h2 id="org4d117d1">Intro</h2>
 <p>
 Präsentation ist auch online <a href="https://sirbubbls.github.io/backpropagation-seminar">sirbubbls.github.io/backpropagation-seminar</a>
 </p>
@@ -44,8 +44,8 @@ Präsentation ist in Org-Mode geschrieben, also sourcen aller Grafiken und
 Beispiele sind integriert.
 </p>
 </section>
-<section id="slide-org9d5f2c3">
-<h3 id="org9d5f2c3">Zusätzliche Ressourcen</h3>
+<section id="slide-org0125aab">
+<h3 id="org0125aab">Zusätzliche Ressourcen</h3>
 <p>
 Deep Learning (Ian Goodfellow, Yoshua Bengio &amp; Aaron Courville)
 </p>
@@ -64,8 +64,8 @@ Deep Learning (Ian Goodfellow, Yoshua Bengio &amp; Aaron Courville)
 </p>
 
 </section>
-<section id="slide-orgd76d399">
-<h3 id="orgd76d399">Notation</h3>
+<section id="slide-org91248b8">
+<h3 id="org91248b8">Notation</h3>
 <div class="org-src-container">
 
 <pre  class="src src-python"><span style="color: #e45649;">for</span> i <span style="color: #e45649;">in</span> <span style="color: #a626a4;">range</span>(<span style="color: #da8548; font-weight: bold;">5</span>):
@@ -84,19 +84,19 @@ Deep Learning (Ian Goodfellow, Yoshua Bengio &amp; Aaron Courville)
 </section>
 </section>
 <section>
-<section id="slide-org6245d2c">
-<h2 id="org6245d2c">Vorwissen</h2>
+<section id="slide-org8ea80f1">
+<h2 id="org8ea80f1">Vorwissen</h2>
 </section>
-<section id="slide-org2c3722e">
-<h3 id="org2c3722e">Gradient Der Gradient ist der Vektor aller partiellen Ableitungen einer Funktion \(f\).</h3>
+<section id="slide-orged3b33e">
+<h3 id="orged3b33e">Gradient Der Gradient ist der Vektor aller partiellen Ableitungen einer Funktion \(f\).</h3>
 <blockquote>
 <p>
 Notation: \(\nabla_xf(x)\)
 </p>
 </blockquote>
 </section>
-<section id="slide-org0a5fc51">
-<h4 id="org0a5fc51">Beispiel</h4>
+<section id="slide-orgc434f01">
+<h4 id="orgc434f01">Beispiel</h4>
 <blockquote>
 <p>
 \(f(x, y) = 2x^2 + y^3\)
@@ -107,15 +107,15 @@ Notation: \(\nabla_xf(x)\)
 </p>
 
 </section>
-<section id="slide-orge31a917">
-<h3 id="orge31a917">Stochastic Gradient Descent</h3>
+<section id="slide-orgd0810c6">
+<h3 id="orgd0810c6">Stochastic Gradient Descent</h3>
 <p>
 Der Gradient Descent Algorithmus wird dafür verwendet ein lokales Minimum einer
 Funktion zu bestimmen.
 </p>
 </section>
-<section id="slide-org5b66102">
-<h4 id="org5b66102">Beispiel</h4>
+<section id="slide-org6f3360c">
+<h4 id="org6f3360c">Beispiel</h4>
 <p>
 Funktion \(f(x)=x^2-y^2\) ist gegeben.
 </p>
@@ -139,7 +139,7 @@ sp.init_printing()
 
 
 <ul class="org-ul">
-<li><a id="org1dcc0c5"></a>test<br />
+<li><a id="orgffc0f03"></a>test<br />
 <p>
 \left[\begin{matrix}2 x &amp; - 2 y\end{matrix}\right]
 </p>
@@ -149,8 +149,8 @@ sp.init_printing()
 </section>
 </section>
 <section>
-<section id="slide-org2e87b71">
-<h2 id="org2e87b71">Neuronale Netze</h2>
+<section id="slide-org4cc9773">
+<h2 id="org4cc9773">Neuronale Netze</h2>
 <p>
 Formale Definition für ein Neuronales Netz: \(y=f(x; \theta)\) und \(y=f^*(x)\)
 </p>
@@ -162,8 +162,8 @@ die optimale Funktion \(f^*\) anzunähern.</li>
 
 </ul>
 </section>
-<section id="slide-orgc418b0d">
-<h3 id="orgc418b0d">Wie ist nun ein neurales Netzwerk aufgebaut?</h3>
+<section id="slide-org0d3fd98">
+<h3 id="org0d3fd98">Wie ist nun ein neurales Netzwerk aufgebaut?</h3>
 <p>
 Wir teilen das Netzwerk in Schichten (Layer) auf.
 </p>
@@ -179,8 +179,8 @@ Jeder Layer bildet eine Funktion \(f^{i}\), mit \(i=Layer\ Index\) ab.
 </p>
 
 </section>
-<section id="slide-org57072ca">
-<h4 id="org57072ca">Formell</h4>
+<section id="slide-org6227fb1">
+<h4 id="org6227fb1">Formell</h4>
 <p>
 Somit ist ein neurales Netzwerk eine Kette an Funktionen \(f\).
 </p>
@@ -192,26 +192,14 @@ Ein Netz mit \(3\) Layern wäre somit \(f^2(f^1(f^0(X)))\) mit \(X=Input\ Data\)
 </blockquote>
 
 </section>
-<section id="slide-org43a554a">
-<h4 id="org43a554a">Aufbau eines Layers</h4>
+<section id="slide-org8b36cf6">
+<h4 id="org8b36cf6">Aufbau eines Layers</h4>
 
 </section>
 </section>
 <section>
-<section id="slide-org223c9c9">
-<h2 id="org223c9c9">Backpropagation</h2>
-<div class="outline-text-2" id="text-org223c9c9">
-</div>
-</section>
-<section id="slide-org933bb22">
-<h3 id="org933bb22">Wozu brauchen wir den Backpropagation Algorithmus?</h3>
-<p>
-Ein fundamentaler Baustein, von neuralen Netzen.
-</p>
-
-</section>
-<section id="slide-org49c48b2">
-<h3 id="org49c48b2">Forward Propagation</h3>
+<section id="slide-org883dafd">
+<h2 id="org883dafd">Forward Propagation</h2>
 <p>
 Ein Layer in einem Feed-Forward Neural Network besteht aus folgenden Elementen:
 </p>
@@ -223,18 +211,18 @@ Ein Layer in einem Feed-Forward Neural Network besteht aus folgenden Elementen:
 
 </ul>
 </section>
-<section id="slide-org4401b68">
-<h4 id="org4401b68">Dimensionen</h4>
+<section id="slide-orgf10d06f">
+<h3 id="orgf10d06f">Dimensionen</h3>
 </section>
-<section id="slide-orgdcdd576">
-<h4 id="orgdcdd576">Beispiel (XOR)</h4>
+<section id="slide-org0de9b2f">
+<h3 id="org0de9b2f">Beispiel (XOR)</h3>
 <p>
 \(W=\left[\begin{array}{ccc} 1 & 1 \\ 1 & 1 \end{array}\right]\) <br />
 \(c=\left [\begin{array}{ccc} 0 \\ -1 \end{array} \right]\) <br />
 </p>
 </section>
-<section id="slide-org95078b3">
-<h4 id="org95078b3">Multiplizieren der Weights (\(W\)) und Inputs (\(X\))</h4>
+<section id="slide-org44c1ea4">
+<h3 id="org44c1ea4">Multiplizieren der Weights (\(W\)) und Inputs (\(X\))</h3>
 <p>
 \[
 XW=\left[\begin{array}{ccc} 0 & 0 \\ 0 & 1 \\ 1 & 0 \\ 1 & 1 \end{array} \right]
@@ -243,8 +231,8 @@ XW=\left[\begin{array}{ccc} 0 & 0 \\ 0 & 1 \\ 1 & 0 \\ 1 & 1 \end{array} \right]
 \]
 </p>
 </section>
-<section id="slide-org0cf6fe3">
-<h4 id="org0cf6fe3">Addieren des Bias Vektors (\(c\))</h4>
+<section id="slide-orgbd44546">
+<h3 id="orgbd44546">Addieren des Bias Vektors (\(c\))</h3>
 <p>
 \[
 XW + c=
@@ -254,8 +242,8 @@ XW + c=
 \]
 </p>
 </section>
-<section id="slide-orgc1e4ca6">
-<h4 id="orgc1e4ca6">Aktivierungsfunktion (in diesem Fall \(ReLU\))</h4>
+<section id="slide-org35ed46f">
+<h3 id="org35ed46f">Aktivierungsfunktion (in diesem Fall \(ReLU\))</h3>
 <blockquote>
 <p>
 \(ReLU:= f(x)=max(0, x)\)
@@ -263,9 +251,77 @@ XW + c=
 </blockquote>
 <p>
 \[
+relu(XW+c)=
 relu(\left[\begin{array}{ccc} 0 & -1 \\ 1 & 0 \\ 1 & 0 \\ 2 & 1 \end{array} \right])=
 \left[\begin{array}{ccc} 0 & 0 \\ 1 & 0 \\ 1 & 0 \\ 2 & 1 \end{array} \right]
 \]
+</p>
+
+<p>
+Die Aktivierungsfunktion wird auf jedes Element der Matrix ausgeführt.
+</p>
+
+</section>
+<section id="slide-org83c517b">
+<h3 id="org83c517b">Output Layer</h3>
+<p>
+Multiplizieren der Output Matrix des ersten Layers mit den Weights des Output Layers (\(w\)).
+</p>
+
+<p>
+\[
+w= relu(XW+c)* \left[\begin{array}{ccc} 1 \\ -2 \end{array}\right]=
+\left[\begin{array}{ccc} 0 & 0 \\ 1 & 0 \\ 1 & 0 \\ 2 & 1 \end{array} \right]*
+\left[\begin{array}{ccc} 1 \\ -2 \end{array}\right]=
+\left[\begin{array}{ccc} 0 \\ 1 \\ 1 \\ 0 \end{array}\right]
+\]
+</p>
+
+</section>
+<section id="slide-org962bc27">
+<h3 id="org962bc27">Predictions &amp; Input</h3>
+<p>
+Input: \(\left[\begin{array}{ccc} 0 & 0 \\ 0 & 1 \\ 1 & 0 \\ 1 & 1 \end{array} \right]\)
+Predictions: \(\left[\begin{array}{ccc} 0 \\ 1 \\ 1 \\ 0 \end{array}\right]\)
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgb589d33">
+<h2 id="orgb589d33">Backpropagation</h2>
+<div class="outline-text-2" id="text-orgb589d33">
+</div>
+</section>
+<section id="slide-orgab314e7">
+<h3 id="orgab314e7">Wozu brauchen wir den Backpropagation Algorithmus?</h3>
+<p>
+Ein fundamentaler Baustein, von neuralen Netzen.
+</p>
+
+<p>
+Backpropagation ist kein Lernalgorithmus/Optimierungsalgorithmus, sondern aussschlißlich für die Generierung der Gradients zuständig.
+</p>
+
+</section>
+<section id="slide-orge9b3966">
+<h3 id="orge9b3966">Chain Rule</h3>
+<p>
+Die Kettenregel ist nützlich um Ableitung.
+</p>
+
+<p>
+\[
+y=g(x)\ und\ z=f(g(x))
+\]
+</p>
+
+<p>
+Dann besagt die Kettenregel \(\frac{dz}{dx} = \frac{dz}{dy} \frac{dy}{dx}\).
+</p>
+
+<p>
+Vektornotation: \(\nabla_xz=\left( \frac{\partial y}{\partial x}\right) ^T \nabla_y z\)
 </p>
 </section>
 </section>
