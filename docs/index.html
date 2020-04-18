@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8"/>
 <title>Backpropagation</title>
-<meta name="author" content="(Lucas Sas Brunschier)"/>
+<meta name="author" content="Lucas Sas Brunschier"/>
 <style type="text/css">
 .underline { text-decoration: underline; }
 </style>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@3/css/reveal.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/css/reveal.css"/>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@3/css/theme/moon.css" id="theme"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/css/theme/black.css" id="theme"/>
 
 <link rel="stylesheet" href="style.css"/>
 
@@ -19,7 +19,7 @@
         var link = document.createElement( 'link' );
         link.rel = 'stylesheet';
         link.type = 'text/css';
-        link.href = 'https://cdn.jsdelivr.net/npm/reveal.js@3/css/print/pdf.css';
+        link.href = 'https://cdn.jsdelivr.net/npm/reveal.js/css/print/pdf.css';
         document.getElementsByTagName( 'head' )[0].appendChild( link );
     }
 </script>
@@ -28,12 +28,13 @@
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide"><h1 class="title">Backpropagation</h1><h2 class="author">Lucas Sas Brunschier</h2><h2 class="date">SS20</h2><p class="date">Created: 2020-04-15 Wed 02:05</p>
+<section id="sec-title-slide">
+<h1 class="title">Backpropagation</h1><h2 class="author">Lucas Sas Brunschier</h2><h2 class="date">SS20</h2><p class="date">Created: 2020-04-18 Sat 20:38</p>
 </section>
 
 <section>
-<section id="slide-orgdf44e76">
-<h2 id="orgdf44e76">Intro</h2>
+<section id="slide-orga8a15fe">
+<h2 id="orga8a15fe">Intro</h2>
 <p>
 Präsentation ist auch online <a href="https://sirbubbls.github.io/backpropagation-seminar">sirbubbls.github.io/backpropagation-seminar</a>
 </p>
@@ -43,10 +44,8 @@ Präsentation ist in Org-Mode geschrieben, also sourcen aller Grafiken und
 Beispiele sind integriert.
 </p>
 </section>
-</section>
-<section>
-<section id="slide-orgedc617d">
-<h3 id="orgedc617d">Zusätzliche Ressourcen</h3>
+<section id="slide-org9d5f2c3">
+<h3 id="org9d5f2c3">Zusätzliche Ressourcen</h3>
 <p>
 Deep Learning (Ian Goodfellow, Yoshua Bengio &amp; Aaron Courville)
 </p>
@@ -65,15 +64,13 @@ Deep Learning (Ian Goodfellow, Yoshua Bengio &amp; Aaron Courville)
 </p>
 
 </section>
-</section>
-<section>
-<section id="slide-orgba993b8">
-<h3 id="orgba993b8">Notation</h3>
+<section id="slide-orgd76d399">
+<h3 id="orgd76d399">Notation</h3>
 <div class="org-src-container">
 
-<pre  class="src src-python"><code trim><span style="color: #e45649;">for</span> i <span style="color: #e45649;">in</span> <span style="color: #a626a4;">range</span>(<span style="color: #da8548; font-weight: bold;">5</span>):
+<pre  class="src src-python"><span style="color: #e45649;">for</span> i <span style="color: #e45649;">in</span> <span style="color: #a626a4;">range</span>(<span style="color: #da8548; font-weight: bold;">5</span>):
     <span style="color: #e45649;">print</span>(i)
-</code></pre>
+</pre>
 </div>
 
 <pre class="example">
@@ -87,22 +84,20 @@ Deep Learning (Ian Goodfellow, Yoshua Bengio &amp; Aaron Courville)
 </section>
 </section>
 <section>
-<section id="slide-org66f148f">
-<h2 id="org66f148f">Vorwissen</h2>
+<section id="slide-org6245d2c">
+<h2 id="org6245d2c">Vorwissen</h2>
 </section>
-</section>
-<section>
-<section id="slide-orgd2cf474">
-<h3 id="orgd2cf474">Gradient Der Gradient ist der Vektor aller partiellen Ableitungen einer Funktion \(f\).</h3>
-<blockquote >
+<section id="slide-org2c3722e">
+<h3 id="org2c3722e">Gradient Der Gradient ist der Vektor aller partiellen Ableitungen einer Funktion \(f\).</h3>
+<blockquote>
 <p>
 Notation: \(\nabla_xf(x)\)
 </p>
 </blockquote>
 </section>
-<section id="slide-org3802d6f">
-<h4 id="org3802d6f">Beispiel</h4>
-<blockquote >
+<section id="slide-org0a5fc51">
+<h4 id="org0a5fc51">Beispiel</h4>
+<blockquote>
 <p>
 \(f(x, y) = 2x^2 + y^3\)
 </p>
@@ -112,24 +107,22 @@ Notation: \(\nabla_xf(x)\)
 </p>
 
 </section>
-</section>
-<section>
-<section id="slide-org04c5ca4">
-<h3 id="org04c5ca4">Stochastic Gradient Descent</h3>
+<section id="slide-orge31a917">
+<h3 id="orge31a917">Stochastic Gradient Descent</h3>
 <p>
 Der Gradient Descent Algorithmus wird dafür verwendet ein lokales Minimum einer
 Funktion zu bestimmen.
 </p>
 </section>
-<section id="slide-org0c46b4e">
-<h4 id="org0c46b4e">Beispiel</h4>
+<section id="slide-org5b66102">
+<h4 id="org5b66102">Beispiel</h4>
 <p>
 Funktion \(f(x)=x^2-y^2\) ist gegeben.
 </p>
 
 <div class="org-src-container">
 
-<pre  class="src src-jupyter-python"><code trim><span style="color: #e45649;">import</span> matplotlib.pyplot <span style="color: #e45649;">as</span> plt
+<pre  class="src src-jupyter-python"><span style="color: #e45649;">import</span> matplotlib.pyplot <span style="color: #e45649;">as</span> plt
 <span style="color: #e45649;">import</span> numpy <span style="color: #e45649;">as</span> np
 <span style="color: #e45649;">import</span> sympy <span style="color: #e45649;">as</span> sp
 <span style="color: #e45649;">from</span> sympy <span style="color: #e45649;">import</span> latex
@@ -139,14 +132,14 @@ sp.init_printing()
 <span style="color: #6a1868;">F</span> = sp.Matrix([x**<span style="color: #da8548; font-weight: bold;">2</span>-y**<span style="color: #da8548; font-weight: bold;">2</span>])
 <span style="color: #6a1868;">J</span> = F.jacobian(sp.Matrix([x, y]))
 <span style="color: #e45649;">print</span>(latex(J))
-</code></pre>
+</pre>
 </div>
 
 : \left[\begin{matrix}2 x & - 2 y\end{matrix}\right]
 
 
 <ul class="org-ul">
-<li><a id="orgd0a5a96"></a>test<br />
+<li><a id="org1dcc0c5"></a>test<br />
 <p>
 \left[\begin{matrix}2 x &amp; - 2 y\end{matrix}\right]
 </p>
@@ -156,8 +149,8 @@ sp.init_printing()
 </section>
 </section>
 <section>
-<section id="slide-orgce1528e">
-<h2 id="orgce1528e">Neuronale Netze</h2>
+<section id="slide-org2e87b71">
+<h2 id="org2e87b71">Neuronale Netze</h2>
 <p>
 Formale Definition für ein Neuronales Netz: \(y=f(x; \theta)\) und \(y=f^*(x)\)
 </p>
@@ -169,10 +162,8 @@ die optimale Funktion \(f^*\) anzunähern.</li>
 
 </ul>
 </section>
-</section>
-<section>
-<section id="slide-org5063bac">
-<h3 id="org5063bac">Wie ist nun ein neurales Netzwerk aufgebaut?</h3>
+<section id="slide-orgc418b0d">
+<h3 id="orgc418b0d">Wie ist nun ein neurales Netzwerk aufgebaut?</h3>
 <p>
 Wir teilen das Netzwerk in Schichten (Layer) auf.
 </p>
@@ -188,74 +179,131 @@ Jeder Layer bildet eine Funktion \(f^{i}\), mit \(i=Layer\ Index\) ab.
 </p>
 
 </section>
-<section id="slide-org448b125">
-<h4 id="org448b125">Formell</h4>
+<section id="slide-org57072ca">
+<h4 id="org57072ca">Formell</h4>
 <p>
 Somit ist ein neurales Netzwerk eine Kette an Funktionen \(f\).
 </p>
 
-<blockquote >
+<blockquote>
 <p>
 Ein Netz mit \(3\) Layern wäre somit \(f^2(f^1(f^0(X)))\) mit \(X=Input\ Data\)
 </p>
 </blockquote>
+
+</section>
+<section id="slide-org43a554a">
+<h4 id="org43a554a">Aufbau eines Layers</h4>
+
 </section>
 </section>
 <section>
-<section id="slide-org5486afa">
-<h2 id="org5486afa">Backpropagation</h2>
-<div class="outline-text-2" id="text-org5486afa">
+<section id="slide-org223c9c9">
+<h2 id="org223c9c9">Backpropagation</h2>
+<div class="outline-text-2" id="text-org223c9c9">
 </div>
 </section>
-</section>
-<section>
-<section id="slide-org5062208">
-<h3 id="org5062208">Wozu brauchen wir den Backpropagation Algorithmus?</h3>
+<section id="slide-org933bb22">
+<h3 id="org933bb22">Wozu brauchen wir den Backpropagation Algorithmus?</h3>
 <p>
 Ein fundamentaler Baustein, von neuralen Netzen.
 </p>
 
 </section>
-</section>
-<section>
-<section id="slide-orgca379fd">
-<h3 id="orgca379fd">Forward Propagation</h3>
+<section id="slide-org49c48b2">
+<h3 id="org49c48b2">Forward Propagation</h3>
 <p>
 Ein Layer in einem Feed-Forward Neural Network besteht aus folgenden Elementen:
 </p>
 <ul>
-<li>Inputs</li>
-<li>Weights</li>
+<li>Inputs (\(X\))</li>
+<li>Weights (\(W\))</li>
 <li>Biases</li>
 <li>Output</li>
 
 </ul>
 </section>
-<section id="slide-orga97fc97">
-<h4 id="orga97fc97">Dimensionen</h4>
+<section id="slide-org4401b68">
+<h4 id="org4401b68">Dimensionen</h4>
+</section>
+<section id="slide-orgdcdd576">
+<h4 id="orgdcdd576">Beispiel (XOR)</h4>
+<p>
+\(W=\left[\begin{array}{ccc} 1 & 1 \\ 1 & 1 \end{array}\right]\) <br />
+\(c=\left [\begin{array}{ccc} 0 \\ -1 \end{array} \right]\) <br />
+</p>
+</section>
+<section id="slide-org95078b3">
+<h4 id="org95078b3">Multiplizieren der Weights (\(W\)) und Inputs (\(X\))</h4>
+<p>
+\[
+XW=\left[\begin{array}{ccc} 0 & 0 \\ 0 & 1 \\ 1 & 0 \\ 1 & 1 \end{array} \right]
+\left[\begin{array}{ccc} 1 & 1 \\ 1 & 1 \end{array}\right]=
+\left[\begin{array}{ccc} 0 & 0 \\ 1 & 1 \\ 1 & 1 \\ 2 & 2 \end{array} \right]
+\]
+</p>
+</section>
+<section id="slide-org0cf6fe3">
+<h4 id="org0cf6fe3">Addieren des Bias Vektors (\(c\))</h4>
+<p>
+\[
+XW + c=
+\left[\begin{array}{ccc} 0 & 0 \\ 1 & 1 \\ 1 & 1 \\ 2 & 2 \end{array} \right] +
+\left(\begin{array}{ccc} 0 \\ -1 \end{array}\right)=
+\left[\begin{array}{ccc} 0 & -1 \\ 1 & 0 \\ 1 & 0 \\ 2 & 1 \end{array} \right]
+\]
+</p>
+</section>
+<section id="slide-orgc1e4ca6">
+<h4 id="orgc1e4ca6">Aktivierungsfunktion (in diesem Fall \(ReLU\))</h4>
+<blockquote>
+<p>
+\(ReLU:= f(x)=max(0, x)\)
+</p>
+</blockquote>
+<p>
+\[
+relu(\left[\begin{array}{ccc} 0 & -1 \\ 1 & 0 \\ 1 & 0 \\ 2 & 1 \end{array} \right])=
+\left[\begin{array}{ccc} 0 & 0 \\ 1 & 0 \\ 1 & 0 \\ 2 & 1 \end{array} \right]
+\]
+</p>
 </section>
 </section>
 </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/reveal.js@3/js/reveal.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/lib/js/head.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/js/reveal.js"></script>
 <script>
 // Full list of configuration options available here:
 // https://github.com/hakimel/reveal.js#configuration
 Reveal.initialize({
-multiplex: {
-    secret: '', // null if client
-    id: '', // id, obtained from socket.io server
-    url: '' // Location of socket.io server
-},
 
-// Optional libraries used to extend on reveal.js
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+mouseWheel: false,
+fragmentInURL: false,
+hashOneBasedIndex: false,
+pdfSeparateFragments: true,
+
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'convex', // see README of reveal.js for options
+transitionSpeed: 'default',
+
+// Optional libraries used to extend reveal.js
 dependencies: [
- { src: 'https://cdn.jsdelivr.net/npm/reveal.js@3/lib/js/classList.js', condition: function() { return !document.body.classList; } },
- { src: 'https://cdn.jsdelivr.net/npm/reveal.js@3/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
- { src: 'https://cdn.jsdelivr.net/npm/reveal.js@3/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
- { src: 'https://cdn.jsdelivr.net/npm/reveal.js@3/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
- { src: 'https://cdn.jsdelivr.net/npm/reveal.js@3/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } }]
+
 });
 </script>
 </body>
