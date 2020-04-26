@@ -95,6 +95,10 @@ Ein Netz mit $3$ Layern wäre somit $f^2(f^1(f^0(X)))$ mit $X=Input\ Data$
 
 *** Aufbau eines Layers
 
+*** Beliebte Aktivierungsfunktionen
+- Rectified Linear Unit $ReLU$
+- Leaky $ReLU$
+- Sigmoid Function
 * Forward Propagation
 Ein Layer in einem Feed-Forward Neural Network besteht aus folgenden Elementen:
 - Inputs ($X$)
