@@ -26,6 +26,8 @@ https://www.deeplearningbook.org
 
 [[https://www.deeplearningbook.org/contents/mlp.html][Backpropagation Kapitel]]
 
+** Jupyter Notebook
+Beispiele für alle Methoden dieser Präsentation sind in diesem [[https://github.com/SirBubbls/backpropagation-seminar/blob/master/Backpropagation.ipynb][IPython Notebook]] zu finden.
 * Vorwissen
 ** Gradient
 Der Gradient ist der Vektor aller partiellen Ableitungen einer Funktion $f$.
