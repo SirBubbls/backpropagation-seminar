@@ -7,9 +7,9 @@
 <style type="text/css">
 .underline { text-decoration: underline; }
 </style>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/css/reveal.css"/>
+<link rel="stylesheet" href="reveal/css/reveal.css"/>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/css/theme/black.css" id="theme"/>
+<link rel="stylesheet" href="reveal/css/theme/black.css" id="theme"/>
 
 <link rel="stylesheet" href="style.css"/>
 
@@ -19,7 +19,7 @@
         var link = document.createElement( 'link' );
         link.rel = 'stylesheet';
         link.type = 'text/css';
-        link.href = 'https://cdn.jsdelivr.net/npm/reveal.js/css/print/pdf.css';
+        link.href = 'reveal/css/print/pdf.css';
         document.getElementsByTagName( 'head' )[0].appendChild( link );
     }
 </script>
@@ -29,12 +29,12 @@
 <div class="reveal">
 <div class="slides">
 <section id="sec-title-slide">
-<h1 class="title">Backpropagation</h1><h2 class="author">Lucas Sas Brunschier</h2><h2 class="date">SS20</h2><p class="date">Created: 2020-04-19 Sun 00:40</p>
+<h1 class="title">Backpropagation</h1><h2 class="author">Lucas Sas Brunschier</h2><h2 class="date">SS20</h2><p class="date">Created: 2020-04-26 Sun 20:20</p>
 </section>
 
 <section>
-<section id="slide-org4d117d1">
-<h2 id="org4d117d1">Intro</h2>
+<section id="slide-org4e49b7d">
+<h2 id="org4e49b7d">Intro</h2>
 <p>
 Präsentation ist auch online <a href="https://sirbubbls.github.io/backpropagation-seminar">sirbubbls.github.io/backpropagation-seminar</a>
 </p>
@@ -44,8 +44,17 @@ Präsentation ist in Org-Mode geschrieben, also sourcen aller Grafiken und
 Beispiele sind integriert.
 </p>
 </section>
-<section id="slide-org0125aab">
-<h3 id="org0125aab">Zusätzliche Ressourcen</h3>
+<section id="slide-org7d6bc3e">
+<h3 id="org7d6bc3e">Zusätzliche Ressourcen</h3>
+<p>
+Diese Funktion wird Aktivierungsfunktion genannt.
+</p>
+<aside class="notes">
+<p>
+test notes
+</p>
+
+</aside>
 <p>
 Deep Learning (Ian Goodfellow, Yoshua Bengio &amp; Aaron Courville)
 </p>
@@ -64,39 +73,21 @@ Deep Learning (Ian Goodfellow, Yoshua Bengio &amp; Aaron Courville)
 </p>
 
 </section>
-<section id="slide-org91248b8">
-<h3 id="org91248b8">Notation</h3>
-<div class="org-src-container">
-
-<pre  class="src src-python"><span style="color: #e45649;">for</span> i <span style="color: #e45649;">in</span> <span style="color: #a626a4;">range</span>(<span style="color: #da8548; font-weight: bold;">5</span>):
-    <span style="color: #e45649;">print</span>(i)
-</pre>
-</div>
-
-<pre class="example">
-0
-1
-2
-3
-4
-</pre>
-
-</section>
 </section>
 <section>
-<section id="slide-org8ea80f1">
-<h2 id="org8ea80f1">Vorwissen</h2>
+<section id="slide-orgec6e0bf">
+<h2 id="orgec6e0bf">Vorwissen</h2>
 </section>
-<section id="slide-orged3b33e">
-<h3 id="orged3b33e">Gradient Der Gradient ist der Vektor aller partiellen Ableitungen einer Funktion \(f\).</h3>
+<section id="slide-orgdee3463">
+<h3 id="orgdee3463">Gradient Der Gradient ist der Vektor aller partiellen Ableitungen einer Funktion \(f\).</h3>
 <blockquote>
 <p>
 Notation: \(\nabla_xf(x)\)
 </p>
 </blockquote>
 </section>
-<section id="slide-orgc434f01">
-<h4 id="orgc434f01">Beispiel</h4>
+<section id="slide-org60bc6f3">
+<h4 id="org60bc6f3">Beispiel</h4>
 <blockquote>
 <p>
 \(f(x, y) = 2x^2 + y^3\)
@@ -107,52 +98,50 @@ Notation: \(\nabla_xf(x)\)
 </p>
 
 </section>
-<section id="slide-orgd0810c6">
-<h3 id="orgd0810c6">Stochastic Gradient Descent</h3>
+<section id="slide-org25fe359">
+<h3 id="org25fe359">Stochastic Gradient Descent</h3>
 <p>
 Der Gradient Descent Algorithmus wird dafür verwendet ein lokales Minimum einer
 Funktion zu bestimmen.
 </p>
 </section>
-<section id="slide-org6f3360c">
-<h4 id="org6f3360c">Beispiel</h4>
+<section id="slide-orgc167023">
+<h4 id="orgc167023">Beispiel</h4>
 <p>
 Funktion \(f(x)=x^2-y^2\) ist gegeben.
 </p>
 
+<div class="org">
+<p>
+\(1+1\)
+</p>
+
+</div>
+
 <div class="org-src-container">
 
-<pre  class="src src-jupyter-python"><span style="color: #e45649;">import</span> matplotlib.pyplot <span style="color: #e45649;">as</span> plt
-<span style="color: #e45649;">import</span> numpy <span style="color: #e45649;">as</span> np
-<span style="color: #e45649;">import</span> sympy <span style="color: #e45649;">as</span> sp
-<span style="color: #e45649;">from</span> sympy <span style="color: #e45649;">import</span> latex
+<pre  class="src src-jupyter-python">%config <span style="color: #DFDFDF;">InlineBackend.figure_format</span> = <span style="color: #7bc275;">'retina'</span>
+<span style="color: #51afef;">import</span> matplotlib.pyplot <span style="color: #51afef;">as</span> plt
+<span style="color: #51afef;">import</span> numpy <span style="color: #51afef;">as</span> np
+<span style="color: #51afef;">import</span> sympy <span style="color: #51afef;">as</span> sp
+<span style="color: #51afef;">from</span> sympy <span style="color: #51afef;">import</span> latex
 sp.init_printing()
 
-<span style="color: #6a1868;">x</span>, <span style="color: #6a1868;">y</span> = sp.symbols(<span style="color: #50a14f;">'x, y'</span>, real=<span style="color: #b751b6;">True</span>)
-<span style="color: #6a1868;">F</span> = sp.Matrix([x**<span style="color: #da8548; font-weight: bold;">2</span>-y**<span style="color: #da8548; font-weight: bold;">2</span>])
-<span style="color: #6a1868;">J</span> = F.jacobian(sp.Matrix([x, y]))
-<span style="color: #e45649;">print</span>(latex(J))
+<span style="color: #DFDFDF;">x</span>, <span style="color: #DFDFDF;">y</span> = sp.symbols(<span style="color: #7bc275;">'x, y'</span>, real=<span style="color: #a991f1;">True</span>)
+<span style="color: #DFDFDF;">F</span> = sp.Matrix([x**<span style="color: #e69055; font-weight: bold;">2</span>-y**<span style="color: #e69055; font-weight: bold;">2</span>])
+<span style="color: #DFDFDF;">J</span> = F.jacobian(sp.Matrix([x, y]))
+J
 </pre>
 </div>
 
-: \left[\begin{matrix}2 x & - 2 y\end{matrix}\right]
-
-
-<ul class="org-ul">
-<li><a id="orgffc0f03"></a>test<br />
-<p>
-\left[\begin{matrix}2 x &amp; - 2 y\end{matrix}\right]
-</p>
-</li>
-</ul>
 
 </section>
 </section>
 <section>
-<section id="slide-org4cc9773">
-<h2 id="org4cc9773">Neuronale Netze</h2>
+<section id="slide-org6fec415">
+<h2 id="org6fec415">Neuronale Netze</h2>
 <p>
-Formale Definition für ein Neuronales Netz: \(y=f(x; \theta)\) und \(y=f^*(x)\)
+Formale Definition für ein neuronales Netz: \(y=f(x; \theta)\) und \(y=f^*(x)\)
 </p>
 <ul>
 <li>\(y\) ist den Wert den unser NN vorraussagen soll</li>
@@ -162,8 +151,8 @@ die optimale Funktion \(f^*\) anzunähern.</li>
 
 </ul>
 </section>
-<section id="slide-org0d3fd98">
-<h3 id="org0d3fd98">Wie ist nun ein neurales Netzwerk aufgebaut?</h3>
+<section id="slide-org559ffd8">
+<h3 id="org559ffd8">Wie ist nun ein neurales Netzwerk aufgebaut?</h3>
 <p>
 Wir teilen das Netzwerk in Schichten (Layer) auf.
 </p>
@@ -179,27 +168,53 @@ Jeder Layer bildet eine Funktion \(f^{i}\), mit \(i=Layer\ Index\) ab.
 </p>
 
 </section>
-<section id="slide-org6227fb1">
-<h4 id="org6227fb1">Formell</h4>
+<section id="slide-org240e900">
+<h4 id="org240e900">Formell</h4>
 <p>
 Somit ist ein neurales Netzwerk eine Kette an Funktionen \(f\).
 </p>
 
 <blockquote>
 <p>
-Ein Netz mit \(3\) Layern wäre somit \(f^2(f^1(f^0(X)))\) mit \(X=Input\ Data\)
+Ein Netz mit \(3\) Layern wäre somit \(f^2(f^1(f^0(X)))\)
+mit \(X=Input\ Data\)
 </p>
 </blockquote>
 
 </section>
-<section id="slide-org8b36cf6">
-<h4 id="org8b36cf6">Aufbau eines Layers</h4>
+<section id="slide-org8dc5fc0">
+<h4 id="org8dc5fc0">Aufbau eines Layers</h4>
+<p>
+Jeder Layer enthält mindestens folgende Informationen:
+</p>
+<ul>
+<li>Eine Weight Matrix (\(w\))</li>
+<li>Einen Bias Vektor (\(b\))</li>
+
+</ul>
+</section>
+<section id="slide-orgc6b022f">
+<h4 id="orgc6b022f">Aktivierungsfunktion</h4>
+<p>
+Da wir bei Neural Networks oft versuchen non-lineare Zusammenhänge zu abstrahieren, benötigen wir auch eine nicht-lineare Komponente in unserem NN.
+</p>
+
+<p>
+Diese Funktion wird Aktivierungsfunktion genannt.
+</p>
+<aside class="notes">
+<p>
+test notes
+</p>
+
+</aside>
+
 
 </section>
 </section>
 <section>
-<section id="slide-org883dafd">
-<h2 id="org883dafd">Forward Propagation</h2>
+<section id="slide-orge27c730">
+<h2 id="orge27c730">Forward Propagation</h2>
 <p>
 Ein Layer in einem Feed-Forward Neural Network besteht aus folgenden Elementen:
 </p>
@@ -211,18 +226,28 @@ Ein Layer in einem Feed-Forward Neural Network besteht aus folgenden Elementen:
 
 </ul>
 </section>
-<section id="slide-orgf10d06f">
-<h3 id="orgf10d06f">Dimensionen</h3>
+<section id="slide-org6780c34">
+<h3 id="org6780c34">Formell</h3>
+<p>
+Um die Aktivierungen (\(a\)) eines Layers zu berechen können wir folgende Formel benutzen:
+</p>
+
+<blockquote>
+<p>
+\(a_L = a_{L-1} w_L + b_L\)
+</p>
+</blockquote>
+
 </section>
-<section id="slide-org0de9b2f">
-<h3 id="org0de9b2f">Beispiel (XOR)</h3>
+<section id="slide-org5f8733f">
+<h3 id="org5f8733f">Beispiel (XOR)</h3>
 <p>
 \(W=\left[\begin{array}{ccc} 1 & 1 \\ 1 & 1 \end{array}\right]\) <br />
 \(c=\left [\begin{array}{ccc} 0 \\ -1 \end{array} \right]\) <br />
 </p>
 </section>
-<section id="slide-org44c1ea4">
-<h3 id="org44c1ea4">Multiplizieren der Weights (\(W\)) und Inputs (\(X\))</h3>
+<section id="slide-orgac03235">
+<h3 id="orgac03235">Multiplizieren der Weights (\(W\)) und Inputs (\(X\))</h3>
 <p>
 \[
 XW=\left[\begin{array}{ccc} 0 & 0 \\ 0 & 1 \\ 1 & 0 \\ 1 & 1 \end{array} \right]
@@ -230,9 +255,10 @@ XW=\left[\begin{array}{ccc} 0 & 0 \\ 0 & 1 \\ 1 & 0 \\ 1 & 1 \end{array} \right]
 \left[\begin{array}{ccc} 0 & 0 \\ 1 & 1 \\ 1 & 1 \\ 2 & 2 \end{array} \right]
 \]
 </p>
+
 </section>
-<section id="slide-orgbd44546">
-<h3 id="orgbd44546">Addieren des Bias Vektors (\(c\))</h3>
+<section id="slide-org68ac531">
+<h3 id="org68ac531">Addieren des Bias Vektors (\(c\))</h3>
 <p>
 \[
 XW + c=
@@ -242,8 +268,8 @@ XW + c=
 \]
 </p>
 </section>
-<section id="slide-org35ed46f">
-<h3 id="org35ed46f">Aktivierungsfunktion (in diesem Fall \(ReLU\))</h3>
+<section id="slide-org7e9e4b0">
+<h3 id="org7e9e4b0">Aktivierungsfunktion (in diesem Fall \(ReLU\))</h3>
 <blockquote>
 <p>
 \(ReLU:= f(x)=max(0, x)\)
@@ -262,13 +288,10 @@ Die Aktivierungsfunktion wird auf jedes Element der Matrix ausgeführt.
 </p>
 
 </section>
-<section id="slide-org83c517b">
-<h3 id="org83c517b">Output Layer</h3>
+<section id="slide-org2f289f9">
+<h3 id="org2f289f9">Output Layer</h3>
 <p>
 Multiplizieren der Output Matrix des ersten Layers mit den Weights des Output Layers (\(w\)).
-</p>
-
-<p>
 \[
 w= relu(XW+c)* \left[\begin{array}{ccc} 1 \\ -2 \end{array}\right]=
 \left[\begin{array}{ccc} 0 & 0 \\ 1 & 0 \\ 1 & 0 \\ 2 & 1 \end{array} \right]*
@@ -276,59 +299,66 @@ w= relu(XW+c)* \left[\begin{array}{ccc} 1 \\ -2 \end{array}\right]=
 \left[\begin{array}{ccc} 0 \\ 1 \\ 1 \\ 0 \end{array}\right]
 \]
 </p>
-
 </section>
-<section id="slide-org962bc27">
-<h3 id="org962bc27">Predictions &amp; Input</h3>
+<section id="slide-orgf7c9950">
+<h3 id="orgf7c9950">Predictions &amp; Input</h3>
 <p>
 Input: \(\left[\begin{array}{ccc} 0 & 0 \\ 0 & 1 \\ 1 & 0 \\ 1 & 1 \end{array} \right]\)
 Predictions: \(\left[\begin{array}{ccc} 0 \\ 1 \\ 1 \\ 0 \end{array}\right]\)
 </p>
 
 </section>
+<section id="slide-org37da145">
+<h3 id="org37da145">Code Beispiel</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #51afef;">def</span> <span style="color: #5cEfFF;">forward</span>(X):
+    <span style="color: #DFDFDF;">a</span> = X
+    <span style="color: #51afef;">for</span> i <span style="color: #51afef;">in</span> <span style="color: #C57BDB;">range</span>(<span style="color: #C57BDB;">len</span>(L)):
+        <span style="color: #DFDFDF;">a</span> = h @ L[i].weights + L[i].bias
+    <span style="color: #51afef;">return</span> a
+</pre>
+</div>
+
+</section>
 </section>
 <section>
-<section id="slide-orgb589d33">
-<h2 id="orgb589d33">Backpropagation</h2>
-<div class="outline-text-2" id="text-orgb589d33">
+<section id="slide-org7e0c925">
+<h2 id="org7e0c925">Backpropagation</h2>
+<div class="outline-text-2" id="text-org7e0c925">
 </div>
 </section>
-<section id="slide-orgab314e7">
-<h3 id="orgab314e7">Wozu brauchen wir den Backpropagation Algorithmus?</h3>
+<section id="slide-org8fc475c">
+<h3 id="org8fc475c">Wozu brauchen wir den Backpropagation Algorithmus?</h3>
 <p>
 Ein fundamentaler Baustein, von neuralen Netzen.
 </p>
 
 <p>
-Backpropagation ist kein Lernalgorithmus/Optimierungsalgorithmus, sondern aussschlißlich für die Generierung der Gradients zuständig.
+Backpropagation ist kein Lernalgorithmus/Optimierungsalgorithmus, sondern aussschlißlich für die Generierung der Gradients jedes Layers zuständig.
 </p>
+
 
 </section>
-<section id="slide-orge9b3966">
-<h3 id="orge9b3966">Chain Rule</h3>
+<section id="slide-org8d7f0bb">
+<h3 id="org8d7f0bb">Ketten Regel</h3>
 <p>
-Die Kettenregel ist nützlich um Ableitung.
+Die Kettenregel ist nützlich um Ableitungen aus schon bereits vorhandenen Ableitungen zu konstruieren.
 </p>
 
 <p>
-\[
-y=g(x)\ und\ z=f(g(x))
-\]
+\[ y=g(x)\ und\ z=f(g(x))=f(y) \]
 </p>
 
 <p>
-Dann besagt die Kettenregel \(\frac{dz}{dx} = \frac{dz}{dy} \frac{dy}{dx}\).
-</p>
-
-<p>
-Vektornotation: \(\nabla_xz=\left( \frac{\partial y}{\partial x}\right) ^T \nabla_y z\)
+Dann besagt die Kettenregel: \(\frac{dz}{dx} = \frac{dz}{dy} \frac{dy}{dx}\)
 </p>
 </section>
 </section>
 </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/reveal.js/lib/js/head.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/reveal.js/js/reveal.js"></script>
+<script src="reveal/lib/js/head.min.js"></script>
+<script src="reveal/js/reveal.js"></script>
 <script>
 // Full list of configuration options available here:
 // https://github.com/hakimel/reveal.js#configuration
@@ -354,11 +384,11 @@ transitionSpeed: 'default',
 
 // Optional libraries used to extend reveal.js
 dependencies: [
- { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
- { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
- { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
- { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } },
- { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } }]
+ { src: 'reveal/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'reveal/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'reveal/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'reveal/plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'reveal/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } }]
 
 });
 </script>
