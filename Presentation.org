@@ -146,10 +146,10 @@ Predictions: $\left[\begin{array}{ccc} 0 \\ 1 \\ 1 \\ 0 \end{array}\right]$
 ** Code Beispiel
 #+BEGIN_SRC python
 def forward(X):
-    h = X
+    a = X
     for i in range(len(L)):
-        h = h @ L[i].weights + L[i].bias
-    return h
+        a = h @ L[i].weights + L[i].bias
+    return a
 #+END_SRC
 
 #+RESULTS:
