@@ -63,6 +63,12 @@ Ein Netz mit $3$ Layern wäre somit $f^2(f^1(f^0(X)))$ mit $X=Input\ Data$
 #+end_quote
 
 *** Aufbau eines Layers
+Jeder Layer enthält mindestens folgende Informationen:
+- Eine Weight Matrix ($w$)
+- Einen Bias Vektor ($b$)
+ 
+*** Aktivierungsfunktion
+Da wir bei Neural Networks oft versuchen non-lineare Zusammenhänge zu aproximieren, benötigen wir auch eine nicht-lineare Komponente in unserem NN.
 
 *** Beliebte Aktivierungsfunktionen
 - Rectified Linear Unit $ReLU$
