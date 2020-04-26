@@ -59,7 +59,8 @@ Jeder Layer bildet eine Funktion $f^{i}$, mit $i=Layer\ Index$ ab.
 Somit ist ein neurales Netzwerk eine Kette an Funktionen $f$.
 
 #+begin_quote
-Ein Netz mit $3$ Layern wäre somit $f^2(f^1(f^0(X)))$ mit $X=Input\ Data$
+Ein Netz mit $3$ Layern wäre somit $f^2(f^1(f^0(X)))$
+mit $X=Input\ Data$
 #+end_quote
 
 *** Aufbau eines Layers
