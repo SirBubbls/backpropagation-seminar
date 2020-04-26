@@ -3,4 +3,168 @@
 #+EXPORT_FILE_NAME: docs/index.html
 
 * Intro
-** Ressources
+Präsentation ist auch online [[https://sirbubbls.github.io/backpropagation-seminar][sirbubbls.github.io/backpropagation-seminar]]
+
+Präsentation ist in Org-Mode geschrieben, also sourcen aller Grafiken und
+Beispiele sind integriert.
+** Zusätzliche Ressourcen
+Deep Learning (Ian Goodfellow, Yoshua Bengio & Aaron Courville)
+#+ATTR_ORG: :width 200
+#+ATTR_HTML: :width 150
+[[https://images-eu.ssl-images-amazon.com/images/I/610HnULa0dL._SY445_QL70_ML2_.jpg]]
+
+https://www.deeplearningbook.org
+
+[[https://www.deeplearningbook.org/contents/mlp.html][Backpropagation Kapitel]]
+
+** Notation
+#+BEGIN_SRC python :exports both :results output
+for i in range(5):
+    print(i)
+#+END_SRC
+
+#+RESULTS:
+: 0
+: 1
+: 2
+: 3
+: 4
+
+* Vorwissen
+# ** Neural Networks
+** Gradient Der Gradient ist der Vektor aller partiellen Ableitungen einer Funktion $f$.
+#+begin_quote
+Notation: $\nabla_xf(x)$
+#+end_quote
+*** Beispiel
+#+begin_quote
+$f(x, y) = 2x^2 + y^3$
+#+end_quote
+$\rightarrow \nabla_xf(x)=(\begin{array}{c} f'_x \\ f'_y \end{array})= (\begin{array}{c} 4x \\ 3y \end{array})$
+
+** Stochastic Gradient Descent
+Der Gradient Descent Algorithmus wird dafür verwendet ein lokales Minimum einer
+Funktion zu bestimmen.
+*** Beispiel
+Funktion $f(x)=x^2-y^2$ ist gegeben.
+
+#+begin_org
+$1+1$
+#+end_org
+
+#+BEGIN_SRC jupyter-python :session py :display text/latex :output both :results raw :wrap EXPORT html
+%config InlineBackend.figure_format = 'retina'
+import matplotlib.pyplot as plt
+import numpy as np
+import sympy as sp
+from sympy import latex
+sp.init_printing()
+
+x, y = sp.symbols('x, y', real=True)
+F = sp.Matrix([x**2-y**2])
+J = F.jacobian(sp.Matrix([x, y]))
+J
+#+END_SRC
+
+#+RESULTS:
+#+begin_EXPORT html
+$\displaystyle \left[\begin{matrix}2 x & - 2 y\end{matrix}\right]$
+#+end_EXPORT
+
+
+* Neuronale Netze
+Formale Definition für ein neuronales Netz: $y=f(x; \theta)$ und $y=f^*(x)$
+- $y$ ist den Wert den unser NN vorraussagen soll
+- $x$ sind die Input Daten, die das NN erhält
+- $\theta$ sind Parameter des neuronalen Netzes, um $f$ so nah wie möglich an
+  die optimale Funktion $f^*$ anzunähern.
+** Wie ist nun ein neurales Netzwerk aufgebaut?
+Wir teilen das Netzwerk in Schichten (Layer) auf.
+
+#+ATTR_HTML: :width 50% :height 50%
+https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Neural_network.svg/1200px-Neural_network.svg.png
+
+Jeder Layer bildet eine Funktion $f^{i}$, mit $i=Layer\ Index$ ab.
+
+*** Formell
+Somit ist ein neurales Netzwerk eine Kette an Funktionen $f$.
+
+#+begin_quote
+Ein Netz mit $3$ Layern wäre somit $f^2(f^1(f^0(X)))$ mit $X=Input\ Data$
+#+end_quote
+
+*** Aufbau eines Layers
+
+* Forward Propagation
+Ein Layer in einem Feed-Forward Neural Network besteht aus folgenden Elementen:
+- Inputs ($X$)
+- Weights ($W$)
+- Biases
+- Output
+** Dimensionen
+** Beispiel (XOR)
+$W=\left[\begin{array}{ccc} 1 & 1 \\ 1 & 1 \end{array}\right]$ \\
+$c=\left [\begin{array}{ccc} 0 \\ -1 \end{array} \right]$ \\
+** Multiplizieren der Weights ($W$) und Inputs ($X$)
+$$
+XW=\left[\begin{array}{ccc} 0 & 0 \\ 0 & 1 \\ 1 & 0 \\ 1 & 1 \end{array} \right]
+\left[\begin{array}{ccc} 1 & 1 \\ 1 & 1 \end{array}\right]=
+\left[\begin{array}{ccc} 0 & 0 \\ 1 & 1 \\ 1 & 1 \\ 2 & 2 \end{array} \right]
+$$
+
+** Addieren des Bias Vektors ($c$)
+$$
+XW + c=
+\left[\begin{array}{ccc} 0 & 0 \\ 1 & 1 \\ 1 & 1 \\ 2 & 2 \end{array} \right] +
+\left(\begin{array}{ccc} 0 \\ -1 \end{array}\right)=
+\left[\begin{array}{ccc} 0 & -1 \\ 1 & 0 \\ 1 & 0 \\ 2 & 1 \end{array} \right]
+$$
+** Aktivierungsfunktion (in diesem Fall $ReLU$)
+#+begin_quote
+$ReLU:= f(x)=max(0, x)$
+#+end_quote
+$$
+relu(XW+c)=
+relu(\left[\begin{array}{ccc} 0 & -1 \\ 1 & 0 \\ 1 & 0 \\ 2 & 1 \end{array} \right])=
+\left[\begin{array}{ccc} 0 & 0 \\ 1 & 0 \\ 1 & 0 \\ 2 & 1 \end{array} \right]
+$$
+
+Die Aktivierungsfunktion wird auf jedes Element der Matrix ausgeführt.
+
+** Output Layer
+Multiplizieren der Output Matrix des ersten Layers mit den Weights des Output Layers ($w$).
+$$
+w= relu(XW+c)* \left[\begin{array}{ccc} 1 \\ -2 \end{array}\right]=
+\left[\begin{array}{ccc} 0 & 0 \\ 1 & 0 \\ 1 & 0 \\ 2 & 1 \end{array} \right]*
+\left[\begin{array}{ccc} 1 \\ -2 \end{array}\right]=
+\left[\begin{array}{ccc} 0 \\ 1 \\ 1 \\ 0 \end{array}\right]
+$$
+** Predictions & Input
+Input: $\left[\begin{array}{ccc} 0 & 0 \\ 0 & 1 \\ 1 & 0 \\ 1 & 1 \end{array} \right]$
+Predictions: $\left[\begin{array}{ccc} 0 \\ 1 \\ 1 \\ 0 \end{array}\right]$
+
+** Code Beispiel
+#+BEGIN_SRC python
+def forward(X):
+    h = X
+    for i in range(len(L)):
+        h = h @ L[i].weights + L[i].bias
+    return h
+#+END_SRC
+
+#+RESULTS:
+: None
+
+* Backpropagation
+** Wozu brauchen wir den Backpropagation Algorithmus?
+Ein fundamentaler Baustein, von neuralen Netzen.
+
+Backpropagation ist kein Lernalgorithmus/Optimierungsalgorithmus, sondern aussschlißlich für die Generierung der Gradients jedes Layers zuständig.
+
+
+** Ketten Regel
+Die Kettenregel ist nützlich um Ableitungen aus schon bereits vorhandenen Ableitungen zu konstruieren.
+
+$$ y=g(x)\ und\ z=f(g(x))=f(y) $$
+
+Dann besagt die Kettenregel: $\frac{dz}{dx} = \frac{dz}{dy} \frac{dy}{dx}$
