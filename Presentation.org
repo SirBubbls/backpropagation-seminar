@@ -1,6 +1,15 @@
+#+bind: org-export-publishing-directory "./exports"
 #+TITLE: Backpropagation
 #+LANGUAGE: de
 #+EXPORT_FILE_NAME: docs/index.html
+#+AUTHOR: Lucas Sas Brunschier
+#+DATE: SS20
+#+EMAIL: lucassas@live.de
+#+OPTIONS: toc:nil num:nil
+#+REVEAL_EXTRA_CSS: style.css
+#+STYLE: <link rel="stylesheet" type="text/css" href="style.css" />
+#+REVEAL_ROOT: reveal
+#+REVEAL_THEME: solarized
 
 * Intro
 Präsentation ist auch online [[https://sirbubbls.github.io/backpropagation-seminar][sirbubbls.github.io/backpropagation-seminar]]
