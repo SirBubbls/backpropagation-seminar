@@ -84,9 +84,15 @@ In dieser Präsentation benutzen wir die Euklidean-Distance $(x-y)^2$ als Cost F
 Ein Layer in einem Feed-Forward Neural Network besteht aus folgenden Elementen:
 - Inputs ($X$)
 - Weights ($W$)
-- Biases
-- Output
-** Dimensionen
+- Biases ($b$)
+- Output ($a$)
+** Formell
+Um die Aktivierungen ($a$) eines Layers zu berechen können wir folgende Formel benutzen:
+#+begin_quote
+$a_L = \sigma(a_{L-1} w_L + b_L)$
+#+end_quote
+Der berechnete Vektor $a_L$ dient dem Layer $L+1$ als Input.
+
 ** Beispiel (XOR)
 $W=\left[\begin{array}{ccc} 1 & 1 \\ 1 & 1 \end{array}\right]$ \\
 $c=\left [\begin{array}{ccc} 0 \\ -1 \end{array} \right]$ \\
