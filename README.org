@@ -1,0 +1,2 @@
+#+TITLE: Backpropagation Seminar
+#+AUTHOR: Lucas Sas
