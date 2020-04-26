@@ -163,6 +163,10 @@ Backpropagation ist kein Lernalgorithmus/Optimierungsalgorithmus, sondern ausssc
 
 
 ** Ketten Regel
+#+begin_notes
+Da ein NN prinzipiell nur viele geschachtelte Funktionen sind ist die Kettenregel sehr nützlich um die Ableitungen für jede Funktion zu bestimmen.
+#+end_notes
+
 Die Kettenregel ist nützlich um Ableitungen aus schon bereits vorhandenen Ableitungen zu konstruieren.
 
 $$ y=g(x)\ und\ z=f(g(x))=f(y) $$
