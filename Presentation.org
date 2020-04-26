@@ -68,6 +68,12 @@ Ein Netz mit $3$ Layern wäre somit $f^2(f^1(f^0(X)))$ mit $X=Input\ Data$
 - Rectified Linear Unit $ReLU$
 - Leaky $ReLU$
 - Sigmoid Function
+*** Cost Function ($J$)
+Eine Funktion um zu bestimmen wie 'nah' wir uns an unserem erwarteten Inference Wert befinden.
+#+begin_quote
+In dieser Präsentation benutzen wir die Euklidean-Distance $(x-y)^2$ als Cost Function.
+#+end_quote
+
 * Forward Propagation
 Ein Layer in einem Feed-Forward Neural Network besteht aus folgenden Elementen:
 - Inputs ($X$)
