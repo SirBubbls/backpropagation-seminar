@@ -28,6 +28,9 @@ https://www.deeplearningbook.org
 
 ** Jupyter Notebook
 Beispiele für alle Methoden dieser Präsentation sind in diesem [[https://github.com/SirBubbls/backpropagation-seminar/blob/master/Backpropagation.ipynb][IPython Notebook]] zu finden.
+* Historisches
+Erste Verwendung in Zusammenhang mit artificial neural networks im Jahre 1985 im Buch 'Learning Logic' (Parker, D.B.).
+
 * Vorwissen
 ** Gradient
 Der Gradient ist der Vektor aller partiellen Ableitungen einer Funktion $f$.
