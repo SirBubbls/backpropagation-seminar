@@ -199,6 +199,12 @@ $\nabla_{w^k} J = ga^{k-1}$
 $\nabla a^{k-1} J = w^kg$
 
 * Computational Graphs
+** Einfache Rechenoperation
+$$
+y = a+b
+$$
+
+[[./basic_graph.png]]
 ** Forward Propagation eines Layers
 $$
 a = \sigma(a_{L-1}w+b)
