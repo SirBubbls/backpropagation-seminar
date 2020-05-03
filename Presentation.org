@@ -197,3 +197,8 @@ $\nabla_{w^k} J = ga^{k-1}$
 #+end_quote
 *** Schritt 5
 $\nabla a^{k-1} J = w^kg$
+* Quellen
+- ❤️ Deep Learning (Ian Goodfellow, Yoshua Bengio & Aaron Courville)
+- https://medium.com/@14prakash/back-propagation-is-very-simple-who-made-it-complicated-97b794c97e5c
+- Wikipedia: https://en.wikipedia.org/wiki/Backpropagation
+- Wikipedia: https://en.wikipedia.org/wiki/Delta_rule
