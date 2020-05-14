@@ -302,11 +302,15 @@ $$
 
 Wir erhalten nun auch mehrere Gradienten in Form einer Matrix. Wir können nun den Durchschnitt der Gradienten nutzen um unsere Weights anzupassen.
 
-* General BackPropagation nach Ian Goodfellow
-Bisher haben wir uns nur mit Backpropagation in Zusammenhang mit neuralen Netzwerken beschäftigt. \\
-Backpropagation kann aber auch generell für andere Anwendungen eingesetzt werden.
-** TODO Operationen
-Jede Operation wird durch eine Variable repräsentiert. \\
+* General Back-propagation nach Ian Goodfellow
+Bisher haben wir uns nur mit Back-propagation in Zusammenhang mit neuralen Netzwerken beschäftigt. \\
+Back-propagation kann aber auch generell für andere Anwendungen eingesetzt werden.
+
+** Operationen
+#+begin_notes
+Tensor kann beliebig viele Dimensionen zu haben.
+#+end_notes
+Wir betrachten einen computational Graph, jede Node in dem Graph repräsentiert eine Variable in Form eines Tensors.
 
 *** Funktionen
 #+begin_notes
@@ -321,12 +325,95 @@ Folgende Funktionen werden von Operationen implementiert:
   Gibt alle Variablen/Operationen zurück, die 'Eltern' von sich selber sind.
 - ~bprop()~ \\
   Muss bei jeder Operation implementiert werden.
-*** Generalisierbarkeit
-Dadurch ist der Backpropagation Algorithmus sehr allgemein anwendbar. \\
+** Algorithmus
+Benötigt ist:
+- die Menge aller Variablen $T$, deren Gradienten wir berechnen müssen
+- den Graphen $G$
+- die Variable $z$, die wir differenzieren wollen
+
+*** Äussere Funktion
+Wir definieren $G'$ als alle Variablen, die Vorfahren von $z$ sind oder Nachfahren von $T$. \\
+In ~grad_table~ können wir Variablen Gradients zuweisen. \\
+
+~grad_table[z] = 1~   (da $\frac{\partial z}{\partial z} = 1$)
+
+*** Loop über alle Variablen, deren Gradienten wir berechnen müssen
+In jedem Loop rufen wir die Funktion ~build_grad~ auf.
+#+BEGIN_SRC python
+for v in T:
+    build_grad(v, G, G_1, grad_table)
+return [grad_table[v] for v in T]
+#+END_SRC
+
+*** ~build_grad(v, G, G_1, grad_table)~
+#+BEGIN_SRC python
+def build_grad(v, G, G_1, grad_table):
+    if v in grad_table: return grad_table[v]
+    i = 1
+    for c in get_consumers(V, G_1):
+        op = get_operation(c)
+        d = build_grad(c, G, G_1, grad_table)
+        g[i] = op.bprop(get_inputs(c, G_1), v, d)
+        i += 1
+    g = sum(g)
+    grad_table[v] = g
+    return g
+#+END_SRC
+
+*** ~bprop~ Funktion
+~op.bprop(inputs, X, G)~ \\
+ \\
+~inputs~: Liste an Inputs, die wir der Operation zur Verfügung stellen \\
+~X~: Input, dessen Ableitung wir berechnen wollen \\
+~G~: Gradient des Outputs der Operation
+
+** Beispiel
+*** Graph
+[[./big_graph_1.png]]
+
+*** Bestimmen der Ableitung $\frac{\partial u_1}{\partial u_4}$
+[[./big_graph_2.png]]
+
+** Generalisierbarkeit
+Dadurch ist der Back-propagation Algorithmus sehr allgemein anwendbar. \\
 
 Jede Operation ist für seine eigene Differenzierung verantwortlich und benötigt keine weiteren Informationen.
 
-* Ableitungen eines höheren Grads
+** Symbol to Number / Symbol to Symbol
+Es existieren zwei verschiedene Möglichkeiten die Berechnungen der Gradients durchzuführen.
+
+- Symbol to Number
+- Symbol to Symbol
+
+*** Symbol to Number
+#+begin_notes
+Methode die wir in vorherigen Beispielen verwendet waren.
+#+end_notes
+
+Die Input Variablen werden durch Zahlenwerte ersetzt und daraufhin (wie besprochen) alle nötigen Gradienten berechnet.
+
+*** Symbol to Symbol
+#+begin_notes
+Symbol to Symbol benötigt zum differenzieren keine eigentlichen Zahlenwerte, sondern ersetzt diese durch Symbole. \\
+Zusammengefasst kann man sagen, dass der Symbol to Number approach nur die Berechnungen ausführt die vom Symbol to Symbol als Graph erstellt werden.
+#+end_notes
+
+Beim der Symbol to Symbol Herangehensweise wird zuerst der Graph mit allen Ableitungen mit der Hilfe von symbolischen Werten konstruiert. \\
+Später wird dann der Graph mit der Hilfe eines eigenen Algorithmus ausgewertet. \\
+
+#+begin_quote
+*Vorteil* \\
+Ableitungen eines höheren Grads können berechnet werden, indem man den Back-propagation Algorithmus auf einen bereits abgeleiteten Graphen ausführt.
+#+end_quote
+
+* Historisches
+#+begin_notes
+Die Kettenregel stammt aus dem 17ten Jahrhundert.
+#+end_notes
+
+- Kettenregel stammt aus dem 17ten Jahrhundert (Leibniz, 1676). \\
+- Lineare neurale Netzwerke Mitte des 20ten Jahrhunderts. \\
+- Erfolgreiche Experimente mit Back-Propagation (1986)
 
 * TODO Laufzeit
 **
