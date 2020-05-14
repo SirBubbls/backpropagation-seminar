@@ -2,5 +2,5 @@
 #+AUTHOR: Lucas Sas
 
 * Links
-GitHub: [[https://github.com/SirBubbls/backpropagation-seminar]]
+GitHub: [[https://github.com/SirBubbls/backpropagation-seminar]] \\
 Presentation: [[https://sirbubbls.github.io/backpropagation-seminar/]]
