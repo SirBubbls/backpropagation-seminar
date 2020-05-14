@@ -1,2 +1,6 @@
 #+TITLE: Backpropagation Seminar
 #+AUTHOR: Lucas Sas
+
+* Links
+GitHub: [[https://github.com/SirBubbls/backpropagation-seminar]]
+Presentation: [[https://sirbubbls.github.io/backpropagation-seminar/]]
