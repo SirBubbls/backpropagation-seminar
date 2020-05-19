@@ -525,7 +525,23 @@ Die Kettenregel stammt aus dem 17ten Jahrhundert.
 
 - Kettenregel stammt aus dem 17ten Jahrhundert (Leibniz, 1676). \\
 - Lineare neurale Netzwerke Mitte des 20ten Jahrhunderts. \\
-- Erfolgreiche Experimente mit Back-Propagation (1986)
+- Erfolgreiche Experimente mit Back-Propagation (1986) \\
+ 
+*** Popularität von neuronalen Netzen
+#+begin_notes
+Durch die Erfolge mit Back-propagation wurde Anfang der 90er Jahre Deep Learning vermehrt eingesetzt. \\
+Klassische machine learning Algorithmen wurden in den 90er Jahren mehr genutzt als neuronale Netzwerke.
+#+end_notes
+
+Klassische machine learning Algorithmen wurden in den 90er Jahren mehr genutzt als neuronale Netzwerke.
+
+Durch die hohe Speicheranforderung wurden NN ab ca. 2006 immer vermehrter eingesetzt und
+bilden heute einen fundamentalen Baustein von maschinellem Lernen.
+
+*** Back-propagation & Gradient Descent
+Beide treibenden Algorithmen von neuronalen Netzwerken haben sich seit den 80er Jahren nicht wesentlich verändert. \\
+
+Bessere Resultate sind besser Hardware und Dataset Optimierung zu verdanken.
 
 * Quellen
 - Deep Learning (Ian Goodfellow, Yoshua Bengio & Aaron Courville)
