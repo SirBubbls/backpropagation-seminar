@@ -24,54 +24,22 @@ Deep Learning (Ian Goodfellow, Yoshua Bengio & Aaron Courville)
 
 https://www.deeplearningbook.org
 
-[[https://www.deeplearningbook.org/contents/mlp.html][Backpropagation Kapitel]]
+[[https://www.deeplearningbook.org/contents/mlp.html][Back-propagation Kapitel]]
 
 ** Jupyter Notebook
 Beispiele für alle Methoden dieser Präsentation sind in diesem [[https://github.com/SirBubbls/backpropagation-seminar/blob/master/Backpropagation.ipynb][IPython Notebook]] zu finden.
-* Inhalt
-1. Neuronale Netze
-2. Vorwissen
+* Agenda
+1. Vorwissen
+   - Gradients & Stochastic Gradient Descent
+   - Computational Graphs
+2. Neuronale Netze
 3. Forward Propagation
-4. Backpropagation
-5. General Backpropagation
-  
-* Neuronale Netze
-Formale Definition für ein neuronales Netz: $y=f(x; \theta)$ und $y=f^*(x)$
-- $y$ ist den Wert den unser NN vorraussagen soll
-- $x$ sind die Input Daten, die das NN erhält
-- $\theta$ sind Parameter des neuronalen Netzes, um $f$ so nah wie möglich an
-  die optimale Funktion $f^*$ anzunähern.
-** Wie ist nun ein neurales Netzwerk aufgebaut?
-Wir teilen das Netzwerk in Schichten (Layer) auf.
-
-#+ATTR_HTML: :width 50% :height 50%
-https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Neural_network.svg/1200px-Neural_network.svg.png
-
-Jeder Layer bildet eine Funktion $f^{i}$, mit $i=Layer\ Index$ ab.
-
-*** Formell
-Somit ist ein neurales Netzwerk eine Kette an Funktionen $f$.
-#+begin_quote
-Ein Netz mit $3$ Layern wäre somit $f^2(f^1(f^0(X)))$
-mit $X=Input\ Data$
-#+end_quote
-*** Aufbau eines Layers
-Jeder Layer enthält mindestens folgende Informationen:
-- Eine Weight Matrix ($w$)
-- Einen Bias Vektor ($b$)
-*** Aktivierungsfunktion
-Da wir bei Neural Networks oft versuchen non-lineare Zusammenhänge zu aproximieren, benötigen wir auch eine nicht-lineare Komponente in unserem NN.
-*** Beliebte Aktivierungsfunktionen
-- Rectified Linear Unit ($ReLU$)
-- $Leaky\ ReLU$
-- Sigmoid Function
-*** Cost Function ($J$)
-Eine Funktion um zu bestimmen wie 'nah' wir uns an unserem erwarteten Inference Wert befinden.
-#+begin_quote
-In dieser Präsentation benutzen wir die Euklidean-Distance $(x-y)^2$ als Cost Function.
-#+end_quote
-* Historisches
-Erste Verwendung in Zusammenhang mit artificial neural networks im Jahre 1985 im Buch 'Learning Logic' (Parker, D.B.).
+4. Back-propagation
+   - Kettenregel
+   - Back-propagation
+   - Delta Rule
+   - Implementation in Python
+5. General Back-propagation
 
 * Vorwissen
 ** Gradient
@@ -81,9 +49,9 @@ Notation: $\nabla_xf(x)$
 #+end_quote
 *** Beispiel
 #+begin_quote
-$f(x, y) = 2x^2 + y^3$
+$f(x) = 2x_1^2 + x_2^3$
 #+end_quote
-$\rightarrow \nabla_xf(x)=\left(\begin{array}{c} f'_x \\ f'_y \end{array}\right)= \left(\begin{array}{c} 4x \\ 3y \end{array}\right)$
+$\rightarrow \nabla_xf(x)=\left(\begin{array}{c} f'_{x_1} \\ f'_{x_2} \end{array}\right)= \left(\begin{array}{c} 4x_1 \\ 3x^2_2 \end{array}\right)$
 ** Stochastic Gradient Descent
 Der Gradient Descent Algorithmus wird dafür verwendet ein lokales Minimum einer Funktion zu bestimmen.
 *** Beispiel
@@ -102,7 +70,7 @@ Rechenoperationen in ANN's werden typischerweise nicht in mathematischen Formeln
 Typischerweise werden Operationen in artificial neural networks nicht mit mathematischen Formeln angegeben, sondern als Graph dargestellt.
 
 *** Repräsentation
-Jede Node in einem Graph $G$ repräsentiert eine mathematische Operation.\\
+Jede Node in einem Graph $G$ repräsentiert eine mathematische Operation oder eine Input Variable.\\
 
 Beispielsweise:
 - Matrix Multiplikation
@@ -115,28 +83,108 @@ $$
 
 [[./basic_graph.png]]
 *** Komplexere Beispiele
-$x=y+z$
+$x=y+z$ \\
 $a=x\odot z$
 
-[[./basic_graph_2.png]]
+[[./basic_graph_2.jpg]]
 
+* Künstliche Neuronale Netze & Deep Learning
+** Künstliche Neuronale Netze
+Als Vorbild dienen Neuronale Netze in der Biologie, jedoch sind beide Felder doch unterschiedlicher als man vielleicht erwarten würde.
+
+#+begin_quote
+In diesem Vortrag werden nur fully connected feed forward networks behandelt.
+#+end_quote
+
+** Formale Definition
+Formale Definition für ein neuronales Netz: $y=f(x; \theta)$ und $y=f^*(x)$
+- $y$ ist den Wert den unser NN vorraussagen soll
+- $x$ sind die Input Daten, die das NN erhält
+- $\theta$ sind Parameter des NN's, um $f$ so nah wie möglich an
+  die optimale Funktion $f^*$ anzunähern.
+
+** Wie ist nun ein neuronales Netzwerk aufgebaut?
+Wir teilen das Netzwerk in Schichten (Layer) auf.
+
+#+ATTR_HTML: :width 50% :height 50%
+https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Neural_network.svg/1200px-Neural_network.svg.png
+
+Jeder Layer bildet eine Funktion $f^{i}$, mit $i=Layer\ Index$ ab.
+
+*** Formell
+Somit ist ein neurales Netzwerk eine Kette an Funktionen $f$.
+#+begin_quote
+Ein Netz mit $3$ Layern wäre somit $f^2(f^1(f^0(X)))$
+mit $X=Input\ Data$
+#+end_quote
+*** Aufbau eines Layers
+Jeder Layer enthält *mindestens* folgende Informationen:
+- Eine Weight Matrix ($w$)
+- Einen Bias Vektor ($b$)
+- Aktivierungsfunktion ($\sigma$)
+*** Aktivierungsfunktion
+#+begin_notes
+Non linearity Functions werden benötigt, da eine zwei lineare Funktionen
+immer zu einer weiteren linearen Funktion reduziert werden können. \\
+*Ausnahme* bei einem Output Layer dessen Output eine reelle Zahl sein soll.
+#+end_notes
+
+Da wir bei Neural Networks oft versuchen non-lineare Zusammenhänge zu approximieren, benötigen wir auch eine nicht-lineare Komponente in unserem NN.
+
+*** Beliebte Aktivierungsfunktionen
+- Rectified Linear Unit ($ReLU$) \\
+  #+begin_quote
+  $f(x)=max(0, x)$
+  #+end_quote
+- $Leaky\ ReLU$ \\
+  #+begin_quote
+  $f(x)=\begin{cases} x &\quad if\ x > 0 \\ 0.1x &\quad else \end{cases}$
+#+end_quote
+- Sigmoid Function \\
+  #+begin_quote
+  $f(x)= \frac{1}{1+e^{-t}}$
+  #+end_quote
+ 
+*** Function Plot
+[[./activation_functions.jpg]]
+
+*** Cost Function ($J$)
+Eine Funktion um zu bestimmen wie 'nah' wir uns an unserem erwarteten Inference Wert befinden.
+#+begin_quote
+In dieser Präsentation benutzen wir die Euklidean-Distance $(x-y)^2$ als Cost Function.
+#+end_quote
 * Forward Propagation
 Ein Layer in einem Feed-Forward Neural Network besteht aus folgenden Elementen:
 - Inputs ($X$)
 - Weights ($W$)
 - Biases ($b$)
 - Output ($a$)
+** Allgemein
+#+begin_notes
+Jede Verbindung repräsentiert einen Float. \\
+Jedes Neuron enthält einen Vektor mit
+#+end_notes
+
+Jedes Neuron eines Layers $L_i$ ist mit allen Neuronen des Layers $L_{i-1}$ verbunden. \\
+
+[[./connections.jpg]]
+
+*** Berechnung des Inputs
+
+Jedes Neuron enthält einen Vektor mit Weights $w$, der Angibt wie stark jeder Input gewichtet wird. \\
+$z=a_1*w_1+a_2*w_2$ oder $z=w^Ta$
+
+[[./connections.jpg]]
+
 ** Formell
 Um die Aktivierungen ($a$) eines Layers zu berechen können wir folgende Formel benutzen:
+
 #+begin_quote
 $a_L = \sigma(a_{L-1} w_L + b_L)$
 #+end_quote
 Der berechnete Vektor $a_L$ dient dem Layer $L+1$ als Input.
-** Computational Graph
-#+begin_notes
-Backpropagation besteht letztendlich nur darin den Graph in die andere Richtung zu propagieren.
-#+end_notes
 
+** Computational Graph
 $$
 a = \sigma(a_{L-1}w_L+b)
 $$
@@ -145,7 +193,7 @@ $$
 
 ** Beispiel (XOR)
 $W=\left[\begin{array}{ccc} 1 & 1 \\ 1 & 1 \end{array}\right]$ \\
-$c=\left [\begin{array}{ccc} 0 \\ -1 \end{array} \right]$ \\
+$b=\left [\begin{array}{ccc} 0 \\ -1 \end{array} \right]$ \\
 ** Multiplizieren der Weights ($W$) und Inputs ($X$)
 $$
 XW=\left[\begin{array}{ccc} 0 & 0 \\ 0 & 1 \\ 1 & 0 \\ 1 & 1 \end{array} \right]
@@ -153,9 +201,9 @@ XW=\left[\begin{array}{ccc} 0 & 0 \\ 0 & 1 \\ 1 & 0 \\ 1 & 1 \end{array} \right]
 \left[\begin{array}{ccc} 0 & 0 \\ 1 & 1 \\ 1 & 1 \\ 2 & 2 \end{array} \right]
 $$
 
-** Addieren des Bias Vektors ($c$)
+** Addieren des Bias Vektors ($b$)
 $$
-XW + c=
+XW + b=
 \left[\begin{array}{ccc} 0 & 0 \\ 1 & 1 \\ 1 & 1 \\ 2 & 2 \end{array} \right] +
 \left(\begin{array}{ccc} 0 \\ -1 \end{array}\right)=
 \left[\begin{array}{ccc} 0 & -1 \\ 1 & 0 \\ 1 & 0 \\ 2 & 1 \end{array} \right]
@@ -165,7 +213,7 @@ $$
 $ReLU:= f(x)=max(0, x)$
 #+end_quote
 $$
-relu(XW+c)=
+relu(XW+b)=
 relu(\left[\begin{array}{ccc} 0 & -1 \\ 1 & 0 \\ 1 & 0 \\ 2 & 1 \end{array} \right])=
 \left[\begin{array}{ccc} 0 & 0 \\ 1 & 0 \\ 1 & 0 \\ 2 & 1 \end{array} \right]
 $$
@@ -175,13 +223,14 @@ Die Aktivierungsfunktion wird auf jedes Element der Matrix ausgeführt.
 ** Output Layer
 Multiplizieren der Output Matrix des ersten Layers mit den Weights des Output Layers ($w$).
 $$
-w= relu(XW+c)* \left[\begin{array}{ccc} 1 \\ -2 \end{array}\right]=
+w= relu(XW+b)* \left[\begin{array}{ccc} 1 \\ -2 \end{array}\right]=
 \left[\begin{array}{ccc} 0 & 0 \\ 1 & 0 \\ 1 & 0 \\ 2 & 1 \end{array} \right]*
 \left[\begin{array}{ccc} 1 \\ -2 \end{array}\right]=
 \left[\begin{array}{ccc} 0 \\ 1 \\ 1 \\ 0 \end{array}\right]
 $$
+
 ** Predictions & Input
-Input: $\left[\begin{array}{ccc} 0 & 0 \\ 0 & 1 \\ 1 & 0 \\ 1 & 1 \end{array} \right]$
+Input: $\left[\begin{array}{ccc} 0 & 0 \\ 0 & 1 \\ 1 & 0 \\ 1 & 1 \end{array} \right]$ \\
 Predictions: $\left[\begin{array}{ccc} 0 \\ 1 \\ 1 \\ 0 \end{array}\right]$
 
 ** Code Beispiel
@@ -189,17 +238,36 @@ Predictions: $\left[\begin{array}{ccc} 0 \\ 1 \\ 1 \\ 0 \end{array}\right]$
 def forward(X):
     a = X
     for layer in L:
-        a = h @ L.weights + L.bias
+        a = h @ layer.weights + layer.bias
     return a
 #+END_SRC
 
+** Laufzeitkomplexität
+#+begin_notes
+Wir multiplizieren jedes Weight und addieren einen Bias Wert.
+#+end_notes
+
+#+begin_quote
+$$
+O(w)
+$$
+#+end_quote
+
+- $w$ Anzahl der Weights in neuronalem Netz.
+
 * Backpropagation
-** Wozu brauchen wir den Backpropagation Algorithmus?
+** Wozu brauchen wir den Back-propagation Algorithmus?
+#+begin_notes
+Gesuchte Gradients:
+- Ableitung von $J$ in Abhängigkeit von Bias $b^k$
+- Ableitung von $J$ in Abhängigkeit von Weights $w^k$
+#+end_notes
+
 Ein fundamentaler Baustein, von neuralen Netzen.
 
-Backpropagation ist kein Lernalgorithmus/Optimierungsalgorithmus, sondern aussschlißlich für die Generierung der Gradients jedes Layers zuständig.
+Back-propagation ist kein Lernalgorithmus/Optimierungsalgorithmus, sondern aussschlißlich für die Generierung der Gradients jedes Layers zuständig.
 
-Also suchen wir folgende Gradienten:
+Also suchen wir folgende Gradients:
  - $\nabla_{b^k} J$
  - $\nabla_{w^k} J$
 
@@ -213,10 +281,11 @@ Die Kettenregel ist nützlich um Ableitungen aus schon bereits vorhandenen Ablei
 $$y=g(x)\ und\ z=f(g(x))=f(y)$$
 
 Dann besagt die Kettenregel: $\frac{dz}{dx} = \frac{dz}{dy} \frac{dy}{dx}$
+
 ** Kettenregel als Graph
 
 #+begin_notes
-An der Formel $f'(f(f(w)))f'(f(w))f'(w)$ erkennt man, dass immer die Zwischenergebnisse aus jedem Schritt benötigt werden um die Korrekte Ableitung $\frac{\partial z}{\partial w}$.
+An der Formel $f'(f(f(w)))f'(f(w))f'(w)$ erkennt man, dass immer die Zwischenergebnisse aus jedem Schritt benötigt werden um die korrekte Ableitung $\frac{\partial z}{\partial w}$ zu bestimmen.
 #+end_notes
 
 $$
@@ -237,11 +306,11 @@ $$
 
 ** Anpassung der Forward Propagation
 #+begin_notes
-Wie davor gezeigt müssen wir nun Zwischenergebnisse aus der Forward Progagation speichern um im Anschluss effizient die Backpropagation durchführen zu können.
+Wie davor gezeigt müssen wir nun Zwischenergebnisse aus der Forward Progagation speichern um im Anschluss effizient die Back-propagation durchführen zu können.
 Eine Alternative ist bei *limitiertem Speicher* die Zwischenergebnisse immer neu zu evaluieren, wenn sie benötigt werden. (-> Höhere Laufzeit)
 #+end_notes
 
-Wir benötigen folgende Werte aus jedem Layer um den Backpropagation Algorithmus ausführen zu können.
+Wir benötigen folgende Werte aus jedem Layer um den Back-propagation Algorithmus ausführen zu können.
 - $a$ Aktivation Vektor
 - $z$ Pre Activation Function Vektor
  
@@ -272,13 +341,20 @@ $\nabla_{w^k} J = ga^{k-1}$
 #+end_quote
 *** Schritt 5
 $\nabla a^{k-1} J = w^kg$
+*** Wiederholen von Schritt 3 - 5 des nächsten Layers ($L{-1}$)
 ** Graph
+#+begin_notes
+Wir bilden einen Pfad (von Hinten nach Vorne) an Pfeilen zu einem Gradienten einer Node die wir berechnen wollen.
+Wir multiplizieren alle partiellen Ableitungen auf dem Weg dahin miteinander.
+#+end_notes
+
 [[./backprop_derriv.jpg]]
-** TODO Delta Rule
-In neural Networks kann der Gradient Descent Algorithmus zu der sog. *Delta Rule* zusammengefasst werden.
+
+** Delta Rule
+In neural Networks kann der Back-propagation Algorithmus zu der sog. *Delta Rule* zusammengefasst werden.
 #+begin_notes
 $\lambda$ ist learning rate \\
-$\alpha$ ist die aktivierungsfunktion \\
+$\alpha$ ist die Aktivierungsfunktion \\
 $z$ ist inputs * weights \\
 #+end_notes
 
@@ -287,6 +363,7 @@ $$
 \nabla w_{ji} = \lambda ( - a) \alpha'(z)a_{L-1}
 $$
 #+end_quote
+
 ** Praktisches Beispiel in Python
 #+BEGIN_EXPORT html
 <div class = "stretch">
@@ -294,6 +371,38 @@ $$
 </div>
 #+END_EXPORT
 
+** Komplexität
+#+begin_quote
+*Wichtig* \\
+Folgende Komplexitäten beziehen sich ausschließlich auf den Backpropagation Algorithmus.
+#+end_quote
+
+*** Laufzeitkomplexität
+#+begin_notes
+Wir multiplizieren die transponierte Weight Matrix also die gleiche Komplexität wie
+Forward-propagation.
+#+end_notes
+
+Back-propagation besitzt die gleiche Laufzeitkomplexität wie Forward-propagation.
+
+#+begin_quote
+$$
+O(w)
+$$
+#+end_quote
+
+- $w$ Anzahl der Weights in neuronalem Netz.
+
+*** Speicherkomplexität
+#+begin_quote
+$$
+O(mh)
+$$
+#+end_quote
+
+- $m$ Anzahl an Elementen in Batch
+- $h$ Anzahl der Hidden-Units
+ 
 ** Anmerkungen
 In der Praxis werden keine Vektoren als Input Daten benutzt, sondern Matrizen (siehe ~XOR~ Beispiel).
 $$
@@ -302,13 +411,40 @@ $$
 
 Wir erhalten nun auch mehrere Gradienten in Form einer Matrix. Wir können nun den Durchschnitt der Gradienten nutzen um unsere Weights anzupassen.
 
-* General Back-propagation nach Ian Goodfellow
-Bisher haben wir uns nur mit Back-propagation in Zusammenhang mit neuralen Netzwerken beschäftigt. \\
+* General Back-propagation
+Bisher haben wir uns nur mit Back-propagation in Zusammenhang mit neuronalen Netzwerken beschäftigt. \\
 Back-propagation kann aber auch generell für andere Anwendungen eingesetzt werden.
+
+** Symbol to Number / Symbol to Symbol
+Es existieren zwei verschiedene Möglichkeiten die Berechnungen der Gradients durchzuführen.
+
+- Symbol to Number
+- Symbol to Symbol
+
+*** Symbol to Number
+#+begin_notes
+Methode die wir in vorherigen Beispielen verwendet waren.
+#+end_notes
+
+Die Input Variablen werden durch Zahlenwerte ersetzt und daraufhin (wie besprochen) alle nötigen Gradienten berechnet.
+
+*** Symbol to Symbol
+#+begin_notes
+Symbol to Symbol benötigt zum differenzieren keine eigentlichen Zahlenwerte, sondern ersetzt diese durch Symbole. \\
+Zusammengefasst kann man sagen, dass der Symbol to Number approach nur die Berechnungen ausführt die vom Symbol to Symbol als Graph erstellt werden.
+#+end_notes
+
+Beim der Symbol to Symbol Herangehensweise wird zuerst der Graph mit allen Ableitungen mit der Hilfe von symbolischen Werten konstruiert. \\
+Später wird dann der Graph mit der Hilfe eines eigenen Algorithmus ausgewertet. \\
+
+#+begin_quote
+*Vorteil* \\
+Ableitungen eines höheren Grads können berechnet werden, indem man den Back-propagation Algorithmus auf einen bereits abgeleiteten Graphen ausführt.
+#+end_quote
 
 ** Operationen
 #+begin_notes
-Tensor kann beliebig viele Dimensionen zu haben.
+Wir benutzen Tensoren um eine möglichst generelle Definition des Algorithmus zu beschreiben.
 #+end_notes
 Wir betrachten einen computational Graph, jede Node in dem Graph repräsentiert eine Variable in Form eines Tensors.
 
@@ -317,7 +453,6 @@ Wir betrachten einen computational Graph, jede Node in dem Graph repräsentiert 
 ~get_operation~ Beispiel bei einer Variable, die durch Matrix Multiplikation generiert wird, würde genau diese Operation zurück gegeben werden.
 #+end_notes
 
-Folgende Funktionen werden von Operationen implementiert:
 - ~get_operation()~
 - ~get_consumers()~ \\
   Gibt alle Variablen/Operationen zurück, die 'Kinder' von sich selber sind.
@@ -331,8 +466,9 @@ Benötigt ist:
 - den Graphen $G$
 - die Variable $z$, die wir differenzieren wollen
 
-*** Äussere Funktion
-Wir definieren $G'$ als alle Variablen, die Vorfahren von $z$ sind oder Nachfahren von $T$. \\
+*** Äußere Funktion
+Wir definieren $G'$ als alle Variablen, die Vorfahren von $z$, oder Nachfahren von $T$ sind. \\
+\\
 In ~grad_table~ können wir Variablen Gradients zuweisen. \\
 
 ~grad_table[z] = 1~   (da $\frac{\partial z}{\partial z} = 1$)
@@ -369,42 +505,18 @@ def build_grad(v, G, G_1, grad_table):
 
 ** Beispiel
 *** Graph
-[[./big_graph_1.png]]
+[[./big_graph_1.jpg]]
 
 *** Bestimmen der Ableitung $\frac{\partial u_1}{\partial u_4}$
-[[./big_graph_2.png]]
+[[./big_graph_2.jpg]]
+
+*** Eintragen aller Ableitungen in Graph
+[[./big_graph_3.jpg]]
 
 ** Generalisierbarkeit
 Dadurch ist der Back-propagation Algorithmus sehr allgemein anwendbar. \\
 
 Jede Operation ist für seine eigene Differenzierung verantwortlich und benötigt keine weiteren Informationen.
-
-** Symbol to Number / Symbol to Symbol
-Es existieren zwei verschiedene Möglichkeiten die Berechnungen der Gradients durchzuführen.
-
-- Symbol to Number
-- Symbol to Symbol
-
-*** Symbol to Number
-#+begin_notes
-Methode die wir in vorherigen Beispielen verwendet waren.
-#+end_notes
-
-Die Input Variablen werden durch Zahlenwerte ersetzt und daraufhin (wie besprochen) alle nötigen Gradienten berechnet.
-
-*** Symbol to Symbol
-#+begin_notes
-Symbol to Symbol benötigt zum differenzieren keine eigentlichen Zahlenwerte, sondern ersetzt diese durch Symbole. \\
-Zusammengefasst kann man sagen, dass der Symbol to Number approach nur die Berechnungen ausführt die vom Symbol to Symbol als Graph erstellt werden.
-#+end_notes
-
-Beim der Symbol to Symbol Herangehensweise wird zuerst der Graph mit allen Ableitungen mit der Hilfe von symbolischen Werten konstruiert. \\
-Später wird dann der Graph mit der Hilfe eines eigenen Algorithmus ausgewertet. \\
-
-#+begin_quote
-*Vorteil* \\
-Ableitungen eines höheren Grads können berechnet werden, indem man den Back-propagation Algorithmus auf einen bereits abgeleiteten Graphen ausführt.
-#+end_quote
 
 * Historisches
 #+begin_notes
@@ -415,10 +527,8 @@ Die Kettenregel stammt aus dem 17ten Jahrhundert.
 - Lineare neurale Netzwerke Mitte des 20ten Jahrhunderts. \\
 - Erfolgreiche Experimente mit Back-Propagation (1986)
 
-* TODO Laufzeit
-**
 * Quellen
-- ❤️ Deep Learning (Ian Goodfellow, Yoshua Bengio & Aaron Courville)
+- Deep Learning (Ian Goodfellow, Yoshua Bengio & Aaron Courville)
 - https://medium.com/@14prakash/back-propagation-is-very-simple-who-made-it-complicated-97b794c97e5c
 - Wikipedia: https://en.wikipedia.org/wiki/Backpropagation
 - Wikipedia: https://en.wikipedia.org/wiki/Delta_rule
