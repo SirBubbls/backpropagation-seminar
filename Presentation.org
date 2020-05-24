@@ -62,6 +62,11 @@ $\left(\begin{array}{c} 2x_1 \\ -2x_2 \end{array}\right) = \left(\begin{array}{c
 
 $Neuer\ Punkt = \left(\begin{array}{c} 2 \\ 1 \end{array}\right)+ \lambda \left(\begin{array}{c} 4 \\ -2 \end{array}\right)$ mit $\lambda: learning\ rate$
 
+** Visualisiert
+#+ATTR_ORG: :width 200
+#+ATTR_HTML: :height 500
+[[./gradient_descent.gif]]
+
 ** Computational Graphs
 #+begin_notes
 Rechenoperationen in ANN's werden typischerweise nicht in mathematischen Formeln angegeben, sondern in sog. computational Graphs.
