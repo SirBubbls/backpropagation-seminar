@@ -24,7 +24,7 @@ Deep Learning (Ian Goodfellow, Yoshua Bengio & Aaron Courville)
 
 https://www.deeplearningbook.org
 
-[[https://www.deeplearningbook.org/contents/mlp.html][Back-propagation Kapitel]]
+[[https://www.deeplearningbook.org/contents/mlp.html][Backpropagation Kapitel]]
 
 ** Jupyter Notebook
 Beispiele für alle praktischen Beispiele dieser Präsentation sind in diesem [[https://github.com/SirBubbls/backpropagation-seminar][Repository]] zu finden.
@@ -36,12 +36,12 @@ Beispiele für alle praktischen Beispiele dieser Präsentation sind in diesem [[
    - Computational Graphs
 2. Neuronale Netze
 3. Forward Propagation
-4. Back-propagation
+4. Backpropagation
    - Kettenregel
-   - Back-propagation
+   - Backpropagation
    - Delta Rule
    - Implementation in Python
-5. General Back-propagation
+5. General Backpropagation
 6. Historisches
 7. Quellen
 
@@ -77,7 +77,7 @@ Also: $\nabla_xf(x)=\left(\begin{array}{c} f'_{x_1} \\ f'_{x_2} \end{array}\righ
 Wir starten mit einem beliebigen Punkt: z.B. $\left(\begin{array}{c} 2 \\ 1 \end{array}\right)$ und setzen ein: \\
 $\left(\begin{array}{c} 2x_1 \\ -2x_2 \end{array}\right) = \left(\begin{array}{c} 2 * 2 \\ -2 * 1 \end{array}\right) = \left(\begin{array}{c} 4 \\ -2 \end{array}\right)$
 
-$Neuer\ Punkt = \left(\begin{array}{c} 2 \\ 1 \end{array}\right)+ \lambda \left(\begin{array}{c} 4 \\ -2 \end{array}\right)$ mit $\lambda: learning\ rate$
+$Neuer\ Punkt = \left(\begin{array}{c} 2 \\ 1 \end{array}\right)  - \lambda \left(\begin{array}{c} 4 \\ -2 \end{array}\right)$ mit $\lambda: learning\ rate$
 
 ** Visualisiert
 #+ATTR_ORG: :width 200
@@ -293,7 +293,7 @@ $$
 - $w$ Anzahl der Weights in neuronalem Netz.
 
 * Backpropagation
-** Wozu brauchen wir den Back-propagation Algorithmus?
+** Wozu brauchen wir den Backpropagation Algorithmus?
 #+begin_notes
 Gesuchte Gradients:
 - Ableitung von $J$ in Abhängigkeit von Bias $b^k$
@@ -302,7 +302,7 @@ Gesuchte Gradients:
 
 Ein fundamentaler Baustein, von neuralen Netzen.
 
-Back-propagation ist kein Lernalgorithmus/Optimierungsalgorithmus, sondern aussschlißlich für die Generierung der Gradients jedes Layers zuständig.
+Backpropagation ist kein Lernalgorithmus/Optimierungsalgorithmus, sondern aussschlißlich für die Generierung der Gradients jedes Layers zuständig.
 
 Also suchen wir folgende Gradients:
  - $\nabla_{b^k} J$
@@ -343,11 +343,11 @@ $$
 
 ** Anpassung der Forward Propagation
 #+begin_notes
-Wie davor gezeigt müssen wir nun Zwischenergebnisse aus der Forward Progagation speichern um im Anschluss effizient die Back-propagation durchführen zu können.
+Wie davor gezeigt müssen wir nun Zwischenergebnisse aus der Forward Progagation speichern um im Anschluss effizient die Backpropagation durchführen zu können.
 Eine Alternative ist bei *limitiertem Speicher* die Zwischenergebnisse immer neu zu evaluieren, wenn sie benötigt werden. (-> Höhere Laufzeit)
 #+end_notes
 
-Wir benötigen folgende Werte aus jedem Layer um den Back-propagation Algorithmus ausführen zu können.
+Wir benötigen folgende Werte aus jedem Layer um den Backpropagation Algorithmus ausführen zu können.
 - $a$ Aktivation Vektor
 - $z$ Pre Activation Function Vektor
  
@@ -401,7 +401,7 @@ Wir multiplizieren alle partiellen Ableitungen auf dem Weg dahin miteinander.
 [[./backprop_derriv.jpg]]
 
 ** Delta Rule
-In neural Networks kann der Back-propagation Algorithmus zu der sog. *Delta Rule* zusammengefasst werden.
+In neural Networks kann der Backpropagation Algorithmus zu der sog. *Delta Rule* zusammengefasst werden.
 #+begin_notes
 $\lambda$ ist learning rate \\
 $\alpha$ ist die Aktivierungsfunktion \\
@@ -459,7 +459,7 @@ Wir multiplizieren die transponierte Weight Matrix also die gleiche Komplexität
 Forward-propagation.
 #+end_notes
 
-Back-propagation besitzt die gleiche Laufzeitkomplexität wie Forward-propagation.
+Backpropagation besitzt die gleiche Laufzeitkomplexität wie Forward-propagation.
 
 #+begin_quote
 $$
@@ -480,9 +480,9 @@ $$
 - $h$ Anzahl der Hidden-Units
  
 
-* General Back-propagation
-Bisher haben wir uns nur mit Back-propagation in Zusammenhang mit neuronalen Netzwerken beschäftigt. \\
-Back-propagation kann aber auch generell für andere Anwendungen eingesetzt werden.
+* General Backpropagation
+Bisher haben wir uns nur mit Backpropagation in Zusammenhang mit neuronalen Netzwerken beschäftigt. \\
+Backpropagation kann aber auch generell für andere Anwendungen eingesetzt werden.
 
 ** Symbol to Number / Symbol to Symbol
 Es existieren zwei verschiedene Möglichkeiten die Berechnungen der Gradients durchzuführen.
@@ -508,7 +508,7 @@ Später wird dann der Graph mit der Hilfe eines eigenen Algorithmus ausgewertet.
 
 #+begin_quote
 *Vorteil* \\
-Ableitungen eines höheren Grads können berechnet werden, indem man den Back-propagation Algorithmus auf einen bereits abgeleiteten Graphen ausführt.
+Ableitungen eines höheren Grads können berechnet werden, indem man den Backpropagation Algorithmus auf einen bereits abgeleiteten Graphen ausführt.
 #+end_quote
 
 ** Operationen
@@ -536,7 +536,7 @@ Benötigt ist:
 - die Variable $z$, die wir differenzieren wollen
 
 *** Äußere Funktion
-Wir definieren $G'$ als alle Variablen, die Vorfahren von $z$, oder Nachfahren von $T$ sind. \\
+Wir definieren $G'$ als alle Variablen, die Vorfahren von $z$ und Nachfahren von $T$ sind. \\
 \\
 In ~grad_table~ können wir Variablen Gradients zuweisen. \\
 
@@ -551,11 +551,20 @@ return [grad_table[v] for v in T]
 #+END_SRC
 
 *** ~build_grad(v, G, G_1, grad_table)~
+#+begin_notes
+Es handelt sich um eine *rekursive* Funktion.\\
+Der Base Case ist erreicht, sobald sich der zu berechnende Gradient sich bereits in ~grad_table~ befindet.\\
+\\
+Um den Gradient zu berechnen benötigen wir erst alle Ableitungen der Consumer aus $G'$. \\
+\\
+Alle Gradients der Consumer werden summiert und daraufhin der Node zugeordnet.
+#+end_notes
+
 #+BEGIN_SRC python
 def build_grad(v, G, G_1, grad_table):
     if v in grad_table: return grad_table[v]
     i = 1
-    for c in get_consumers(V, G_1):
+    for c in get_consumers(v, G_1):
         op = get_operation(c)
         d = build_grad(c, G, G_1, grad_table)
         g[i] = op.bprop(get_inputs(c, G_1), v, d)
@@ -566,6 +575,10 @@ def build_grad(v, G, G_1, grad_table):
 #+END_SRC
 
 *** ~bprop~ Funktion
+#+begin_notes
+Auch diese Funktion kann natürlich auch in einer anderen Sprache implementiert sein.
+#+end_notes
+
 ~op.bprop(inputs, X, G)~ \\
  \\
 ~inputs~: Liste an Inputs, die wir der Operation zur Verfügung stellen \\
@@ -574,16 +587,28 @@ def build_grad(v, G, G_1, grad_table):
 
 ** Beispiel
 *** Graph
+Wir wollen $\frac{\partial u_1}{\partial u_4}$ bestimmen.
 [[./big_graph_1.jpg]]
 
 *** Bestimmen der Ableitung $\frac{\partial u_1}{\partial u_4}$
+#+begin_notes
+Wir müssen erst $G'$ bestimmen, also:
+- Vorfahren von $u_1 = z$
+- Nachfahren von $[u_4] = T$
+#+end_notes
+
 [[./big_graph_2.jpg]]
 
 *** Eintragen aller Ableitungen in Graph
+#+begin_notes
+Wir tragen alle Operationen, die zur Berechnung der gesuchten Ableitung benötigt werden in den Graphen $G$ ein.
+#+end_notes
+
+#+ATTR_HTML: :height 550
 [[./big_graph_3.jpg]]
 
 ** Generalisierbarkeit
-Dadurch ist der Back-propagation Algorithmus sehr allgemein anwendbar. \\
+Dadurch ist der Backpropagation Algorithmus sehr allgemein anwendbar. \\
 
 Jede Operation ist für seine eigene Differenzierung verantwortlich und benötigt keine weiteren Informationen.
 
@@ -598,7 +623,7 @@ Die Kettenregel stammt aus dem 17ten Jahrhundert.
  
 *** Popularität von neuronalen Netzen
 #+begin_notes
-Durch die Erfolge mit Back-propagation wurde Anfang der 90er Jahre Deep Learning vermehrt eingesetzt. \\
+Durch die Erfolge mit Backpropagation wurde Anfang der 90er Jahre Deep Learning vermehrt eingesetzt. \\
 Klassische machine learning Algorithmen wurden in den 90er Jahren mehr genutzt als neuronale Netzwerke.
 #+end_notes
 
@@ -607,7 +632,7 @@ Klassische machine learning Algorithmen wurden in den 90er Jahren mehr genutzt a
 Durch die hohe Speicheranforderung wurden NN ab ca. 2006 immer vermehrter eingesetzt und
 bilden heute einen fundamentalen Baustein von maschinellem Lernen.
 
-*** Back-propagation & Gradient Descent
+*** Backpropagation & Gradient Descent
 Beide treibenden Algorithmen von neuronalen Netzwerken haben sich seit den 80er Jahren nicht wesentlich verändert. \\
 
 Bessere Resultate sind besser Hardware und Dataset Optimierung zu verdanken.
