@@ -33,8 +33,8 @@
 </section>
 
 <section>
-<section id="slide-org3ca6fd1">
-<h2 id="org3ca6fd1">Intro</h2>
+<section id="slide-org884c251">
+<h2 id="org884c251">Intro</h2>
 <p>
 Präsentation ist auch online <a href="https://sirbubbls.github.io/backpropagation-seminar">sirbubbls.github.io/backpropagation-seminar</a>
 </p>
@@ -44,8 +44,8 @@ Präsentation ist in Org-Mode geschrieben, also sourcen aller Grafiken und
 Beispiele sind integriert.
 </p>
 </section>
-<section id="slide-org5ec700e">
-<h3 id="org5ec700e">Zusätzliche Ressourcen</h3>
+<section id="slide-orgbec82c6">
+<h3 id="orgbec82c6">Zusätzliche Ressourcen</h3>
 <p>
 Deep Learning (Ian Goodfellow, Yoshua Bengio &amp; Aaron Courville)
 </p>
@@ -64,8 +64,8 @@ Deep Learning (Ian Goodfellow, Yoshua Bengio &amp; Aaron Courville)
 </p>
 
 </section>
-<section id="slide-org8965674">
-<h3 id="org8965674">Jupyter Notebook</h3>
+<section id="slide-org421665b">
+<h3 id="org421665b">Jupyter Notebook</h3>
 <p>
 Beispiele für alle praktischen Beispiele dieser Präsentation sind in diesem <a href="https://github.com/SirBubbls/backpropagation-seminar">Repository</a> zu finden.
 </p>
@@ -73,8 +73,8 @@ Beispiele für alle praktischen Beispiele dieser Präsentation sind in diesem <a
 </section>
 </section>
 <section>
-<section id="slide-org7967c89">
-<h2 id="org7967c89">Agenda</h2>
+<section id="slide-orgd927d9c">
+<h2 id="orgd927d9c">Agenda</h2>
 </section>
 <section>
 <ol>
@@ -103,13 +103,13 @@ Beispiele für alle praktischen Beispiele dieser Präsentation sind in diesem <a
 </section>
 </section>
 <section>
-<section id="slide-orgba22a38">
-<h2 id="orgba22a38">Vorwissen</h2>
-<div class="outline-text-2" id="text-orgba22a38">
+<section id="slide-orgcf2daee">
+<h2 id="orgcf2daee">Vorwissen</h2>
+<div class="outline-text-2" id="text-orgcf2daee">
 </div>
 </section>
-<section id="slide-orgaea06f0">
-<h3 id="orgaea06f0">Gradient</h3>
+<section id="slide-org447591a">
+<h3 id="org447591a">Gradient</h3>
 <p>
 Der Gradient ist der Vektor aller partiellen Ableitungen einer Funktion \(f\).
 </p>
@@ -120,8 +120,8 @@ Notation: \(\nabla f(x)\)
 </blockquote>
 
 </section>
-<section id="slide-orga59034c">
-<h4 id="orga59034c">Beispiel</h4>
+<section id="slide-org5188cac">
+<h4 id="org5188cac">Beispiel</h4>
 <blockquote>
 <p>
 \(f(x) = 2x_1^2 + x_2^3\)
@@ -132,8 +132,8 @@ Notation: \(\nabla f(x)\)
 </p>
 
 </section>
-<section id="slide-org3ec4ffc">
-<h4 id="org3ec4ffc">Jacobi Matrix</h4>
+<section id="slide-org8b78d20">
+<h4 id="org8b78d20">Jacobi Matrix</h4>
 <blockquote>
 <p>
 Bei mehreren Funktionen (o.a. <b>Komponenten Funktionen</b>).
@@ -151,14 +151,14 @@ J(f) =\left (\begin{array}{cc} \nabla f_1 \\ \nabla f_2 \end{array} \right )
 </p>
 
 </section>
-<section id="slide-org153d17a">
-<h3 id="org153d17a">Stochastic Gradient Descent</h3>
+<section id="slide-org431754f">
+<h3 id="org431754f">Stochastic Gradient Descent</h3>
 <p>
 Der Gradient Descent Algorithmus wird dafür verwendet ein lokales Minimum einer Funktion zu bestimmen.
 </p>
 </section>
-<section id="slide-org5d5908f">
-<h4 id="org5d5908f">Beispiel</h4>
+<section id="slide-org0e57526">
+<h4 id="org0e57526">Beispiel</h4>
 <p>
 Funktion \(f(x)=x_1^2-x_2^2\) ist gegeben. <br />
 Also: \(\nabla_xf(x)=\left(\begin{array}{c} f'_{x_1} \\ f'_{x_2} \end{array}\right)= \left(\begin{array}{c} 2x_1 \\ -2x_2 \end{array}\right)\) <br />
@@ -171,8 +171,8 @@ Wir starten mit einem beliebigen Punkt: z.B. \(\left(\begin{array}{c} 2 \\ 1 \en
 </p>
 
 </section>
-<section id="slide-org92c197f">
-<h3 id="org92c197f">Visualisiert</h3>
+<section id="slide-orga21a88a">
+<h3 id="orga21a88a">Visualisiert</h3>
 
 <div class="figure">
 <p><img src="./gradient_descent.gif" alt="gradient_descent.gif" height="500" />
@@ -180,8 +180,8 @@ Wir starten mit einem beliebigen Punkt: z.B. \(\left(\begin{array}{c} 2 \\ 1 \en
 </div>
 
 </section>
-<section id="slide-org31cfa4b">
-<h3 id="org31cfa4b">Computational Graphs</h3>
+<section id="slide-orgfb8a05c">
+<h3 id="orgfb8a05c">Computational Graphs</h3>
 <aside class="notes">
 <p>
 Rechenoperationen in ANN&rsquo;s werden typischerweise nicht in mathematischen Formeln angegeben, sondern in sog. computational Graphs.
@@ -194,8 +194,8 @@ Typischerweise werden Operationen in artificial neural networks nicht mit mathem
 </p>
 
 </section>
-<section id="slide-orgcc42e9e">
-<h4 id="orgcc42e9e">Repräsentation</h4>
+<section id="slide-org46c394b">
+<h4 id="org46c394b">Repräsentation</h4>
 <p>
 Jede Node in einem Graph \(G\) repräsentiert eine mathematische Operation oder eine Input Variable.<br />
 </p>
@@ -211,8 +211,8 @@ Beispielsweise:
 </ul>
 
 </section>
-<section id="slide-org51be0a4">
-<h4 id="org51be0a4">Addition Beispiel</h4>
+<section id="slide-org17d4622">
+<h4 id="org17d4622">Addition Beispiel</h4>
 <p>
 \[
 y = a+b
@@ -226,8 +226,8 @@ y = a+b
 </div>
 
 </section>
-<section id="slide-org55c2893">
-<h4 id="org55c2893">Komplexere Beispiele</h4>
+<section id="slide-orgd6ba594">
+<h4 id="orgd6ba594">Komplexere Beispiele</h4>
 <p>
 \(x=y+z\) <br />
 \(a=x\odot z\)
@@ -242,13 +242,13 @@ y = a+b
 </section>
 </section>
 <section>
-<section id="slide-orgc7507a6">
-<h2 id="orgc7507a6">Künstliche Neuronale Netze &amp; Deep Learning</h2>
-<div class="outline-text-2" id="text-orgc7507a6">
+<section id="slide-org04291d2">
+<h2 id="org04291d2">Künstliche Neuronale Netze &amp; Deep Learning</h2>
+<div class="outline-text-2" id="text-org04291d2">
 </div>
 </section>
-<section id="slide-orgcd072af">
-<h3 id="orgcd072af">Künstliche Neuronale Netze</h3>
+<section id="slide-org7a4487a">
+<h3 id="org7a4487a">Künstliche Neuronale Netze</h3>
 <p>
 Als Vorbild dienen Neuronale Netze in der Biologie, jedoch sind beide Felder doch unterschiedlicher als man vielleicht erwarten würde.
 </p>
@@ -260,8 +260,8 @@ In diesem Vortrag werden nur fully connected feed forward networks behandelt.
 </blockquote>
 
 </section>
-<section id="slide-orge2d13cf">
-<h3 id="orge2d13cf">Formale Definition</h3>
+<section id="slide-org28eca0c">
+<h3 id="org28eca0c">Formale Definition</h3>
 <blockquote>
 <p>
 Parameter werden üblicherweise als Theta (\(\theta\)) notiert. <br />
@@ -281,8 +281,8 @@ Formale Definition für ein neuronales Netz: \(y=f(x; \theta)\) und \(y = f^*(x)
 </ul>
 
 </section>
-<section id="slide-org6a17f50">
-<h3 id="org6a17f50">Wie ist nun ein neuronales Netzwerk aufgebaut?</h3>
+<section id="slide-orge5069fd">
+<h3 id="orge5069fd">Wie ist nun ein neuronales Netzwerk aufgebaut?</h3>
 <aside class="notes">
 <p>
 In der gezeigten Grafik bilden alle vertikal angeordneten Neuronen einen Layer in einem NN ab.
@@ -305,8 +305,8 @@ Jeder Layer bildet eine Funktion \(f^{i}\), mit \(i=Layer\ Index\) ab.
 </p>
 
 </section>
-<section id="slide-org991c922">
-<h4 id="org991c922">Formell</h4>
+<section id="slide-orgfdf9fa3">
+<h4 id="orgfdf9fa3">Formell</h4>
 <p>
 Somit ist ein neurales Netzwerk eine Kette an Funktionen \(f\).
 </p>
@@ -318,8 +318,8 @@ mit \(X=Input\ Data\)
 </blockquote>
 
 </section>
-<section id="slide-org432c7bb">
-<h4 id="org432c7bb">Aufbau eines Layers</h4>
+<section id="slide-org4102b90">
+<h4 id="org4102b90">Aufbau eines Layers</h4>
 <p>
 Jeder Layer enthält <b>mindestens</b> folgende Informationen:
 </p>
@@ -331,8 +331,8 @@ Jeder Layer enthält <b>mindestens</b> folgende Informationen:
 </ul>
 
 </section>
-<section id="slide-org36ec43c">
-<h4 id="org36ec43c">Verbindung der Layer</h4>
+<section id="slide-org609871e">
+<h4 id="org609871e">Verbindung der Layer</h4>
 <aside class="notes">
 <p>
 Jede Kante in einem NN Modell repräsentiert eine reelle Zahl. <br />
@@ -353,8 +353,8 @@ Jedes Neuron eines Layers \(L_i\) ist mit allen Neuronen des Layers \(L_{i-1}\) 
 </div>
 
 </section>
-<section id="slide-orge2d3ecb">
-<h4 id="orge2d3ecb">Aktivierungsfunktion</h4>
+<section id="slide-org3aa6e28">
+<h4 id="org3aa6e28">Aktivierungsfunktion</h4>
 <aside class="notes">
 <p>
 Non linearity Functions werden benötigt, da eine zwei lineare Funktionen
@@ -369,8 +369,8 @@ Da wir bei Neural Networks oft versuchen non-lineare Zusammenhänge zu approximi
 </p>
 
 </section>
-<section id="slide-org6527e91">
-<h4 id="org6527e91">Beliebte Aktivierungsfunktionen</h4>
+<section id="slide-org8274157">
+<h4 id="org8274157">Beliebte Aktivierungsfunktionen</h4>
 <ul>
 <li><p>
 Rectified Linear Unit (\(ReLU\)) <br />
@@ -400,8 +400,8 @@ Sigmoid Function <br />
 </ul>
 
 </section>
-<section id="slide-org1f2b269">
-<h4 id="org1f2b269">Function Plot</h4>
+<section id="slide-org106c11e">
+<h4 id="org106c11e">Function Plot</h4>
 
 <div class="figure">
 <p><img src="./activation_functions.jpg" alt="activation_functions.jpg" />
@@ -409,8 +409,8 @@ Sigmoid Function <br />
 </div>
 
 </section>
-<section id="slide-org496c44c">
-<h4 id="org496c44c">Cost Function (\(J\))</h4>
+<section id="slide-org63c631d">
+<h4 id="org63c631d">Cost Function (\(J\))</h4>
 <p>
 Eine Funktion um zu bestimmen wie &rsquo;nah&rsquo; wir uns an unserem erwarteten Inference Wert befinden.
 </p>
@@ -423,8 +423,8 @@ In dieser Präsentation benutzen wir die Euklidean-Distance \((x-y)^2\) als Cost
 </section>
 </section>
 <section>
-<section id="slide-orgae0889c">
-<h2 id="orgae0889c">Forward Propagation</h2>
+<section id="slide-org4fa42c2">
+<h2 id="org4fa42c2">Forward Propagation</h2>
 <p>
 Ein Layer in einem Feed-Forward Neural Network besteht aus folgenden Elementen:
 </p>
@@ -436,11 +436,11 @@ Ein Layer in einem Feed-Forward Neural Network besteht aus folgenden Elementen:
 
 </ul>
 </section>
-<section id="slide-orgd3de2c9">
-<h3 id="orgd3de2c9">Berechnung des Inputs</h3>
+<section id="slide-orgb31a2c1">
+<h3 id="orgb31a2c1">Berechnung des Inputs</h3>
 <p>
 Jedes Neuron enthält einen Vektor mit Weights \(w\), der Angibt wie stark jeder Input gewichtet wird. <br />
-\(z=a_1*w_1+a_2*w_2\) oder \(z=w^Ta\)
+\(z=a_1*w_1+a_2*w_2\) oder \(z=Wa_{L-1}\)
 </p>
 
 
@@ -450,15 +450,15 @@ Jedes Neuron enthält einen Vektor mit Weights \(w\), der Angibt wie stark jeder
 </div>
 
 </section>
-<section id="slide-orgc45b5ff">
-<h3 id="orgc45b5ff">Formell</h3>
+<section id="slide-org6884cdc">
+<h3 id="org6884cdc">Formell</h3>
 <p>
 Um die Aktivierungen (\(a\)) eines Layers zu berechen können wir folgende Formel benutzen:
 </p>
 
 <blockquote>
 <p>
-\(a_L = \sigma(a_{L-1} w_L + b_L)\)
+\(a_L = \sigma(W_La_{L-1} + b_L)\)
 </p>
 </blockquote>
 <p>
@@ -466,11 +466,11 @@ Der berechnete Vektor \(a_L\) dient dem Layer \(L+1\) als Input.
 </p>
 
 </section>
-<section id="slide-org90483fe">
-<h3 id="org90483fe">Computational Graph</h3>
+<section id="slide-orgb00a22f">
+<h3 id="orgb00a22f">Computational Graph</h3>
 <p>
 \[
-a = \sigma(a_{L-1}w_L+b)
+a = \sigma(W_La_{L-1}+b)
 \]
 </p>
 
@@ -481,15 +481,15 @@ a = \sigma(a_{L-1}w_L+b)
 </div>
 
 </section>
-<section id="slide-org6f0e608">
-<h3 id="org6f0e608">Beispiel (XOR)</h3>
+<section id="slide-orgc3dc462">
+<h3 id="orgc3dc462">Beispiel (XOR)</h3>
 <p>
 \(W=\left[\begin{array}{ccc} 1 & 1 \\ 1 & 1 \end{array}\right]\) <br />
 \(b=\left [\begin{array}{ccc} 0 \\ -1 \end{array} \right]\) <br />
 </p>
 </section>
-<section id="slide-org4890249">
-<h3 id="org4890249">Multiplizieren der Weights (\(W\)) und Inputs (\(X\))</h3>
+<section id="slide-org13577fd">
+<h3 id="org13577fd">Multiplizieren der Weights (\(W\)) und Inputs (\(X\))</h3>
 <p>
 \[
 XW=\left[\begin{array}{ccc} 0 & 0 \\ 0 & 1 \\ 1 & 0 \\ 1 & 1 \end{array} \right]
@@ -499,8 +499,8 @@ XW=\left[\begin{array}{ccc} 0 & 0 \\ 0 & 1 \\ 1 & 0 \\ 1 & 1 \end{array} \right]
 </p>
 
 </section>
-<section id="slide-org8fca53c">
-<h3 id="org8fca53c">Addieren des Bias Vektors (\(b\))</h3>
+<section id="slide-orgdc1f8d6">
+<h3 id="orgdc1f8d6">Addieren des Bias Vektors (\(b\))</h3>
 <p>
 \[
 XW + b=
@@ -510,8 +510,8 @@ XW + b=
 \]
 </p>
 </section>
-<section id="slide-orgbe51b20">
-<h3 id="orgbe51b20">Aktivierungsfunktion (in diesem Fall \(ReLU\))</h3>
+<section id="slide-orgf936a02">
+<h3 id="orgf936a02">Aktivierungsfunktion (in diesem Fall \(ReLU\))</h3>
 <blockquote>
 <p>
 \(ReLU:= f(x)=max(0, x)\)
@@ -530,8 +530,8 @@ Die Aktivierungsfunktion wird auf jedes Element der Matrix ausgeführt.
 </p>
 
 </section>
-<section id="slide-org265b00f">
-<h3 id="org265b00f">Output Layer</h3>
+<section id="slide-org68f630c">
+<h3 id="org68f630c">Output Layer</h3>
 <p>
 Multiplizieren der Output Matrix des ersten Layers mit den Weights des Output Layers (\(w\)).
 \[
@@ -543,29 +543,29 @@ w= relu(XW+b)* \left[\begin{array}{ccc} 1 \\ -2 \end{array}\right]=
 </p>
 
 </section>
-<section id="slide-orgc50c1a0">
-<h3 id="orgc50c1a0">Predictions &amp; Input</h3>
+<section id="slide-org3c1c7b9">
+<h3 id="org3c1c7b9">Predictions &amp; Input</h3>
 <p>
 Input: \(\left[\begin{array}{ccc} 0 & 0 \\ 0 & 1 \\ 1 & 0 \\ 1 & 1 \end{array} \right]\) <br />
 Predictions: \(\left[\begin{array}{ccc} 0 \\ 1 \\ 1 \\ 0 \end{array}\right]\)
 </p>
 
 </section>
-<section id="slide-org8829096">
-<h3 id="org8829096">Code Beispiel</h3>
+<section id="slide-orgd7a0196">
+<h3 id="orgd7a0196">Code Beispiel</h3>
 <div class="org-src-container">
 
 <pre  class="src src-python"><span style="color: #fb2874;">def</span> <span style="color: #b6e63e;">forward</span>(X):
     <span style="color: #fd971f;">a</span> = X
     <span style="color: #fb2874;">for</span> layer <span style="color: #fb2874;">in</span> L:
-        <span style="color: #fd971f;">a</span> = h @ layer.weights + layer.bias
+        <span style="color: #fd971f;">a</span> = layer.weights @ a + layer.bias
     <span style="color: #fb2874;">return</span> a
 </pre>
 </div>
 
 </section>
-<section id="slide-org7ca47ce">
-<h3 id="org7ca47ce">Laufzeitkomplexität</h3>
+<section id="slide-orge03e7c0">
+<h3 id="orge03e7c0">Laufzeitkomplexität</h3>
 <aside class="notes">
 <p>
 Wir multiplizieren jedes Weight und addieren einen Bias Wert.
@@ -589,13 +589,13 @@ O(w)
 </section>
 </section>
 <section>
-<section id="slide-orgc6d124a">
-<h2 id="orgc6d124a">Backpropagation</h2>
-<div class="outline-text-2" id="text-orgc6d124a">
+<section id="slide-org917fee8">
+<h2 id="org917fee8">Backpropagation</h2>
+<div class="outline-text-2" id="text-org917fee8">
 </div>
 </section>
-<section id="slide-orgfb7fd31">
-<h3 id="orgfb7fd31">Wozu brauchen wir den Backpropagation Algorithmus?</h3>
+<section id="slide-orgd23adfa">
+<h3 id="orgd23adfa">Wozu brauchen wir den Backpropagation Algorithmus?</h3>
 <aside class="notes">
 <p>
 Gesuchte Gradients:
@@ -626,8 +626,8 @@ Also suchen wir folgende Gradients:
 </ul>
 
 </section>
-<section id="slide-org25bd6d4">
-<h3 id="org25bd6d4">Kettenregel</h3>
+<section id="slide-org8f354e2">
+<h3 id="org8f354e2">Kettenregel</h3>
 <aside class="notes">
 <p>
 Da ein NN prinzipiell nur viele geschachtelte Funktionen sind ist die Kettenregel sehr nützlich um die Ableitungen für jede Funktion zu bestimmen.
@@ -648,8 +648,8 @@ Dann besagt die Kettenregel: \(\frac{dz}{dx} = \frac{dz}{dy} \frac{dy}{dx}\)
 </p>
 
 </section>
-<section id="slide-orgc392f01">
-<h3 id="orgc392f01">Kettenregel als Graph</h3>
+<section id="slide-orga529320">
+<h3 id="orga529320">Kettenregel als Graph</h3>
 <aside class="notes">
 <p>
 An der Formel \(f'(f(f(w)))f'(f(w))f'(w)\) erkennt man, dass immer die Zwischenergebnisse aus jedem Schritt benötigt werden um die korrekte Ableitung \(\frac{\partial z}{\partial w}\) zu bestimmen.
@@ -682,8 +682,8 @@ f'(y)f'(x)f'(w) \\
 </p>
 
 </section>
-<section id="slide-org1108a39">
-<h3 id="org1108a39">Anpassung der Forward Propagation</h3>
+<section id="slide-org7a944bd">
+<h3 id="org7a944bd">Anpassung der Forward Propagation</h3>
 <aside class="notes">
 <p>
 Wie davor gezeigt müssen wir nun Zwischenergebnisse aus der Forward Progagation speichern um im Anschluss effizient die Backpropagation durchführen zu können.
@@ -708,26 +708,26 @@ Wir benötigen folgende Werte aus jedem Layer um den Backpropagation Algorithmus
 </p>
 </blockquote>
 </section>
-<section id="slide-org841fe41">
-<h3 id="org841fe41">Beschreibung des Algorithmus</h3>
-<div class="outline-text-3" id="text-org841fe41">
+<section id="slide-org8534606">
+<h3 id="org8534606">Beschreibung des Algorithmus</h3>
+<div class="outline-text-3" id="text-org8534606">
 </div>
 </section>
-<section id="slide-orgcecb625">
-<h4 id="orgcecb625">Schritt 1</h4>
+<section id="slide-org9f09569">
+<h4 id="org9f09569">Schritt 1</h4>
 <p>
 Forward Propagation ausführen.
 </p>
 </section>
-<section id="slide-org1d61f0c">
-<h4 id="org1d61f0c">Schritt 2</h4>
+<section id="slide-orgc7c567b">
+<h4 id="orgc7c567b">Schritt 2</h4>
 <p>
 Wir berechnen den Gradienten der Cost Function \(J\).
 \(J = \frac{1}{2} (y-X)^2 \rightarrow \nabla_y J = X - y\)
 </p>
 </section>
-<section id="slide-orgcbbbb11">
-<h4 id="orgcbbbb11">Schritt 3</h4>
+<section id="slide-org477939f">
+<h4 id="org477939f">Schritt 3</h4>
 <p>
 Erst müssen wir den Gradienten in Relation zu den pre activation function values berechnen.
 </p>
@@ -740,8 +740,8 @@ Erst müssen wir den Gradienten in Relation zu den pre activation function value
 mit \(f'(x) := Ableitung\ der\ Aktivierungsfunktioin\)
 </p>
 </section>
-<section id="slide-org7f48a40">
-<h4 id="org7f48a40">Schritt 4</h4>
+<section id="slide-orgd002144">
+<h4 id="orgd002144">Schritt 4</h4>
 <p>
 Weight Gradienten berechnen.
 \[
@@ -757,8 +757,8 @@ f(w, a, b) = w*a+b
 </blockquote>
 
 </section>
-<section id="slide-org88b8969">
-<h4 id="org88b8969">Schritt 5</h4>
+<section id="slide-orgba697ba">
+<h4 id="orgba697ba">Schritt 5</h4>
 <p>
 Bias Gradienten berechnen.
 \[
@@ -774,17 +774,17 @@ f(w, a, b) = w*a+b
 </blockquote>
 
 </section>
-<section id="slide-org162d576">
-<h4 id="org162d576">Schritt 6</h4>
+<section id="slide-orgc7be62c">
+<h4 id="orgc7be62c">Schritt 6</h4>
 <p>
 \(\nabla a^{k-1} J = w^kg\)
 </p>
 </section>
-<section id="slide-orgf679bac">
-<h4 id="orgf679bac">Wiederholen von Schritt 3 - 5 des nächsten Layers (\(L{-1}\))</h4>
+<section id="slide-org9f94945">
+<h4 id="org9f94945">Wiederholen von Schritt 3 - 5 des nächsten Layers (\(L{-1}\))</h4>
 </section>
-<section id="slide-org35ee9a5">
-<h3 id="org35ee9a5">Graph</h3>
+<section id="slide-orgae8e10e">
+<h3 id="orgae8e10e">Graph</h3>
 <aside class="notes">
 <p>
 Wir bilden einen Pfad (von Hinten nach Vorne) an Pfeilen zu einem Gradienten einer Node die wir berechnen wollen.
@@ -800,8 +800,8 @@ Wir multiplizieren alle partiellen Ableitungen auf dem Weg dahin miteinander.
 </div>
 
 </section>
-<section id="slide-org1e2463e">
-<h3 id="org1e2463e">Delta Rule</h3>
+<section id="slide-org62f8c36">
+<h3 id="org62f8c36">Delta Rule</h3>
 <p>
 In neural Networks kann der Backpropagation Algorithmus zu der sog. <b>Delta Rule</b> zusammengefasst werden.
 </p>
@@ -823,8 +823,8 @@ In neural Networks kann der Backpropagation Algorithmus zu der sog. <b>Delta Rul
 </blockquote>
 
 </section>
-<section id="slide-org62a2e68">
-<h3 id="org62a2e68">Praktisches Beispiel in Python</h3>
+<section id="slide-org25bed57">
+<h3 id="org25bed57">Praktisches Beispiel in Python</h3>
 <p>
 <a href="https://github.com/SirBubbls/backpropagation-seminar/blob/master/Backpropagation.ipynb">Notebook</a>
 </p>
@@ -832,8 +832,8 @@ In neural Networks kann der Backpropagation Algorithmus zu der sog. <b>Delta Rul
      <iframe width="100%" height="100%" src="http://localhost:8888/lab"></iframe>
 </div>
 </section>
-<section id="slide-org73ea144">
-<h4 id="org73ea144">Mini Batch Training</h4>
+<section id="slide-org92285cb">
+<h4 id="org92285cb">Mini Batch Training</h4>
 <aside class="notes">
 <p>
 Keine Vektoren sondern mehrere Datenpunkte in Form einer Matrix (ein Vektor aus Vektoren (Inputs)).
@@ -852,8 +852,8 @@ Input = \left[\begin{array}{ccc} 0 & 0 \\ 0 & 1 \\ 1 & 0 \\ 1 & 1 \end{array} \r
 Wir erhalten nun auch mehrere Gradienten in Form einer Matrix. Wir können nun den Durchschnitt der Gradienten nutzen um unsere Weights anzupassen.
 </p>
 </section>
-<section id="slide-orgae87517">
-<h4 id="orgae87517">Iris Dataset</h4>
+<section id="slide-org267e2af">
+<h4 id="org267e2af">Iris Dataset</h4>
 <p>
 <a href="https://github.com/SirBubbls/backpropagation-seminar/blob/master/MiniBatch.ipynb">Notebook</a>
 </p>
@@ -863,8 +863,8 @@ Wir erhalten nun auch mehrere Gradienten in Form einer Matrix. Wir können nun d
 </p>
 </div>
 </section>
-<section id="slide-org0d80f23">
-<h4 id="org0d80f23">Low Learning Rate</h4>
+<section id="slide-orgc5ba6fe">
+<h4 id="orgc5ba6fe">Low Learning Rate</h4>
 
 <div class="figure">
 <p><img src="./low_learning_rate.gif" alt="low_learning_rate.gif" height="550" />
@@ -872,8 +872,8 @@ Wir erhalten nun auch mehrere Gradienten in Form einer Matrix. Wir können nun d
 </div>
 
 </section>
-<section id="slide-orgc8f8595">
-<h4 id="orgc8f8595">High Learning Rate</h4>
+<section id="slide-org73b0a40">
+<h4 id="org73b0a40">High Learning Rate</h4>
 
 <div class="figure">
 <p><img src="./high_learning_rate.gif" alt="high_learning_rate.gif" height="550" />
@@ -881,8 +881,8 @@ Wir erhalten nun auch mehrere Gradienten in Form einer Matrix. Wir können nun d
 </div>
 
 </section>
-<section id="slide-orgdc14d32">
-<h3 id="orgdc14d32">Komplexität</h3>
+<section id="slide-org9f995a3">
+<h3 id="org9f995a3">Komplexität</h3>
 <blockquote>
 <p>
 <b>Wichtig</b> <br />
@@ -891,8 +891,8 @@ Folgende Komplexitäten beziehen sich ausschließlich auf den Backpropagation Al
 </blockquote>
 
 </section>
-<section id="slide-orgcb19a5b">
-<h4 id="orgcb19a5b">Laufzeitkomplexität</h4>
+<section id="slide-org5a96a7d">
+<h4 id="org5a96a7d">Laufzeitkomplexität</h4>
 <aside class="notes">
 <p>
 Wir multiplizieren die transponierte Weight Matrix also die gleiche Komplexität wie
@@ -919,8 +919,8 @@ O(w)
 </ul>
 
 </section>
-<section id="slide-orgfe8561b">
-<h4 id="orgfe8561b">Speicherkomplexität</h4>
+<section id="slide-org8237860">
+<h4 id="org8237860">Speicherkomplexität</h4>
 <blockquote>
 <p>
 \[
@@ -939,16 +939,16 @@ O(mh)
 </section>
 </section>
 <section>
-<section id="slide-org2858d52">
-<h2 id="org2858d52">General Backpropagation</h2>
+<section id="slide-org8b33e70">
+<h2 id="org8b33e70">General Backpropagation</h2>
 <p>
 Bisher haben wir uns nur mit Backpropagation in Zusammenhang mit neuronalen Netzwerken beschäftigt. <br />
 Backpropagation kann aber auch generell für andere Anwendungen eingesetzt werden.
 </p>
 
 </section>
-<section id="slide-org7650b6d">
-<h3 id="org7650b6d">Symbol to Number / Symbol to Symbol</h3>
+<section id="slide-orgcc9164e">
+<h3 id="orgcc9164e">Symbol to Number / Symbol to Symbol</h3>
 <p>
 Es existieren zwei verschiedene Möglichkeiten die Berechnungen der Gradients durchzuführen.
 </p>
@@ -960,8 +960,8 @@ Es existieren zwei verschiedene Möglichkeiten die Berechnungen der Gradients du
 </ul>
 
 </section>
-<section id="slide-org3518ad2">
-<h4 id="org3518ad2">Symbol to Number</h4>
+<section id="slide-org395c622">
+<h4 id="org395c622">Symbol to Number</h4>
 <aside class="notes">
 <p>
 Methode die wir in vorherigen Beispielen verwendet waren.
@@ -974,8 +974,8 @@ Die Input Variablen werden durch Zahlenwerte ersetzt und daraufhin (wie besproch
 </p>
 
 </section>
-<section id="slide-org706ccb8">
-<h4 id="org706ccb8">Symbol to Symbol</h4>
+<section id="slide-org6699cc9">
+<h4 id="org6699cc9">Symbol to Symbol</h4>
 <aside class="notes">
 <p>
 Symbol to Symbol benötigt zum differenzieren keine eigentlichen Zahlenwerte, sondern ersetzt diese durch Symbole. <br />
@@ -997,8 +997,8 @@ Ableitungen eines höheren Grads können berechnet werden, indem man den Backpro
 </blockquote>
 
 </section>
-<section id="slide-org8752170">
-<h3 id="org8752170">Operationen</h3>
+<section id="slide-org76cc3f9">
+<h3 id="org76cc3f9">Operationen</h3>
 <aside class="notes">
 <p>
 Wir benutzen Tensoren um eine möglichst generelle Definition des Algorithmus zu beschreiben.
@@ -1010,8 +1010,8 @@ Wir betrachten einen computational Graph, jede Node in dem Graph repräsentiert 
 </p>
 
 </section>
-<section id="slide-org429650d">
-<h4 id="org429650d">Funktionen</h4>
+<section id="slide-org1bd7dd7">
+<h4 id="org1bd7dd7">Funktionen</h4>
 <aside class="notes">
 <p>
 <code>get_operation</code> Beispiel bei einer Variable, die durch Matrix Multiplikation generiert wird, würde genau diese Operation zurück gegeben werden.
@@ -1030,8 +1030,8 @@ Muss bei jeder Operation implementiert werden.</li>
 
 </ul>
 </section>
-<section id="slide-orgb97e568">
-<h3 id="orgb97e568">Algorithmus</h3>
+<section id="slide-org8269d04">
+<h3 id="org8269d04">Algorithmus</h3>
 <p>
 Benötigt ist:
 </p>
@@ -1043,8 +1043,8 @@ Benötigt ist:
 </ul>
 
 </section>
-<section id="slide-org22b51d5">
-<h4 id="org22b51d5">Äußere Funktion</h4>
+<section id="slide-org8299ef1">
+<h4 id="org8299ef1">Äußere Funktion</h4>
 <p>
 Wir definieren \(G'\) als alle Variablen, die Vorfahren von \(z\) und Nachfahren von \(T\) sind. <br />
 <br />
@@ -1056,8 +1056,8 @@ In <code>grad_table</code> können wir Variablen Gradients zuweisen. <br />
 </p>
 
 </section>
-<section id="slide-org7a55597">
-<h4 id="org7a55597">Loop über alle Variablen, deren Gradienten wir berechnen müssen</h4>
+<section id="slide-org56b8760">
+<h4 id="org56b8760">Loop über alle Variablen, deren Gradienten wir berechnen müssen</h4>
 <p>
 In jedem Loop rufen wir die Funktion <code>build_grad</code> auf.
 </p>
@@ -1070,8 +1070,8 @@ In jedem Loop rufen wir die Funktion <code>build_grad</code> auf.
 </div>
 
 </section>
-<section id="slide-org3713c13">
-<h4 id="org3713c13"><code>build_grad(v, G, G_1, grad_table)</code></h4>
+<section id="slide-org2e81c82">
+<h4 id="org2e81c82"><code>build_grad(v, G, G_1, grad_table)</code></h4>
 <aside class="notes">
 <p>
 Es handelt sich um eine <b>rekursive</b> Funktion.<br />
@@ -1101,8 +1101,8 @@ Alle Gradients der Consumer werden summiert und daraufhin der Node zugeordnet.
 </div>
 
 </section>
-<section id="slide-org3ef5cee">
-<h4 id="org3ef5cee"><code>bprop</code> Funktion</h4>
+<section id="slide-org3967b58">
+<h4 id="org3967b58"><code>bprop</code> Funktion</h4>
 <aside class="notes">
 <p>
 Auch diese Funktion kann natürlich auch in einer anderen Sprache implementiert sein.
@@ -1119,21 +1119,21 @@ Auch diese Funktion kann natürlich auch in einer anderen Sprache implementiert 
 </p>
 
 </section>
-<section id="slide-orga27aa16">
-<h3 id="orga27aa16">Beispiel</h3>
-<div class="outline-text-3" id="text-orga27aa16">
+<section id="slide-orgbcf1f21">
+<h3 id="orgbcf1f21">Beispiel</h3>
+<div class="outline-text-3" id="text-orgbcf1f21">
 </div>
 </section>
-<section id="slide-org018d372">
-<h4 id="org018d372">Graph</h4>
+<section id="slide-org3fdf152">
+<h4 id="org3fdf152">Graph</h4>
 <p>
 Wir wollen \(\frac{\partial u_1}{\partial u_4}\) bestimmen.
 <img src="./big_graph_1.jpg" alt="big_graph_1.jpg" />
 </p>
 
 </section>
-<section id="slide-orgebfdf78">
-<h4 id="orgebfdf78">Bestimmen der Ableitung \(\frac{\partial u_1}{\partial u_4}\)</h4>
+<section id="slide-orga656207">
+<h4 id="orga656207">Bestimmen der Ableitung \(\frac{\partial u_1}{\partial u_4}\)</h4>
 <aside class="notes">
 <p>
 Wir müssen erst \(G'\) bestimmen, also:
@@ -1153,8 +1153,8 @@ Wir müssen erst \(G'\) bestimmen, also:
 </div>
 
 </section>
-<section id="slide-orgeb4fd75">
-<h4 id="orgeb4fd75">Eintragen aller Ableitungen in Graph</h4>
+<section id="slide-org585e29e">
+<h4 id="org585e29e">Eintragen aller Ableitungen in Graph</h4>
 <aside class="notes">
 <p>
 Wir tragen alle Operationen, die zur Berechnung der gesuchten Ableitung benötigt werden in den Graphen \(G\) ein.
@@ -1169,8 +1169,8 @@ Wir tragen alle Operationen, die zur Berechnung der gesuchten Ableitung benötig
 </div>
 
 </section>
-<section id="slide-orgdd3461c">
-<h3 id="orgdd3461c">Generalisierbarkeit</h3>
+<section id="slide-org694a1f8">
+<h3 id="org694a1f8">Generalisierbarkeit</h3>
 <p>
 Dadurch ist der Backpropagation Algorithmus sehr allgemein anwendbar. <br />
 </p>
@@ -1182,8 +1182,8 @@ Jede Operation ist für seine eigene Differenzierung verantwortlich und benötig
 </section>
 </section>
 <section>
-<section id="slide-orge7b955e">
-<h2 id="orge7b955e">Historisches</h2>
+<section id="slide-org2594bdf">
+<h2 id="org2594bdf">Historisches</h2>
 <aside class="notes">
 <p>
 Die Kettenregel stammt aus dem 17ten Jahrhundert.
@@ -1199,8 +1199,8 @@ Die Kettenregel stammt aus dem 17ten Jahrhundert.
 </ul>
 
 </section>
-<section id="slide-org709193f">
-<h4 id="org709193f">Popularität von neuronalen Netzen</h4>
+<section id="slide-org0c50908">
+<h4 id="org0c50908">Popularität von neuronalen Netzen</h4>
 <aside class="notes">
 <p>
 Durch die Erfolge mit Backpropagation wurde Anfang der 90er Jahre Deep Learning vermehrt eingesetzt. <br />
@@ -1219,8 +1219,8 @@ bilden heute einen fundamentalen Baustein von maschinellem Lernen.
 </p>
 
 </section>
-<section id="slide-orge7b8676">
-<h4 id="orge7b8676">Backpropagation &amp; Gradient Descent</h4>
+<section id="slide-org532c88f">
+<h4 id="org532c88f">Backpropagation &amp; Gradient Descent</h4>
 <p>
 Beide treibenden Algorithmen von neuronalen Netzwerken haben sich seit den 80er Jahren nicht wesentlich verändert. <br />
 </p>
@@ -1232,8 +1232,8 @@ Bessere Resultate sind besser Hardware und Dataset Optimierung zu verdanken.
 </section>
 </section>
 <section>
-<section id="slide-org892f74b">
-<h2 id="org892f74b">Quellen</h2>
+<section id="slide-org0a27d92">
+<h2 id="org0a27d92">Quellen</h2>
 <ul>
 <li>Deep Learning (Ian Goodfellow, Yoshua Bengio &amp; Aaron Courville)</li>
 <li><a href="https://medium.com/@14prakash/back-propagation-is-very-simple-who-made-it-complicated-97b794c97e5c">https://medium.com/@14prakash/back-propagation-is-very-simple-who-made-it-complicated-97b794c97e5c</a></li>
