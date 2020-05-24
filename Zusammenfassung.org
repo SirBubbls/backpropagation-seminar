@@ -1,0 +1,604 @@
+#+TITLE: Backpropagation
+#+LANGUAGE: de
+#+AUTHOR: Lucas Sas Brunschier
+#+DATE: SS20
+#+EMAIL: lucassas@live.de
+#+OPTIONS: num:nil timestamp:nil
+
+* Vorwissen
+** Gradient
+Der Gradient ist der Vektor aller partiellen Ableitungen einer Funktion $f$.
+#+begin_quote
+Notation: $\nabla f(x)$
+#+end_quote
+
+*** Beispiel
+#+begin_quote
+$f(x) = 2x_1^2 + x_2^3$
+#+end_quote
+$\rightarrow \nabla_xf(x)=\left(\begin{array}{c} f'_{x_1} \\ f'_{x_2} \end{array}\right)= \left(\begin{array}{c} 4x_1 \\ 3x^2_2 \end{array}\right)$
+
+*** Jacobi Matrix
+#+begin_quote
+Bei mehreren Funktionen (o.a. *Komponenten Funktionen*).
+#+end_quote
+
+Bei mehreren Funktionen bilden deren Gradienten eine Jacobi Matrix.
+
+$$
+J(f) =\left (\begin{array}{cc} \nabla f_1 \\ \nabla f_2 \end{array} \right )
+$$
+
+** Stochastic Gradient Descent
+Der Gradient Descent Algorithmus wird dafür verwendet ein lokales Minimum einer Funktion zu bestimmen.
+*** Beispiel
+Funktion $f(x)=x_1^2-x_2^2$ ist gegeben. \\
+Also: $\nabla_xf(x)=\left(\begin{array}{c} f'_{x_1} \\ f'_{x_2} \end{array}\right)= \left(\begin{array}{c} 2x_1 \\ -2x_2 \end{array}\right)$ \\
+Wir starten mit einem beliebigen Punkt: z.B. $\left(\begin{array}{c} 2 \\ 1 \end{array}\right)$ und setzen ein: \\
+$\left(\begin{array}{c} 2x_1 \\ -2x_2 \end{array}\right) = \left(\begin{array}{c} 2 * 2 \\ -2 * 1 \end{array}\right) = \left(\begin{array}{c} 4 \\ -2 \end{array}\right)$
+
+$Neuer\ Punkt = \left(\begin{array}{c} 2 \\ 1 \end{array}\right)  - \lambda \left(\begin{array}{c} 4 \\ -2 \end{array}\right)$ mit $\lambda: learning\ rate$
+
+** Visualisiert
+#+ATTR_ORG: :width 200
+#+ATTR_HTML: :height 500
+[[./gradient_descent.gif]]
+
+** Computational Graphs
+#+begin_notes
+Rechenoperationen in ANN's werden typischerweise nicht in mathematischen Formeln angegeben, sondern in sog. computational Graphs.
+#+end_notes
+
+Typischerweise werden Operationen in artificial neural networks nicht mit mathematischen Formeln angegeben, sondern als Graph dargestellt.
+
+*** Repräsentation
+Jede Node in einem Graph $G$ repräsentiert eine mathematische Operation oder eine Input Variable.\\
+
+Beispielsweise:
+- Matrix Multiplikation
+- Addition
+- Skalare Multiplikation
+
+*** Addition Beispiel
+$$
+y = a+b
+$$
+
+[[./basic_graph.png]]
+
+*** Komplexere Beispiele
+$x=y+z$ \\
+$a=x\odot z$
+
+[[./basic_graph_2.jpg]]
+
+* Künstliche Neuronale Netze & Deep Learning
+** Künstliche Neuronale Netze
+Als Vorbild dienen Neuronale Netze in der Biologie, jedoch sind beide Felder doch unterschiedlicher als man vielleicht erwarten würde.
+
+#+begin_quote
+In diesem Vortrag werden nur fully connected feed forward networks behandelt.
+#+end_quote
+
+** Formale Definition
+#+begin_quote
+Parameter werden üblicherweise als Theta ($\theta$) notiert. \\
+Der Lernalgorithmus soll die Parameter $\theta$ so verändern, dass sich $f$ so nah wie möglich an $f^*$ annähert.
+#+end_quote
+
+Formale Definition für ein neuronales Netz: $y=f(x; \theta)$ und $y = f^*(x)$
+- $y$ ist den Wert den unser NN voraussagen soll
+- $x$ sind die Input Daten, die das NN erhält
+- $\theta$ sind alle Parameter eines neuronalen Netzwerks
+- $f^*$ ist unsere Zielfunktion
+
+** Wie ist nun ein neuronales Netzwerk aufgebaut?
+#+begin_notes
+In der gezeigten Grafik bilden alle vertikal angeordneten Neuronen einen Layer in einem NN ab.
+#+end_notes
+
+Wir teilen das Netzwerk in Schichten (Layer) auf.
+
+#+ATTR_HTML: :width 50% :height 50%
+https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Neural_network.svg/1200px-Neural_network.svg.png
+
+Jeder Layer bildet eine Funktion $f^{i}$, mit $i=Layer\ Index$ ab.
+
+*** Formell
+Somit ist ein neurales Netzwerk eine Kette an Funktionen $f$.
+#+begin_quote
+Ein Netz mit $3$ Layern wäre somit $f^2(f^1(f^0(X)))$
+mit $X=Input\ Data$
+#+end_quote
+
+*** Aufbau eines Layers
+
+Jeder Layer enthält *mindestens* folgende Informationen:
+- Eine Weight Matrix ($w$)
+- Einen Bias Vektor ($b$)
+- Aktivierungsfunktion ($\sigma$)
+
+*** Verbindung der Layer
+#+begin_notes
+Jede Kante in einem NN Modell repräsentiert eine reelle Zahl. \\
+Da jedes Neuron mit allen Neuronen des vorherigen Layers verbunden ist, besitzt
+jedes Neuron einen Vektor mit der Größe des vorherigen Layers.
+Also besitzt jeder Layer eine Weight Matrix mit den Dimensionen $size(L_{i-1}) \times size(L_i)$
+#+end_notes
+Jedes Neuron eines Layers $L_i$ ist mit allen Neuronen des Layers $L_{i-1}$ verbunden. \\
+
+[[./connections.jpg]]
+
+*** Aktivierungsfunktion
+#+begin_notes
+Non linearity Functions werden benötigt, da eine zwei lineare Funktionen
+immer zu einer weiteren linearen Funktion reduziert werden können. \\
+*Ausnahme* bei einem Output Layer dessen Output eine reelle Zahl sein soll.
+#+end_notes
+
+Da wir bei Neural Networks oft versuchen non-lineare Zusammenhänge zu approximieren, benötigen wir auch eine nicht-lineare Komponente in unserem NN.
+
+*** Beliebte Aktivierungsfunktionen
+- Rectified Linear Unit ($ReLU$) \\
+  #+begin_quote
+  $f(x)=max(0, x)$
+  #+end_quote
+- $Leaky\ ReLU$ \\
+  #+begin_quote
+  $f(x)=\begin{cases} x &\quad if\ x > 0 \\ 0.1x &\quad else \end{cases}$
+#+end_quote
+- Sigmoid Function \\
+  #+begin_quote
+  $f(x)= \frac{1}{1+e^{-t}}$
+  #+end_quote
+ 
+*** Function Plot
+[[./activation_functions.jpg]]
+
+*** Cost Function ($J$)
+Eine Funktion um zu bestimmen wie 'nah' wir uns an unserem erwarteten Inference Wert befinden.
+#+begin_quote
+In dieser Präsentation benutzen wir die Euklidean-Distance $(x-y)^2$ als Cost Function.
+#+end_quote
+
+* Forward Propagation
+Ein Layer in einem Feed-Forward Neural Network besteht aus folgenden Elementen:
+- Inputs ($X$)
+- Weights ($W$)
+- Biases ($b$)
+- Output ($a$)
+** Berechnung des Inputs
+Jedes Neuron enthält einen Vektor mit Weights $w$, der Angibt wie stark jeder Input gewichtet wird. \\
+$z=a_1*w_1+a_2*w_2$ oder $z=w^Ta$
+
+[[./connections.jpg]]
+
+** Formell
+Um die Aktivierungen ($a$) eines Layers zu berechen können wir folgende Formel benutzen:
+
+#+begin_quote
+$a_L = \sigma(a_{L-1} w_L + b_L)$
+#+end_quote
+Der berechnete Vektor $a_L$ dient dem Layer $L+1$ als Input.
+
+** Computational Graph
+$$
+a = \sigma(a_{L-1}w_L+b)
+$$
+
+[[./forward_prop_graph.png]]
+
+** Beispiel (XOR)
+$W=\left[\begin{array}{ccc} 1 & 1 \\ 1 & 1 \end{array}\right]$ \\
+$b=\left [\begin{array}{ccc} 0 \\ -1 \end{array} \right]$ \\
+** Multiplizieren der Weights ($W$) und Inputs ($X$)
+$$
+XW=\left[\begin{array}{ccc} 0 & 0 \\ 0 & 1 \\ 1 & 0 \\ 1 & 1 \end{array} \right]
+\left[\begin{array}{ccc} 1 & 1 \\ 1 & 1 \end{array}\right]=
+\left[\begin{array}{ccc} 0 & 0 \\ 1 & 1 \\ 1 & 1 \\ 2 & 2 \end{array} \right]
+$$
+
+** Addieren des Bias Vektors ($b$)
+$$
+XW + b=
+\left[\begin{array}{ccc} 0 & 0 \\ 1 & 1 \\ 1 & 1 \\ 2 & 2 \end{array} \right] +
+\left(\begin{array}{ccc} 0 \\ -1 \end{array}\right)=
+\left[\begin{array}{ccc} 0 & -1 \\ 1 & 0 \\ 1 & 0 \\ 2 & 1 \end{array} \right]
+$$
+** Aktivierungsfunktion (in diesem Fall $ReLU$)
+#+begin_quote
+$ReLU:= f(x)=max(0, x)$
+#+end_quote
+$$
+relu(XW+b)=
+relu(\left[\begin{array}{ccc} 0 & -1 \\ 1 & 0 \\ 1 & 0 \\ 2 & 1 \end{array} \right])=
+\left[\begin{array}{ccc} 0 & 0 \\ 1 & 0 \\ 1 & 0 \\ 2 & 1 \end{array} \right]
+$$
+
+Die Aktivierungsfunktion wird auf jedes Element der Matrix ausgeführt.
+
+** Output Layer
+Multiplizieren der Output Matrix des ersten Layers mit den Weights des Output Layers ($w$).
+$$
+w= relu(XW+b)* \left[\begin{array}{ccc} 1 \\ -2 \end{array}\right]=
+\left[\begin{array}{ccc} 0 & 0 \\ 1 & 0 \\ 1 & 0 \\ 2 & 1 \end{array} \right]*
+\left[\begin{array}{ccc} 1 \\ -2 \end{array}\right]=
+\left[\begin{array}{ccc} 0 \\ 1 \\ 1 \\ 0 \end{array}\right]
+$$
+
+** Predictions & Input
+Input: $\left[\begin{array}{ccc} 0 & 0 \\ 0 & 1 \\ 1 & 0 \\ 1 & 1 \end{array} \right]$ \\
+Predictions: $\left[\begin{array}{ccc} 0 \\ 1 \\ 1 \\ 0 \end{array}\right]$
+
+** Code Beispiel
+#+BEGIN_SRC python
+def forward(X):
+    a = X
+    for layer in L:
+        a = h @ layer.weights + layer.bias
+    return a
+#+END_SRC
+
+** Laufzeitkomplexität
+#+begin_notes
+Wir multiplizieren jedes Weight und addieren einen Bias Wert.
+#+end_notes
+
+#+begin_quote
+$$
+O(w)
+$$
+#+end_quote
+
+- $w$ Anzahl der Weights in neuronalem Netz.
+
+* Backpropagation
+** Wozu brauchen wir den Backpropagation Algorithmus?
+#+begin_notes
+Gesuchte Gradients:
+- Ableitung von $J$ in Abhängigkeit von Bias $b^k$
+- Ableitung von $J$ in Abhängigkeit von Weights $w^k$
+#+end_notes
+
+Ein fundamentaler Baustein, von neuralen Netzen.
+
+Backpropagation ist kein Lernalgorithmus/Optimierungsalgorithmus, sondern aussschlißlich für die Generierung der Gradients jedes Layers zuständig.
+
+Also suchen wir folgende Gradients:
+ - $\nabla_{b^k} J$
+ - $\nabla_{w^k} J$
+
+** Kettenregel
+#+begin_notes
+Da ein NN prinzipiell nur viele geschachtelte Funktionen sind ist die Kettenregel sehr nützlich um die Ableitungen für jede Funktion zu bestimmen.
+#+end_notes
+
+Die Kettenregel ist nützlich um Ableitungen aus schon bereits vorhandenen Ableitungen zu konstruieren.
+
+$$y=g(x)\ und\ z=f(g(x))=f(y)$$
+
+Dann besagt die Kettenregel: $\frac{dz}{dx} = \frac{dz}{dy} \frac{dy}{dx}$
+
+** Kettenregel als Graph
+
+#+begin_notes
+An der Formel $f'(f(f(w)))f'(f(w))f'(w)$ erkennt man, dass immer die Zwischenergebnisse aus jedem Schritt benötigt werden um die korrekte Ableitung $\frac{\partial z}{\partial w}$ zu bestimmen.
+#+end_notes
+
+$$
+x = f(w),\ y=f(x),\ z=f(y)
+$$
+
+[[./chain_rule_derriv.jpg]]
+
+$$
+\frac{\partial z}{\partial w}=
+\frac{\partial z}{\partial y}
+\frac{\partial y}{\partial x}
+\frac{\partial x}{\partial w}
+=
+f'(y)f'(x)f'(w) \\
+= f'(f(f(w)))f'(f(w))f'(w)
+$$
+
+** Anpassung der Forward Propagation
+#+begin_notes
+Wie davor gezeigt müssen wir nun Zwischenergebnisse aus der Forward Progagation speichern um im Anschluss effizient die Backpropagation durchführen zu können.
+Eine Alternative ist bei *limitiertem Speicher* die Zwischenergebnisse immer neu zu evaluieren, wenn sie benötigt werden. (-> Höhere Laufzeit)
+#+end_notes
+
+Wir benötigen folgende Werte aus jedem Layer um den Backpropagation Algorithmus ausführen zu können.
+- $a$ Aktivation Vektor
+- $z$ Pre Activation Function Vektor
+ 
+#+begin_quote
+$f'(y)f'(x)f'(w)$: Speichern der Zwischenergebnisse in Variablen
+$f'(f(f(w)))f'(f(w))f'(w)$: Neu Evaluierung der Zwischenergebnisse
+#+end_quote
+** Beschreibung des Algorithmus
+*** Schritt 1
+Forward Propagation ausführen.
+*** Schritt 2
+Wir berechnen den Gradienten der Cost Function $J$.
+$J = \frac{1}{2} (y-X)^2 \rightarrow \nabla_y J = X - y$
+*** Schritt 3
+Erst müssen wir den Gradienten in Relation zu den pre activation function values berechnen.
+#+begin_quote
+$\nabla_{a^{k}} J = g \odot f'(a^{(k)})$
+#+end_quote
+mit $f'(x) := Ableitung\ der\ Aktivierungsfunktioin$
+*** Schritt 4
+Weight Gradienten berechnen.
+$$
+f(w, a, b) = w*a+b
+$$
+$g * \frac{\partial}{\partial w} = g * (a+0)$
+
+#+begin_quote
+$\nabla_{w^k} J = ga^{k-1}$
+#+end_quote
+
+*** Schritt 5
+Bias Gradienten berechnen.
+$$
+f(w, a, b) = w*a+b
+$$
+$g * \frac{\partial}{\partial b}= g * 1$
+
+#+begin_quote
+$\nabla_{b^{k}} J = g$
+#+end_quote
+
+*** Schritt 6
+$\nabla a^{k-1} J = w^kg$
+*** Wiederholen von Schritt 3 - 5 des nächsten Layers ($L{-1}$)
+** Graph
+#+begin_notes
+Wir bilden einen Pfad (von Hinten nach Vorne) an Pfeilen zu einem Gradienten einer Node die wir berechnen wollen.
+Wir multiplizieren alle partiellen Ableitungen auf dem Weg dahin miteinander.
+#+end_notes
+
+[[./backprop_derriv.jpg]]
+
+** Delta Rule
+In neural Networks kann der Backpropagation Algorithmus zu der sog. *Delta Rule* zusammengefasst werden.
+#+begin_notes
+$\lambda$ ist learning rate \\
+$\alpha$ ist die Aktivierungsfunktion \\
+$z$ ist inputs * weights \\
+#+end_notes
+
+#+begin_quote
+$$
+\nabla w_{ji} = \lambda ( - a) \alpha'(z)a_{L-1}
+$$
+#+end_quote
+
+** Praktisches Beispiel in Python
+[[https://github.com/SirBubbls/backpropagation-seminar/blob/master/Backpropagation.ipynb][Notebook]]
+#+BEGIN_EXPORT html
+<div class = "stretch">
+     <iframe width="100%" height="100%" src="http://localhost:8888/lab"></iframe>
+</div>
+#+END_EXPORT
+*** Mini Batch Training
+#+begin_notes
+Keine Vektoren sondern mehrere Datenpunkte in Form einer Matrix (ein Vektor aus Vektoren (Inputs)).
+#+end_notes
+
+In der Praxis werden keine Vektoren als Input Daten benutzt, sondern Matrizen (siehe ~XOR~ Beispiel).
+$$
+Input = \left[\begin{array}{ccc} 0 & 0 \\ 0 & 1 \\ 1 & 0 \\ 1 & 1 \end{array} \right]
+$$
+
+Wir erhalten nun auch mehrere Gradienten in Form einer Matrix. Wir können nun den Durchschnitt der Gradienten nutzen um unsere Weights anzupassen.
+*** Iris Dataset
+[[https://github.com/SirBubbls/backpropagation-seminar/blob/master/MiniBatch.ipynb][Notebook]]
+#+ATTR_ORG: :width 200
+#+ATTR_HTML: :height 500
+[[./dataset.jpg]]
+*** Low Learning Rate
+#+ATTR_ORG: :width 200
+#+ATTR_HTML: :height 550
+[[./low_learning_rate.gif]]
+
+*** High Learning Rate
+#+ATTR_ORG: :width 200
+#+ATTR_HTML: :height 550
+[[./high_learning_rate.gif]]
+
+** Komplexität
+#+begin_quote
+*Wichtig* \\
+Folgende Komplexitäten beziehen sich ausschließlich auf den Backpropagation Algorithmus.
+#+end_quote
+
+*** Laufzeitkomplexität
+#+begin_notes
+Wir multiplizieren die transponierte Weight Matrix also die gleiche Komplexität wie
+Forward-propagation.
+#+end_notes
+
+Backpropagation besitzt die gleiche Laufzeitkomplexität wie Forward-propagation.
+
+#+begin_quote
+$$
+O(w)
+$$
+#+end_quote
+
+- $w$ Anzahl der Weights in neuronalem Netz.
+
+*** Speicherkomplexität
+#+begin_quote
+$$
+O(mh)
+$$
+#+end_quote
+
+- $m$ Anzahl an Elementen in Batch
+- $h$ Anzahl der Hidden-Units
+ 
+
+* General Backpropagation
+Bisher haben wir uns nur mit Backpropagation in Zusammenhang mit neuronalen Netzwerken beschäftigt. \\
+Backpropagation kann aber auch generell für andere Anwendungen eingesetzt werden.
+
+** Symbol to Number / Symbol to Symbol
+Es existieren zwei verschiedene Möglichkeiten die Berechnungen der Gradients durchzuführen.
+
+- Symbol to Number
+- Symbol to Symbol
+
+*** Symbol to Number
+#+begin_notes
+Methode die wir in vorherigen Beispielen verwendet waren.
+#+end_notes
+
+Die Input Variablen werden durch Zahlenwerte ersetzt und daraufhin (wie besprochen) alle nötigen Gradienten berechnet.
+
+*** Symbol to Symbol
+#+begin_notes
+Symbol to Symbol benötigt zum differenzieren keine eigentlichen Zahlenwerte, sondern ersetzt diese durch Symbole. \\
+Zusammengefasst kann man sagen, dass der Symbol to Number approach nur die Berechnungen ausführt die vom Symbol to Symbol als Graph erstellt werden.
+#+end_notes
+
+Beim der Symbol to Symbol Herangehensweise wird zuerst der Graph mit allen Ableitungen mit der Hilfe von symbolischen Werten konstruiert. \\
+Später wird dann der Graph mit der Hilfe eines eigenen Algorithmus ausgewertet. \\
+
+#+begin_quote
+*Vorteil* \\
+Ableitungen eines höheren Grads können berechnet werden, indem man den Backpropagation Algorithmus auf einen bereits abgeleiteten Graphen ausführt.
+#+end_quote
+
+** Operationen
+#+begin_notes
+Wir benutzen Tensoren um eine möglichst generelle Definition des Algorithmus zu beschreiben.
+#+end_notes
+Wir betrachten einen computational Graph, jede Node in dem Graph repräsentiert eine Variable in Form eines Tensors.
+
+*** Funktionen
+#+begin_notes
+~get_operation~ Beispiel bei einer Variable, die durch Matrix Multiplikation generiert wird, würde genau diese Operation zurück gegeben werden.
+#+end_notes
+
+- ~get_operation()~
+- ~get_consumers()~ \\
+  Gibt alle Variablen/Operationen zurück, die 'Kinder' von sich selber sind.
+- ~get_inputs()~ \\
+  Gibt alle Variablen/Operationen zurück, die 'Eltern' von sich selber sind.
+- ~bprop()~ \\
+  Muss bei jeder Operation implementiert werden.
+** Algorithmus
+Benötigt ist:
+- die Menge aller Variablen $T$, deren Gradienten wir berechnen müssen
+- den Graphen $G$
+- die Variable $z$, die wir differenzieren wollen
+
+*** Äußere Funktion
+Wir definieren $G'$ als alle Variablen, die Vorfahren von $z$ und Nachfahren von $T$ sind. \\
+\\
+In ~grad_table~ können wir Variablen Gradients zuweisen. \\
+
+~grad_table[z] = 1~   (da $\frac{\partial z}{\partial z} = 1$)
+
+*** Loop über alle Variablen, deren Gradienten wir berechnen müssen
+In jedem Loop rufen wir die Funktion ~build_grad~ auf.
+#+BEGIN_SRC python
+for v in T:
+    build_grad(v, G, G_1, grad_table)
+return [grad_table[v] for v in T]
+#+END_SRC
+
+*** ~build_grad(v, G, G_1, grad_table)~
+#+begin_notes
+Es handelt sich um eine *rekursive* Funktion.\\
+Der Base Case ist erreicht, sobald sich der zu berechnende Gradient sich bereits in ~grad_table~ befindet.\\
+\\
+Um den Gradient zu berechnen benötigen wir erst alle Ableitungen der Consumer aus $G'$. \\
+\\
+Alle Gradients der Consumer werden summiert und daraufhin der Node zugeordnet.
+#+end_notes
+
+#+BEGIN_SRC python
+def build_grad(v, G, G_1, grad_table):
+    if v in grad_table: return grad_table[v]
+    i = 1
+    for c in get_consumers(v, G_1):
+        op = get_operation(c)
+        d = build_grad(c, G, G_1, grad_table)
+        g[i] = op.bprop(get_inputs(c, G_1), v, d)
+        i += 1
+    g = sum(g)
+    grad_table[v] = g
+    return g
+#+END_SRC
+
+*** ~bprop~ Funktion
+#+begin_notes
+Auch diese Funktion kann natürlich auch in einer anderen Sprache implementiert sein.
+#+end_notes
+
+~op.bprop(inputs, X, G)~ \\
+ \\
+~inputs~: Liste an Inputs, die wir der Operation zur Verfügung stellen \\
+~X~: Input, dessen Ableitung wir berechnen wollen \\
+~G~: Gradient des Outputs der Operation
+
+** Beispiel
+*** Graph
+Wir wollen $\frac{\partial u_1}{\partial u_4}$ bestimmen.
+[[./big_graph_1.jpg]]
+
+*** Bestimmen der Ableitung $\frac{\partial u_1}{\partial u_4}$
+#+begin_notes
+Wir müssen erst $G'$ bestimmen, also:
+- Vorfahren von $u_1 = z$
+- Nachfahren von $[u_4] = T$
+#+end_notes
+
+[[./big_graph_2.jpg]]
+
+*** Eintragen aller Ableitungen in Graph
+#+begin_notes
+Wir tragen alle Operationen, die zur Berechnung der gesuchten Ableitung benötigt werden in den Graphen $G$ ein.
+#+end_notes
+
+#+ATTR_HTML: :height 550
+[[./big_graph_3.jpg]]
+
+** Generalisierbarkeit
+Dadurch ist der Backpropagation Algorithmus sehr allgemein anwendbar. \\
+
+Jede Operation ist für seine eigene Differenzierung verantwortlich und benötigt keine weiteren Informationen.
+
+* Historisches
+#+begin_notes
+Die Kettenregel stammt aus dem 17ten Jahrhundert.
+#+end_notes
+
+- Kettenregel stammt aus dem 17ten Jahrhundert (Leibniz, 1676). \\
+- Lineare neurale Netzwerke Mitte des 20ten Jahrhunderts. \\
+- Erfolgreiche Experimente mit Back-Propagation (1986) \\
+ 
+*** Popularität von neuronalen Netzen
+#+begin_notes
+Durch die Erfolge mit Backpropagation wurde Anfang der 90er Jahre Deep Learning vermehrt eingesetzt. \\
+Klassische machine learning Algorithmen wurden in den 90er Jahren mehr genutzt als neuronale Netzwerke.
+#+end_notes
+
+Klassische machine learning Algorithmen wurden in den 90er Jahren mehr genutzt als neuronale Netzwerke.
+
+Durch die hohe Speicheranforderung wurden NN ab ca. 2006 immer vermehrter eingesetzt und
+bilden heute einen fundamentalen Baustein von maschinellem Lernen.
+
+*** Backpropagation & Gradient Descent
+Beide treibenden Algorithmen von neuronalen Netzwerken haben sich seit den 80er Jahren nicht wesentlich verändert. \\
+
+Bessere Resultate sind besser Hardware und Dataset Optimierung zu verdanken.
+
+* Quellen
+- Deep Learning (Ian Goodfellow, Yoshua Bengio & Aaron Courville)
+- https://medium.com/@14prakash/back-propagation-is-very-simple-who-made-it-complicated-97b794c97e5c
+- Wikipedia: https://en.wikipedia.org/wiki/Backpropagation
+- Wikipedia: https://en.wikipedia.org/wiki/Delta_rule
