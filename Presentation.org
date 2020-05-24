@@ -27,8 +27,10 @@ https://www.deeplearningbook.org
 [[https://www.deeplearningbook.org/contents/mlp.html][Back-propagation Kapitel]]
 
 ** Jupyter Notebook
-Beispiele für alle Methoden dieser Präsentation sind in diesem [[https://github.com/SirBubbls/backpropagation-seminar/blob/master/Backpropagation.ipynb][IPython Notebook]] zu finden.
+Beispiele für alle praktischen Beispiele dieser Präsentation sind in diesem [[https://github.com/SirBubbls/backpropagation-seminar][Repository]] zu finden.
+
 * Agenda
+#+REVEAL: split
 1. Vorwissen
    - Gradients & Stochastic Gradient Descent
    - Computational Graphs
@@ -40,18 +42,33 @@ Beispiele für alle Methoden dieser Präsentation sind in diesem [[https://githu
    - Delta Rule
    - Implementation in Python
 5. General Back-propagation
+6. Historisches
+7. Quellen
 
 * Vorwissen
 ** Gradient
 Der Gradient ist der Vektor aller partiellen Ableitungen einer Funktion $f$.
 #+begin_quote
-Notation: $\nabla_xf(x)$
+Notation: $\nabla f(x)$
 #+end_quote
+
 *** Beispiel
 #+begin_quote
 $f(x) = 2x_1^2 + x_2^3$
 #+end_quote
 $\rightarrow \nabla_xf(x)=\left(\begin{array}{c} f'_{x_1} \\ f'_{x_2} \end{array}\right)= \left(\begin{array}{c} 4x_1 \\ 3x^2_2 \end{array}\right)$
+
+*** Jacobi Matrix
+#+begin_quote
+Bei mehreren Funktionen (o.a. *Komponenten Funktionen*).
+#+end_quote
+
+Bei mehreren Funktionen bilden deren Gradienten eine Jacobi Matrix.
+
+$$
+J(f) =\left (\begin{array}{cc} \nabla f_1 \\ \nabla f_2 \end{array} \right )
+$$
+
 ** Stochastic Gradient Descent
 Der Gradient Descent Algorithmus wird dafür verwendet ein lokales Minimum einer Funktion zu bestimmen.
 *** Beispiel
@@ -81,12 +98,14 @@ Beispielsweise:
 - Matrix Multiplikation
 - Addition
 - Skalare Multiplikation
+
 *** Addition Beispiel
 $$
 y = a+b
 $$
 
 [[./basic_graph.png]]
+
 *** Komplexere Beispiele
 $x=y+z$ \\
 $a=x\odot z$
@@ -102,13 +121,22 @@ In diesem Vortrag werden nur fully connected feed forward networks behandelt.
 #+end_quote
 
 ** Formale Definition
-Formale Definition für ein neuronales Netz: $y=f(x; \theta)$ und $y=f^*(x)$
-- $y$ ist den Wert den unser NN vorraussagen soll
+#+begin_quote
+Parameter werden üblicherweise als Theta ($\theta$) notiert. \\
+Der Lernalgorithmus soll die Parameter $\theta$ so verändern, dass sich $f$ so nah wie möglich an $f^*$ annähert.
+#+end_quote
+
+Formale Definition für ein neuronales Netz: $y=f(x; \theta)$ und $y = f^*(x)$
+- $y$ ist den Wert den unser NN voraussagen soll
 - $x$ sind die Input Daten, die das NN erhält
-- $\theta$ sind Parameter des NN's, um $f$ so nah wie möglich an
-  die optimale Funktion $f^*$ anzunähern.
+- $\theta$ sind alle Parameter eines neuronalen Netzwerks
+- $f^*$ ist unsere Zielfunktion
 
 ** Wie ist nun ein neuronales Netzwerk aufgebaut?
+#+begin_notes
+In der gezeigten Grafik bilden alle vertikal angeordneten Neuronen einen Layer in einem NN ab.
+#+end_notes
+
 Wir teilen das Netzwerk in Schichten (Layer) auf.
 
 #+ATTR_HTML: :width 50% :height 50%
@@ -122,11 +150,25 @@ Somit ist ein neurales Netzwerk eine Kette an Funktionen $f$.
 Ein Netz mit $3$ Layern wäre somit $f^2(f^1(f^0(X)))$
 mit $X=Input\ Data$
 #+end_quote
+
 *** Aufbau eines Layers
+
 Jeder Layer enthält *mindestens* folgende Informationen:
 - Eine Weight Matrix ($w$)
 - Einen Bias Vektor ($b$)
 - Aktivierungsfunktion ($\sigma$)
+
+*** Verbindung der Layer
+#+begin_notes
+Jede Kante in einem NN Modell repräsentiert eine reelle Zahl. \\
+Da jedes Neuron mit allen Neuronen des vorherigen Layers verbunden ist, besitzt
+jedes Neuron einen Vektor mit der Größe des vorherigen Layers.
+Also besitzt jeder Layer eine Weight Matrix mit den Dimensionen $size(L_{i-1}) \times size(L_i)$
+#+end_notes
+Jedes Neuron eines Layers $L_i$ ist mit allen Neuronen des Layers $L_{i-1}$ verbunden. \\
+
+[[./connections.jpg]]
+
 *** Aktivierungsfunktion
 #+begin_notes
 Non linearity Functions werden benötigt, da eine zwei lineare Funktionen
@@ -158,24 +200,14 @@ Eine Funktion um zu bestimmen wie 'nah' wir uns an unserem erwarteten Inference 
 #+begin_quote
 In dieser Präsentation benutzen wir die Euklidean-Distance $(x-y)^2$ als Cost Function.
 #+end_quote
+
 * Forward Propagation
 Ein Layer in einem Feed-Forward Neural Network besteht aus folgenden Elementen:
 - Inputs ($X$)
 - Weights ($W$)
 - Biases ($b$)
 - Output ($a$)
-** Allgemein
-#+begin_notes
-Jede Verbindung repräsentiert einen Float. \\
-Jedes Neuron enthält einen Vektor mit
-#+end_notes
-
-Jedes Neuron eines Layers $L_i$ ist mit allen Neuronen des Layers $L_{i-1}$ verbunden. \\
-
-[[./connections.jpg]]
-
-*** Berechnung des Inputs
-
+** Berechnung des Inputs
 Jedes Neuron enthält einen Vektor mit Weights $w$, der Angibt wie stark jeder Input gewichtet wird. \\
 $z=a_1*w_1+a_2*w_2$ oder $z=w^Ta$
 
@@ -336,15 +368,28 @@ $\nabla_{a^{k}} J = g \odot f'(a^{(k)})$
 #+end_quote
 mit $f'(x) := Ableitung\ der\ Aktivierungsfunktioin$
 *** Schritt 4
-Bias Gradienten berechnen.
-#+begin_quote
-$\nabla_{b^{k}} J = g$
-#+end_quote
 Weight Gradienten berechnen.
+$$
+f(w, a, b) = w*a+b
+$$
+$g * \frac{\partial}{\partial w} = g * (a+0)$
+
 #+begin_quote
 $\nabla_{w^k} J = ga^{k-1}$
 #+end_quote
+
 *** Schritt 5
+Bias Gradienten berechnen.
+$$
+f(w, a, b) = w*a+b
+$$
+$g * \frac{\partial}{\partial b}= g * 1$
+
+#+begin_quote
+$\nabla_{b^{k}} J = g$
+#+end_quote
+
+*** Schritt 6
 $\nabla a^{k-1} J = w^kg$
 *** Wiederholen von Schritt 3 - 5 des nächsten Layers ($L{-1}$)
 ** Graph
@@ -370,11 +415,37 @@ $$
 #+end_quote
 
 ** Praktisches Beispiel in Python
+[[https://github.com/SirBubbls/backpropagation-seminar/blob/master/Backpropagation.ipynb][Notebook]]
 #+BEGIN_EXPORT html
 <div class = "stretch">
      <iframe width="100%" height="100%" src="http://localhost:8888/lab"></iframe>
 </div>
 #+END_EXPORT
+*** Mini Batch Training
+#+begin_notes
+Keine Vektoren sondern mehrere Datenpunkte in Form einer Matrix (ein Vektor aus Vektoren (Inputs)).
+#+end_notes
+
+In der Praxis werden keine Vektoren als Input Daten benutzt, sondern Matrizen (siehe ~XOR~ Beispiel).
+$$
+Input = \left[\begin{array}{ccc} 0 & 0 \\ 0 & 1 \\ 1 & 0 \\ 1 & 1 \end{array} \right]
+$$
+
+Wir erhalten nun auch mehrere Gradienten in Form einer Matrix. Wir können nun den Durchschnitt der Gradienten nutzen um unsere Weights anzupassen.
+*** Iris Dataset
+[[https://github.com/SirBubbls/backpropagation-seminar/blob/master/MiniBatch.ipynb][Notebook]]
+#+ATTR_ORG: :width 200
+#+ATTR_HTML: :height 500
+[[./dataset.jpg]]
+*** Low Learning Rate
+#+ATTR_ORG: :width 200
+#+ATTR_HTML: :height 550
+[[./low_learning_rate.gif]]
+
+*** High Learning Rate
+#+ATTR_ORG: :width 200
+#+ATTR_HTML: :height 550
+[[./high_learning_rate.gif]]
 
 ** Komplexität
 #+begin_quote
@@ -408,13 +479,6 @@ $$
 - $m$ Anzahl an Elementen in Batch
 - $h$ Anzahl der Hidden-Units
  
-** Anmerkungen
-In der Praxis werden keine Vektoren als Input Daten benutzt, sondern Matrizen (siehe ~XOR~ Beispiel).
-$$
-Input = \left[\begin{array}{ccc} 0 & 0 \\ 0 & 1 \\ 1 & 0 \\ 1 & 1 \end{array} \right]
-$$
-
-Wir erhalten nun auch mehrere Gradienten in Form einer Matrix. Wir können nun den Durchschnitt der Gradienten nutzen um unsere Weights anzupassen.
 
 * General Back-propagation
 Bisher haben wir uns nur mit Back-propagation in Zusammenhang mit neuronalen Netzwerken beschäftigt. \\
