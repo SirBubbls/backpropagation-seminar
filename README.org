@@ -1,6 +1,103 @@
-#+TITLE: Backpropagation Seminar
-#+AUTHOR: Lucas Sas
+#+TITLE: Backpropagation Seminar Zusammenfassung
+#+LANGUAGE: de
+#+AUTHOR: Lucas Sas Brunschier
+#+DATE: SS20
+#+EMAIL: lucassas@live.de
+#+OPTIONS: timestamp:nil toc:nil
+#+EXPORT_FILE_NAME: abgabe/zusammenfassung.pdf
 
-* Links
-GitHub: [[https://github.com/SirBubbls/backpropagation-seminar]] \\
-Presentation: [[https://sirbubbls.github.io/backpropagation-seminar/]]
+* Einführung
+** Computational Graphs
+In der machine learning community ist es üblicherweise gängig, mathematische Operationen nicht auf mathematischer Art
+und Weise darzustellen, sondern in der Form eines Graphen. \\
+
+Bei einem computational Graph werden Rechenoperationen und Variablen durch Nodes repräsentiert. Diese Nodes werden durch
+Pfeile miteinander verbunden um den Datenfluss zu visualisieren.
+
+#+CAPTION: In diesem Beispiel ist gut ersichtlich, wie zwei Funktionen ($x=yz$ und $a=x * z$) durch einen Graphen visualisiert werden können.
+[[./docs/basic_graph_2.jpg]]
+
+** Neurale Netze / Deep Learning
+Künstliche neuronale Netze bezeichnet eine Teilemenge des Forschungsbereichs des maschinellen Lernen, als Vorbild dienen neuronale Netze
+der Biologie, jedoch muss dazu erwähnt werden, dass sich die beiden Forschungsbereiche doch weniger miteinander zu tun haben,
+wie man eventuell zu glauben vermag. \\
+\\
+Ein künstliches neuronales Netz ist essentiell eine Verkettung an Funktionen, in dem jeder Layer eine Funktion $f^i$ mit $i$ als Layer Index
+repräsentiert. Somit lässt sich ein Netz mit $3$ Layern mit $f^2(f^1(f^0(X)))$ mit $X$ als Input Daten ausdrücken. Diese Verkettung an Funktionen
+ist ein sehr wichtiges Konzept, wodurch der Backpropagation Algorithmus überhaupt erst anwendbar wird.
+
+* Backpropagation
+** Wozu benötigen wir den Backpropagation Algorithmus?
+Der Backpropagation Algorithmus beschäftigt sich mit der Berechnung von Ableitungen in computational Graphs. Meist wird dieser auch fälschlicher Weise als
+Optimierungsalgorithmus für neurale Netze bezeichnet. Dies trifft jedoch nicht zu, da typischerweise in neuralen Netzwerken der Backpropagation Algorithmus
+ausschließlich für die Berechnung der Gradients (also Ableitungen) der Weights & Biases der verschiedenen Layer zuständig ist. Diese Gradients werden dann
+von dem schon bekannten Gradient Descent Algorithmus dazu genutzt um die Cost Function zu minimieren.
+
+** Kettenregel
+Die Kettenregel ist ein fundamentaler Bestandteil des Backpropagation Algorithmus, da diese uns ermöglicht Ableitungen von verketteten Funktionen zu bestimmen. \\
+
+#+CAPTION: In diesem Beispiel wird eine verkettete Funktion der Form $x = f(w),\ y=f(x),\ z=f(y)$ als Graph dargestellt. Jede Operation leiten wir für sich selber ab und multiplizieren diese, somit erhalten wir die Ableitung $\frac{dz}{dw}$ mit  $\frac{d z}{d y} \frac{d y}{d x} \frac{d x}{d w}= f'(f(f(w)))f'(f(w))f'(w)$.
+[[./docs/chain_rule_derriv.jpg]]
+
+Wie bereits oben schon erwähnt ist ein neuronales Netz eine verkettete Funktion, somit ist die Kettenregel optimal um gewünschte
+Gradients zu berechnen.
+
+** Forward Propagation
+Der Begriff Forward Propagation bezeichnet den Algorithmus, der für die Auswertung eines Datenpunkts durch ein neuronales Netzwerk
+verwendet wird. \\
+
+#+begin_quote
+*Notation*
+- $\sigma$ Aktivierungsfunktion
+- $L$ Layer Index
+- $W$ Weight Matrix
+- $a$ Activations
+- $b$ Bias Vektor
+#+end_quote
+
+Wir wollen die Aktivierungen jeder Neuronen Schicht berechnen, dazu können wir die Formel $a_L = \sigma(W_La_{L-1} + b_L)$ verwenden. Das Produkt
+$W_La_{L-1}$ gibt an wie stark jede Activation des vorherigen Layers durch ein Neuron gewichtet wird. Auf diesen Vektor wird dann ein Bias Wert addiert und die Aktivierungsfunktion auf jedes Element des Vektors ausgeführt.
+
+** Algorithmus
+Als Voraussetzung für den Backpropagation Algorithmus müssen wir zuerst den Forward Propagation Algorithmus ausführen und
+einige Werte jedes Layers speichern:
+- den Wert $z$, bevor die Aktivierungsfunktion ausgeführt wird
+- die Activations $a$ eines Layers
+
+Die erste Ableitung die wir berechnen müssen ist die Ableitung der Cost Function $J=\frac{1}{2}(X-y)^2$ also $J'=y-X$ mit $X$ als
+der vorausgesagte Wert und $y$ als der erwartete Wert. Diesen Wert weisen wir der Hilfsvariable $g$ zu. \\
+
+Nun führen wir folgende Schritte für jeden Layer $k$ in unserem neuralen Netzwerk aus.
+
+1. Die Cost Function in Abhängigkeit des Wertes vor der Aktivierungsfunktion.
+  
+   $\nabla_{z} J = g * \sigma'(z) = g$  auch diesen Gradient weisen wir der Variable $g$ zu.
+2. Berechnung der Weights in Abhängigkeit der Cost Function $J$.
+
+   $\nabla_wJ = a_{L-1} * g$ da $a_{L-1}w_L+b_L$ nach $w_L$ abgeleitet $a_{L-1}$ ergibt.
+3. Berechnung des Biases in Abhängigkeit der Cost Function $J$.
+
+   $\nabla_bJ = g$ da $a_{L-1}w_L+b_L$ nach $b_L$ abgeleitet $1$ ergibt.
+4. Wir können nun die neuen Weights und Gradients mit Hilfe der berechneten Gradients $\nabla_zJ$ und $\nabla_wJ$ anpassen.
+   Die neuen Weights und Biases werden in einer separaten Datenstruktur gespeichert und erst am Ende des Backpropagation Algorithmus dem eigentlichen Netzwerk zugewiesen.
+
+   #+begin_quote
+   *Anmerkung* \\
+    Dieser Teil gehört technisch nicht mehr zum Backpropagation Algorithmus, sondern typischerweise zum Gradient Descent Algorithmus.
+   #+end_quote
+   $w^*_k = w_k - \lambda\nabla_{w_k}J$ \\
+   $b^*_k = b_k - \lambda\nabla_{b_k}J$
+
+5. Nun müssen wir das neue $g$ bestimmen, dass an den Layer $L-1$ übergeben wird.
+  
+   $g = g * w_L$ da wir $a_{L-1}w_L+b_L$ nach $a_{L-1}$ ableiten.
+  
+6. Sobald wir den letzten hidden Layer des Netzwerks erreicht haben müssen wir statt $a_{L-1}$ die Input Matrix $X$ nutzen um die Gradients zu errechnen.
+
+7. Nach der Iteration aller Layer müssen nur noch unser Weights und Biases des neuronales Netz aktualisiert werden.
+
+* Quellen
+- Deep Learning (Ian Goodfellow, Yoshua Bengio & Aaron Courville)
+- https://medium.com/@14prakash/back-propagation-is-very-simple-who-made-it-complicated-97b794c97e5c
+- Wikipedia: https://en.wikipedia.org/wiki/Backpropagation
+- Wikipedia: https://en.wikipedia.org/wiki/Delta_rule
