@@ -96,6 +96,46 @@ Nun führen wir folgende Schritte für jeden Layer $k$ in unserem neuralen Netzw
 
 7. Nach der Iteration aller Layer müssen nur noch unser Weights und Biases des neuronales Netz aktualisiert werden.
 
+** General Backpropagation
+Der Backpropagation Algorithmus lässt sich nicht ausschließlich nur mit neuralen Netzwerken nutzen, sondern kann auch bei computational Graphen einer beliebigen Form Ableitungen bestimmen. \\
+
+Formell wird für die generelle Definition des Backpropagation Algorithmus folgende Parameter benötigt:
+- die Menge aller Variablen $T$, deren Gradienten wir berechnen müssen
+- den Graphen $G$
+- die Variable $z$, die wir differenzieren wollen
+
+Zur Vorbereitung bilden wir den Graphen $G'$ aus $G$ dieser enthält alle Variablen, die Vorfahren von $z$ und Nachfahren von $T$ sind.
+Zudem initialisieren wir die Datenstruktur ~grad_table~, in der wir Variablen Gradients zuweisen können. Zu beginn füllen wir diese
+Datenstruktur mit ~grad_table[z] = 1~, da $\frac{\partial z}{\partial z} = 1$. \\
+
+Wir können den Algorithmus in zwei Teile aufteilen, im äußeren Teil iterieren wir durch alle Elemente in $T$, und rufen in jedem
+Loop die rekursive Funktion ~build_grad~ auf.
+#+BEGIN_SRC python
+for v in T:
+    build_grad(v, G, G_1, grad_table)
+return [grad_table[v] for v in T]
+#+END_SRC
+
+Der Base Case der rekursiven Funktion ~build_grad~ ist erreicht, sobald sich die zu berechnende Variable ~v~ sich bereits in
+~grad_table~ befindet, also zu Beginn bei $v=z$ mit ~build_grad[v] = 1~. Wir iterieren durch alle direkten Nachfahren von ~c~ und
+speichern sowohl die Operation durch die, die Variable erzeugt wurde als auch den Gradient der Variable durch ~d = build_grad~.
+Wir führen die Backpropagation Operation ~bprop()~ der gespeicherten Operation aus und diese berechnet den Gradient der aktuellen
+Variable durch den Gradient des Nachfahren ~d~, die Variable ~v~ die wir differenzieren wollen und den tatsächlichen Inputs ~get_inputs()~. \\
+Da wir bei mehreren Konsumenten auch mehrere Gradients erhalten müssen wir diese schließlich auch summieren oder den Durchschnitt als Gradient für die zu berechnende Variable $v$ benutzen.
+#+BEGIN_SRC python
+def build_grad(v, G, G_1, grad_table):
+    if v in grad_table: return grad_table[v]
+    i = 1
+    for c in get_consumers(v, G_1):
+        op = get_operation(c)
+        d = build_grad(c, G, G_1, grad_table)
+        g[i] = op.bprop(get_inputs(c, G_1), v, d)
+        i += 1
+    g = sum(g)
+    grad_table[v] = g
+    return g
+#+END_SRC
+
 * Quellen
 - Deep Learning (Ian Goodfellow, Yoshua Bengio & Aaron Courville)
 - https://medium.com/@14prakash/back-propagation-is-very-simple-who-made-it-complicated-97b794c97e5c
