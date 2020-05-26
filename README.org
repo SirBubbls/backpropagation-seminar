@@ -4,7 +4,7 @@
 #+DATE: SS20
 #+EMAIL: lucassas@live.de
 #+OPTIONS: timestamp:nil toc:nil
-#+EXPORT_FILE_NAME: abgabe/zusammenfassung.pdf
+#+EXPORT_FILE_NAME: docs/zusammenfassung.pdf
 
 * Einführung
 ** Computational Graphs
