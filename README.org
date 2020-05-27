@@ -6,6 +6,12 @@
 #+OPTIONS: timestamp:nil toc:nil
 #+EXPORT_FILE_NAME: docs/zusammenfassung.pdf
 
+|-------------------+-------------------------------------------------------|
+| GitHub Repository | [[https://github.com/sirbubbls/backpropagation-seminar][github.com/sirbubbls/backpropagation-seminar]]          |
+| Presentation      | [[https://sirbubbls.github.io/backpropagation-seminar/][sirbubbls.github.io/backpropagation-seminar]]           |
+| Video             | [[https://sirbubbls.github.io/backpropagation-seminar/video.mp4][sirbubbls.github.io/backpropagation-seminar/video.mp4]] |
+
+
 * Einführung
 ** Computational Graphs
 In der machine learning community ist es üblicherweise gängig, mathematische Operationen nicht auf mathematischer Art
@@ -95,6 +101,9 @@ Nun führen wir folgende Schritte für jeden Layer $k$ in unserem neuralen Netzw
 6. Sobald wir den letzten hidden Layer des Netzwerks erreicht haben müssen wir statt $a_{L-1}$ die Input Matrix $X$ nutzen um die Gradients zu errechnen.
 
 7. Nach der Iteration aller Layer müssen nur noch unser Weights und Biases des neuronales Netz aktualisiert werden.
+
+   $w_k=w^*_k$ Zuweisung der während der Iteration gespeicherten Weights $w^*_k$ \\
+   $w_k=b^*_k$ Zuweisung der während der Iteration gespeicherten Weights $b^*_k$
 
 ** General Backpropagation
 Der Backpropagation Algorithmus lässt sich nicht ausschließlich nur mit neuralen Netzwerken nutzen, sondern kann auch bei computational Graphen einer beliebigen Form Ableitungen bestimmen. \\
