@@ -12,10 +12,10 @@
 #+REVEAL_THEME: solarized
 
 * Intro
-Präsentation ist auch online [[https://sirbubbls.github.io/backpropagation-seminar][sirbubbls.github.io/backpropagation-seminar]]
+Präsentation ist auch online [[https://sirbubbls.github.io/backpropagation-seminar][sirbubbls.github.io/backpropagation-seminar]] \\
 
-Präsentation ist in Org-Mode geschrieben, also sourcen aller Grafiken und
-Beispiele sind integriert.
+GitHub: [[https://github.com/sirbubbls/backpropagation-seminar]]
+
 ** Zusätzliche Ressourcen
 Deep Learning (Ian Goodfellow, Yoshua Bengio & Aaron Courville)
 #+ATTR_ORG: :width 200
@@ -39,7 +39,6 @@ Beispiele für alle praktischen Beispiele dieser Präsentation sind in diesem [[
 4. Backpropagation
    - Kettenregel
    - Backpropagation
-   - Delta Rule
    - Implementation in Python
 5. General Backpropagation
 6. Historisches
@@ -209,7 +208,7 @@ Ein Layer in einem Feed-Forward Neural Network besteht aus folgenden Elementen:
 - Output ($a$)
 ** Berechnung des Inputs
 Jedes Neuron enthält einen Vektor mit Weights $w$, der Angibt wie stark jeder Input gewichtet wird. \\
-$z=a_1*w_1+a_2*w_2$ oder $z=w^Ta$
+$a_1*w_1+a_2*w_2$ oder $a_{L-1}W_L$
 
 [[./connections.jpg]]
 
@@ -217,13 +216,13 @@ $z=a_1*w_1+a_2*w_2$ oder $z=w^Ta$
 Um die Aktivierungen ($a$) eines Layers zu berechen können wir folgende Formel benutzen:
 
 #+begin_quote
-$a_L = \sigma(a_{L-1} w_L + b_L)$
+$a_L = \sigma(W_La_{L-1} + b_L)$
 #+end_quote
 Der berechnete Vektor $a_L$ dient dem Layer $L+1$ als Input.
 
 ** Computational Graph
 $$
-a = \sigma(a_{L-1}w_L+b)
+a = \sigma(a_{L-1}W_L+b)
 $$
 
 [[./forward_prop_graph.png]]
@@ -275,7 +274,7 @@ Predictions: $\left[\begin{array}{ccc} 0 \\ 1 \\ 1 \\ 0 \end{array}\right]$
 def forward(X):
     a = X
     for layer in L:
-        a = h @ layer.weights + layer.bias
+        a = layer.weights @ a + layer.bias
     return a
 #+END_SRC
 
@@ -329,13 +328,14 @@ $$
 x = f(w),\ y=f(x),\ z=f(y)
 $$
 
+#+ATTR_HTML: :height 275
 [[./chain_rule_derriv.jpg]]
 
 $$
-\frac{\partial z}{\partial w}=
-\frac{\partial z}{\partial y}
-\frac{\partial y}{\partial x}
-\frac{\partial x}{\partial w}
+\frac{d z}{d w}=
+\frac{d z}{d y}
+\frac{d y}{d x}
+\frac{d x}{d w}
 =
 f'(y)f'(x)f'(w) \\
 = f'(f(f(w)))f'(f(w))f'(w)
@@ -399,20 +399,6 @@ Wir multiplizieren alle partiellen Ableitungen auf dem Weg dahin miteinander.
 #+end_notes
 
 [[./backprop_derriv.jpg]]
-
-** Delta Rule
-In neural Networks kann der Backpropagation Algorithmus zu der sog. *Delta Rule* zusammengefasst werden.
-#+begin_notes
-$\lambda$ ist learning rate \\
-$\alpha$ ist die Aktivierungsfunktion \\
-$z$ ist inputs * weights \\
-#+end_notes
-
-#+begin_quote
-$$
-\nabla w_{ji} = \lambda ( - a) \alpha'(z)a_{L-1}
-$$
-#+end_quote
 
 ** Praktisches Beispiel in Python
 [[https://github.com/SirBubbls/backpropagation-seminar/blob/master/Backpropagation.ipynb][Notebook]]
@@ -576,7 +562,9 @@ def build_grad(v, G, G_1, grad_table):
 
 *** ~bprop~ Funktion
 #+begin_notes
-Auch diese Funktion kann natürlich auch in einer anderen Sprache implementiert sein.
+Auch diese Funktion kann natürlich auch in einer anderen Sprache implementiert sein. \\
+
+~inputs~ - Tatsächliche Zahlen
 #+end_notes
 
 ~op.bprop(inputs, X, G)~ \\
@@ -605,7 +593,7 @@ Wir tragen alle Operationen, die zur Berechnung der gesuchten Ableitung benötig
 #+end_notes
 
 #+ATTR_HTML: :height 550
-[[./big_graph_3.jpg]]
+[[./big_graph_3.png]]
 
 ** Generalisierbarkeit
 Dadurch ist der Backpropagation Algorithmus sehr allgemein anwendbar. \\
