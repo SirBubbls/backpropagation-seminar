@@ -401,7 +401,7 @@ Wir multiplizieren alle partiellen Ableitungen auf dem Weg dahin miteinander.
 [[./backprop_derriv.jpg]]
 
 ** Praktisches Beispiel in Python
-[[https://github.com/SirBubbls/backpropagation-seminar/blob/master/Backpropagation.ipynb][Notebook]]
+[[https://github.com/SirBubbls/backpropagation-seminar/blob/master/Basic%20Backpropagation.ipynb][Basic Backpropagation Implementation]]
 #+BEGIN_EXPORT html
 <div class = "stretch">
      <iframe width="100%" height="100%" src="http://localhost:8888/lab"></iframe>
