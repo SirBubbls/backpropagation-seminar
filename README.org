@@ -11,7 +11,6 @@
 | Presentation      | [[https://sirbubbls.github.io/backpropagation-seminar/][sirbubbls.github.io/backpropagation-seminar]]           |
 | Video             | [[https://sirbubbls.github.io/backpropagation-seminar/video.mp4][sirbubbls.github.io/backpropagation-seminar/video.mp4]] |
 
-
 * Einführung
 ** Computational Graphs
 In der machine learning community ist es üblicherweise gängig, mathematische Operationen nicht auf mathematischer Art
@@ -23,10 +22,9 @@ Pfeile miteinander verbunden um den Datenfluss zu visualisieren.
 #+CAPTION: In diesem Beispiel ist gut ersichtlich, wie zwei Funktionen ($x=yz$ und $a=x * z$) durch einen Graphen visualisiert werden können.
 [[./docs/basic_graph_2.jpg]]
 
-** Neurale Netze / Deep Learning
-Künstliche neuronale Netze bezeichnet eine Teilemenge des Forschungsbereichs des maschinellen Lernen, als Vorbild dienen neuronale Netze
-der Biologie, jedoch muss dazu erwähnt werden, dass sich die beiden Forschungsbereiche doch weniger miteinander zu tun haben,
-wie man eventuell zu glauben vermag. \\
+** Neuronale Netze / Deep Learning
+Künstliche neuronale Netze bezeichnen eine Teilemenge des Forschungsbereichs des maschinellen Lernens. Als Vorbild dienen neuronale Netze
+der Biologie, jedoch muss dazu erwähnt werden, dass sich die beiden Forschungsbereiche doch mehr unterscheiden als man eventuell zu glauben vermag. \\
 \\
 Ein künstliches neuronales Netz ist essentiell eine Verkettung an Funktionen, in dem jeder Layer eine Funktion $f^i$ mit $i$ als Layer Index
 repräsentiert. Somit lässt sich ein Netz mit $3$ Layern mit $f^2(f^1(f^0(X)))$ mit $X$ als Input Daten ausdrücken. Diese Verkettung an Funktionen
@@ -35,9 +33,8 @@ ist ein sehr wichtiges Konzept, wodurch der Backpropagation Algorithmus überhau
 * Backpropagation
 ** Wozu benötigen wir den Backpropagation Algorithmus?
 Der Backpropagation Algorithmus beschäftigt sich mit der Berechnung von Ableitungen in computational Graphs. Meist wird dieser auch fälschlicher Weise als
-Optimierungsalgorithmus für neurale Netze bezeichnet. Dies trifft jedoch nicht zu, da typischerweise in neuralen Netzwerken der Backpropagation Algorithmus
-ausschließlich für die Berechnung der Gradients (also Ableitungen) der Weights & Biases der verschiedenen Layer zuständig ist. Diese Gradients werden dann
-von dem schon bekannten Gradient Descent Algorithmus dazu genutzt um die Cost Function zu minimieren.
+Optimierungsalgorithmus für neuronale Netze bezeichnet. Dies trifft jedoch nicht zu, da typischerweise in neuronalen Netzwerken der Backpropagation Algorithmus
+ausschließlich für die Berechnung der Gradients (also Ableitungen) der Weights & Biases der verschiedenen Layer zuständig ist. Diese Gradients werden dann von dem schon bekannten Gradient Descent Algorithmus genutzt, um die Cost Function zu minimieren.
 
 ** Kettenregel
 Die Kettenregel ist ein fundamentaler Bestandteil des Backpropagation Algorithmus, da diese uns ermöglicht Ableitungen von verketteten Funktionen zu bestimmen. \\
@@ -45,7 +42,7 @@ Die Kettenregel ist ein fundamentaler Bestandteil des Backpropagation Algorithmu
 #+CAPTION: In diesem Beispiel wird eine verkettete Funktion der Form $x = f(w),\ y=f(x),\ z=f(y)$ als Graph dargestellt. Jede Operation leiten wir für sich selber ab und multiplizieren diese, somit erhalten wir die Ableitung $\frac{dz}{dw}$ mit  $\frac{d z}{d y} \frac{d y}{d x} \frac{d x}{d w}= f'(f(f(w)))f'(f(w))f'(w)$.
 [[./docs/chain_rule_derriv.jpg]]
 
-Wie bereits oben schon erwähnt ist ein neuronales Netz eine verkettete Funktion, somit ist die Kettenregel optimal um gewünschte
+Wie bereits oben schon erwähnt ist ein neuronales Netz eine verkettete Funktion. Somit ist die Kettenregel optimal um gewünschte
 Gradients zu berechnen.
 
 ** Forward Propagation
@@ -61,8 +58,8 @@ verwendet wird. \\
 - $b$ Bias Vektor
 #+end_quote
 
-Wir wollen die Aktivierungen jeder Neuronen Schicht berechnen, dazu können wir die Formel $a_L = \sigma(W_La_{L-1} + b_L)$ verwenden. Das Produkt
-$W_La_{L-1}$ gibt an wie stark jede Activation des vorherigen Layers durch ein Neuron gewichtet wird. Auf diesen Vektor wird dann ein Bias Wert addiert und die Aktivierungsfunktion auf jedes Element des Vektors ausgeführt.
+Wir wollen die Aktivierungen jeder Neuronen Schicht berechnen. Dazu können wir die Formel $a_L = \sigma(W_La_{L-1} + b_L)$ verwenden. Das Produkt
+$W_La_{L-1}$ gibt an, wie stark jede Activation des vorherigen Layers durch ein Neuron gewichtet wird. Auf diesen Vektor wird dann ein Bias Wert addiert und die Aktivierungsfunktion auf jedes Element des Vektors ausgeführt.
 
 ** Algorithmus
 Als Voraussetzung für den Backpropagation Algorithmus müssen wir zuerst den Forward Propagation Algorithmus ausführen und
@@ -70,10 +67,10 @@ einige Werte jedes Layers speichern:
 - den Wert $z$, bevor die Aktivierungsfunktion ausgeführt wird
 - die Activations $a$ eines Layers
 
-Die erste Ableitung die wir berechnen müssen ist die Ableitung der Cost Function $J=\frac{1}{2}(X-y)^2$ also $J'=y-X$ mit $X$ als
+Die erste Ableitung die wir berechnen müssen, ist die Ableitung der Cost Function $J=\frac{1}{2}(X-y)^2$. Also $J'=y-X$ mit $X$ als
 der vorausgesagte Wert und $y$ als der erwartete Wert. Diesen Wert weisen wir der Hilfsvariable $g$ zu. \\
 
-Nun führen wir folgende Schritte für jeden Layer $k$ in unserem neuralen Netzwerk aus.
+Nun führen wir folgende Schritte für jeden Layer $k$ in unserem neuronalen Netzwerk aus.
 
 1. Die Cost Function in Abhängigkeit des Wertes vor der Aktivierungsfunktion.
   
@@ -98,7 +95,7 @@ Nun führen wir folgende Schritte für jeden Layer $k$ in unserem neuralen Netzw
   
    $g = g * w_L$ da wir $a_{L-1}w_L+b_L$ nach $a_{L-1}$ ableiten.
   
-6. Sobald wir den letzten hidden Layer des Netzwerks erreicht haben müssen wir statt $a_{L-1}$ die Input Matrix $X$ nutzen um die Gradients zu errechnen.
+6. Sobald wir den letzten hidden Layer des Netzwerks erreicht haben, müssen wir statt $a_{L-1}$ die Input Matrix $X$ nutzen um die Gradients zu errechnen.
 
 7. Nach der Iteration aller Layer müssen nur noch unser Weights und Biases des neuronales Netz aktualisiert werden.
 
@@ -106,18 +103,18 @@ Nun führen wir folgende Schritte für jeden Layer $k$ in unserem neuralen Netzw
    $w_k=b^*_k$ Zuweisung der während der Iteration gespeicherten Weights $b^*_k$
 
 ** General Backpropagation
-Der Backpropagation Algorithmus lässt sich nicht ausschließlich nur mit neuralen Netzwerken nutzen, sondern kann auch bei computational Graphen einer beliebigen Form Ableitungen bestimmen. \\
+Der Backpropagation Algorithmus lässt sich nicht nur mit neuronalen Netzwerken nutzen, sondern kann auch bei computational Graphen einer beliebigen Form Ableitungen bestimmen. \\
 
 Formell wird für die generelle Definition des Backpropagation Algorithmus folgende Parameter benötigt:
 - die Menge aller Variablen $T$, deren Gradienten wir berechnen müssen
 - den Graphen $G$
 - die Variable $z$, die wir differenzieren wollen
 
-Zur Vorbereitung bilden wir den Graphen $G'$ aus $G$ dieser enthält alle Variablen, die Vorfahren von $z$ und Nachfahren von $T$ sind.
+Zur Vorbereitung bilden wir den Graphen $G'$ aus $G$. Dieser enthält alle Variablen, die Vorfahren von $z$ und Nachfahren von $T$ sind.
 Zudem initialisieren wir die Datenstruktur ~grad_table~, in der wir Variablen Gradients zuweisen können. Zu beginn füllen wir diese
 Datenstruktur mit ~grad_table[z] = 1~, da $\frac{\partial z}{\partial z} = 1$. \\
 
-Wir können den Algorithmus in zwei Teile aufteilen, im äußeren Teil iterieren wir durch alle Elemente in $T$, und rufen in jedem
+Wir können den Algorithmus in zwei Teile aufteilen. Im äußeren Teil iterieren wir durch alle Elemente in $T$, und rufen in jedem
 Loop die rekursive Funktion ~build_grad~ auf.
 #+BEGIN_SRC python
 for v in T:
@@ -125,12 +122,12 @@ for v in T:
 return [grad_table[v] for v in T]
 #+END_SRC
 
-Der Base Case der rekursiven Funktion ~build_grad~ ist erreicht, sobald sich die zu berechnende Variable ~v~ sich bereits in
-~grad_table~ befindet, also zu Beginn bei $v=z$ mit ~build_grad[v] = 1~. Wir iterieren durch alle direkten Nachfahren von ~c~ und
-speichern sowohl die Operation durch die, die Variable erzeugt wurde als auch den Gradient der Variable durch ~d = build_grad~.
-Wir führen die Backpropagation Operation ~bprop()~ der gespeicherten Operation aus und diese berechnet den Gradient der aktuellen
-Variable durch den Gradient des Nachfahren ~d~, die Variable ~v~ die wir differenzieren wollen und den tatsächlichen Inputs ~get_inputs()~. \\
-Da wir bei mehreren Konsumenten auch mehrere Gradients erhalten müssen wir diese schließlich auch summieren oder den Durchschnitt als Gradient für die zu berechnende Variable $v$ benutzen.
+Der Base Case der rekursiven Funktion ~build_grad~ ist erreicht, sobald sich die zu berechnende Variable ~v~ bereits in
+~grad_table~ befindet. Zu Beginn bei $v=z$ mit ~build_grad[v] = 1~. Wir iterieren durch alle direkten Nachfahren von ~c~ und
+speichern sowohl die Operation durch welche die Variable erzeugt wurde, als auch den Gradient der Variable durch ~d = build_grad~.
+Wir führen die Backpropagation Operation ~bprop()~ der gespeicherten Operation aus. Diese berechnet den Gradient der aktuellen
+Variable durch den Gradient des Nachfahren ~d~, die Variable ~v~, die wir differenzieren wollen und den tatsächlichen Inputs ~get_inputs()~. \\
+Da wir bei mehreren Konsumenten auch mehrere Gradients erhalten, müssen wir diese schließlich auch summieren oder den Durchschnitt als Gradient für die zu berechnende Variable $v$ benutzen.
 #+BEGIN_SRC python
 def build_grad(v, G, G_1, grad_table):
     if v in grad_table: return grad_table[v]
@@ -147,6 +144,6 @@ def build_grad(v, G, G_1, grad_table):
 
 * Quellen
 - Deep Learning (Ian Goodfellow, Yoshua Bengio & Aaron Courville)
-- https://medium.com/@14prakash/back-propagation-is-very-simple-who-made-it-complicated-97b794c97e5c
+- [[https://medium.com/@14prakash/back-propagation-is-very-simple-who-made-it-complicated-97b794c97e5c][Back-Propagation is very simple. Who made it Complicated?]] (Prakash Jay)
 - Wikipedia: https://en.wikipedia.org/wiki/Backpropagation
 - Wikipedia: https://en.wikipedia.org/wiki/Delta_rule
